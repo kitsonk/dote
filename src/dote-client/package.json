@@ -1,0 +1,15 @@
+{
+	"name": "dote-client",
+	"version": "0.1.0",
+	"dependencies": {
+		"dojo": "~1.8.0",
+		"dijit": "~1.8.0"
+	},
+	"main": "main.js",
+	"volo": {
+		"dependencies": {
+			"dojo": "dojo/dojo/~1.8.0",
+			"setten": "dojo/dijit/~1.8.0"
+		}
+	}
+}

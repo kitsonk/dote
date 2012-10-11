@@ -1,0 +1,147 @@
+extends main
+
+prepend head
+  title = "dote Mockup Page"
+
+block scripts
+  script(type="text/javascript")
+    dojoConfig = {
+      async: 1,
+      isDebug: 1,
+      baseUrl: "src",
+      packages: [{
+        name: "dojo",
+        location: "dojo"
+      },{
+        name: "dijit",
+        location: "dijit"
+      },{
+        name: "dote-client",
+        location: "dote-client"
+      }],
+      deps: ["dote-client/main"]
+    };
+  script(type="text/javascript", src="/src/dojo/dojo.js")
+
+prepend css
+  link(rel="stylesheet", type="text/css", href="/_static/css/dote.css", media="all")
+
+block content
+  h1 Dote Topic Mockup
+
+  .topic_cont
+    .topic
+      .vote_cont
+        .vote_inner
+          .votes -2
+          .spark
+            table
+              col.plus(style="width: 10%")
+              col.neutral(style="width: 10%")
+              col.minus(style="width: 80%")
+              tbody
+                tr
+                  td
+                  td
+                  td
+          .button_cont
+            ul
+              li.up(role="button")
+                a(href="#")
+                  i.icon-plus
+                  span Up
+              li.neutral(role="button")
+                a(href="#")
+                  i.icon-check-empty
+                  span neutral
+              li.down(role="button")
+                a.selected(href="#")
+                  i.icon-minus
+                  span Down
+      .content_cont
+        .content_inner
+          .title
+            a(href="#") Convert Dijit Buttons to Display be Pink
+          .status_cont.inactive
+            .action Rejected
+            .owner wildbill
+            .date Posted 3 days ago
+            .date Actioned 1 day ago
+            .commentCount 
+              i.icon-comments-alt
+              span 12
+          .description I think we should make the default theme for Dojo.  We have had blue for a long time with claro and Pink is such a much more attractive colour.
+          .tags_cont
+            i.icon-tags.icon-large
+            ul.tags
+              li dijit
+              li css
+              li themes
+              li ui
+          .voters_cont
+            i.icon-check.icon-large
+            ul.voters
+              li.plus kitsonk
+              li.minus dylanks
+              li.minus neonstalwart
+              li.neutral csnover
+              li.minus kgf
+          .height_cont
+      .height_cont
+
+    .topic
+      .vote_cont
+        .vote_inner
+          .votes +159
+          .spark
+            table
+              col.plus(style="width: 90%")
+              col.neutral(style="width: 0%")
+              col.minus(style="width: 10%")
+              tbody
+                tr
+                  td
+                  td
+                  td
+          .button_cont
+            ul
+              li.up(role="button")
+                a.selected(href="#")
+                  i.icon-plus
+                  span Up
+              li.neutral(role="button")
+                a(href="#")
+                  i.icon-check-empty
+                  span neutral
+              li.down(role="button")
+                a(href="#")
+                  i.icon-minus
+                  span Down
+      .content_cont
+        .content_inner
+          .title
+            a(href="#") Eliminate Core and Adopt TypeScript as the New Dojo Standard
+          .status_cont.active
+            .action Open
+            .owner kriszyp
+            .date Posted 4 days ago
+            .commentCount
+              i.icon-comments-alt
+              span 290
+          .description We should really consider eliminating the Dojo core wholly and instead adopt Microsoft's TypeScript as the standard.
+          .tags_cont
+            i.icon-tags.icon-large
+            ul.tags
+              li dojo
+              li core
+              li alternatives
+          .voters_cont
+            i.icon-check.icon-large
+            ul.voters
+              li.plus kitsonk
+              li.minus dylanks
+              li.minus neonstalwart
+              li.neutral csnover
+              li.minus kgf
+          .height_cont
+      .height_cont

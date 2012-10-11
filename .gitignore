@@ -1,0 +1,6 @@
+.DS_Store
+_static/css/*.css
+src/dijit
+src/dojo
+src/setten
+node_modules/

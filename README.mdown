@@ -1,0 +1,62 @@
+# dote #
+
+A topic based voting system for open collaboration.
+
+## Requirements ##
+
+**dote** depends on the following projects:
+
+* [express][express]
+* [jade][jade]
+* [stylus][stylus]
+* [Font-Awesome][fontawesome]
+* [Dojo Toolkit][dojo]
+* [setten][setten]
+
+You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cpm] or [volo][volo] to properly install
+**dote**. 
+
+## Installation ##
+
+* Clone the repository recursively with ``git``:
+
+    ```bash
+    $ git clone --recursive https://github.com/kitsonk/dote.git
+    ```
+
+* Install NodeJS dependencies with ``npm``:
+
+    ```bash
+    $ cd dote
+    $ npm install
+    ```
+
+* Install AMD dependencies.
+
+    * Using [cpm][cpm]:
+
+        ```bash
+        cpm --packages-path=src install dojo
+        cpm --packages-path=src install dijit
+        cpm --packages-path=src install setten
+        ```
+
+    * Using [volo][volo]:
+
+        ```bash
+        volo install -amd
+        ```
+
+* Start the server:
+
+    ```bash
+    $ node server
+    ```
+
+[volo]: http://volojs.org/
+[cpm]: https://github.com/kriszyp/cpm/
+[nodejs]: http://nodejs.org/download/
+[dojo]: http://dojotoolkit.org/download/
+[express]: http://expressjs.com/
+[jade]: http://jade-lang.com/
+[git]: http://git-scm.com/

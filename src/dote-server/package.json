@@ -1,0 +1,14 @@
+{
+	"name": "dote-server",
+	"version": "0.1.0",
+	"dependencies": {
+		"dojo": "~1.8.0",
+		"setten": "~0.1.2"
+	},
+	"volo": {
+		"dependencies": {
+			"dojo": "dojo/dojo/~1.8.0",
+			"setten": "kitsonk/setten/~0.1.2"
+		}
+	}
+}

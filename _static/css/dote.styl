@@ -1,0 +1,184 @@
+@import "../../src/dijit/themes/claro/claro.css"
+@import "../../src/dijit/themes/claro/document.css"
+@import "../Font-Awesome/css/font-awesome.css"
+@import "nib"
+
+button-color = #bcd8f4
+button-hover-color = #86bdf2
+plus-color = #bcf4c3
+minus-color = #f4bcbc
+neutral-color = #f4e0bc
+
+html
+body
+  height 100%
+  width 100%
+  overflow hidden
+
+.topic_cont
+  width 924px
+  margin 0 auto
+  border-top 1px solid #c0c6cc
+
+.topic
+  border-bottom 1px solid #c0c6cc
+  background-color #f9f9f9
+  background linear-gradient(top, lighten(#e4ebf2, 75%), #e4ebf2 80%)
+  padding 0.5em 0 0 0
+  width 924px
+
+.vote_cont
+  width 150px
+  float left
+
+.vote_inner
+  padding 0.5em
+
+.content_cont
+  float right
+  width 770px
+
+.content_inner
+  padding 1em
+
+.height_cont
+  clear both
+  font-size 1px
+
+.votes
+  font-size 48px
+  text-align center
+
+.spark
+  border 1px solid #555
+  border-radius 2px
+  box-shadow 0 1px 2px rgba(black,0.5), inset 0 0 1px rgba(white,0.5)
+  table
+    border-collapse collapse
+    width 100%
+    tr
+      height 12px
+  .plus
+    background linear-gradient(bottom, darken(#32b512, 30%), #32b512 60%)
+  .neutral
+    background linear-gradient(bottom, darken(#ffd83b, 30%), #ffd83b 60%)
+  .minus
+    background linear-gradient(bottom, darken(#ff0516, 30%), #ff0516 60%)
+
+.button_cont
+.tags_cont
+.voters_cont
+  ul
+    margin 0
+    padding 0
+    display inline
+    > li
+      list-style-type none
+      display inline
+
+.button_cont
+  width 100%
+  ul > li > a
+    background linear-gradient(top,white 0px,button-color 3px,lighten(button-color, 20%) 100%)
+    background-color button-color
+    border 1px solid darken(button-color, 40%)
+    border-radius 2px
+    box-shadow 0 1px 2px rgba(black,0.5), inset 0 0 1px rgba(white,0.5)
+    color #050505
+    display inline-block
+    font-size 11px
+    margin 6px 0 0 0
+    padding 3px 0 2px
+    text-align center
+    text-decoration none
+    text-shadow 0 1px 1px rgba(white,0.75)
+    width 41px
+    &:hover
+      background-color button-hover-color
+      background linear-gradient(top,white 0px,button-hover-color 3px,lighten(button-hover-color, 20%) 100%)
+    &:active
+      background none
+      background-color button-color
+      box-shadow 0 0 1px rgba(black,0.75)
+    &.selected
+      background none
+      background-color button-color
+      box-shadow 0 0 1px rgba(black,0.75)
+    > span
+      display none
+
+.title
+  font-size 26px
+  a
+    text-decoration none
+    transition-property color
+    transition-duration 0.3s
+    &:hover
+      color #0060bf
+      transition-duration 0.3s
+
+.description
+  padding 6px 1em 0 0
+  overflow ellipsis
+
+.status_cont
+  width 130px
+  float right
+  text-align center
+  border-radius 4px
+  box-shadow 0 1px 2px rgba(black,0.5), inset 0 0 1px rgba(white,0.5)
+  padding 0.5em
+  &.active
+    border 1px solid darken(button-color, 50%)
+    background-color #e0f0ff
+    background linear-gradient(top,#e0f0ff,lighten(#e0f0ff, 75%))
+  &.inactive  
+    border 1px solid #999
+    background-color #eee
+    background linear-gradient(top,#eee,lighten(#eee, 75%))
+  .action
+    font-size 18px
+    padding 0.2em
+    text-shadow 0 1px 1px rgba(black, 0.15)
+  .owner
+    font-size 12px
+    line-height 2em
+    font-weight bold
+  .commentCount
+    font-size 14px
+    line-height 2em
+
+.tags_cont
+.voters_cont
+  font-size 12px
+  margin 6px 0
+  line-height 2em
+  i
+    padding 3px
+  ul > li
+    border-radius 2px
+    box-shadow 0 1px 1px rgba(black, 0.15)
+    padding 1px 6px
+    text-shadow 0 1px 1px rgba(white,0.75)
+    color #050505
+
+.tags_cont 
+  ul > li
+    background-color #ddd
+    background linear-gradient(top,white 0px,#ddd 3px,lighten(#ddd, 20%) 100%)
+    border 1px solid #999
+
+.voters_cont
+  ul > li
+    &.plus
+      background-color plus-color
+      background linear-gradient(top,white 0px,plus-color 3px,lighten(plus-color, 20%) 100%)
+      border 1px solid darken(plus-color, 40%)
+    &.minus
+      background-color minus-color
+      background linear-gradient(top,white 0px,minus-color 3px,lighten(minus-color, 20%) 100%)
+      border 1px solid darken(minus-color, 40%)
+    &.neutral
+      background-color neutral-color
+      background linear-gradient(top,white 0px,neutral-color 3px,lighten(neutral-color, 20%) 100%)
+      border 1px solid darken(neutral-color, 40%)
