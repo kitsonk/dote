@@ -1,10 +1,13 @@
 define([
-	"dojo/node!util",
 	"dojo/node!express",
 	"dojo/node!stylus",
 	"dojo/node!nib",
-	"./config"
-], function(util, express, stylus, nib, config){
+	"dojo/node!url",
+	"./config",
+	"./Storage",
+	"./util",
+	"dojo/_base/lang"
+], function(express, stylus, nib, url, config, Storage, util, lang){
 	var app = express(),
 		appPort = process.env.PORT || config.port || 8022;
 
@@ -13,6 +16,9 @@ define([
 			set("filename", path).
 			use(nib());
 	}
+
+	var topics = new Storage("store", "topics.json"),
+		comments = new Storage("store", "comments.json");
 
 	// Configure the server
 	app.configure(function(){
@@ -57,27 +63,74 @@ define([
 					bugs: config.bugs || ""
 				});
 			}else if(request.accepts("json")){
-				response.send({ error: error });
+				response.json({
+					name: error.name,
+					message: error.message,
+					stack: error.stack.split("\n")
+				});
 			}else{
 				response.type("text").send(error);
 			}
 		});
 	});
 
-	app.get("/*", function(request, response, next){
-		if(request.params[0] == "404" || /^_static/.test(request.params[0]) || /^src/.test(request.params[0])){
-			next();
-		}else{
-			response.render("index",{
+	app.get("/", function(request, response, next){
+		response.render("testTopicList", {
 
-			});
+		});
+	});
+
+	app.get("/views/:view", function(request, response, next){
+		response.render(request.params.view, {});
+	});
+
+	app.get("/topics", function(request, response, next){
+		var range = request.header("Range") ? util.parseRange(request.header("Range")) : null,
+			query = decodeURIComponent(url.parse(request.url).query || "");
+		console.log("range", range || {});
+		console.log("query", query);
+		var results = topics.query(query, range || {});
+		response.status(200);
+		if(range){
+			console.log("totalCount", results.totalCount);
+			response.header("Content-Range", util.getContentRange(range.start, results.length,
+				results.totalCount ? results.totalCount : results.length));
+		}
+		response.json(results);
+	});
+
+	app.get("/topics/:id", function(request, response, next){
+		var topic = topics.get(request.params.id);
+		if(topic){
+			response.status(200);
+			response.json(topic);
+		}else{
+			response.status(404);
+			next();
+		}
+	});
+
+	app.get("/comments", function(request, response, next){
+		response.status(200);
+		response.send(comments.query());
+	});
+
+	app.get("/comments/:id", function(request, response, next){
+		var comment = comments.get(request.params.id);
+		if(comment){
+			response.status(200);
+			response.send(topic);
+		}else{
+			response.status(404);
+			next();
 		}
 	});
 
 	return {
 		start: function(){
 			app.listen(appPort);
-			util.puts("HTTP server started on port: " + appPort);
+			console.log("HTTP server started on port: " + appPort);
+			return app;
 		}
 	};
 });

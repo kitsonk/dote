@@ -3,14 +3,16 @@
     "express": "~3.0.0rc4",
     "jade": "~0.27.5",
     "stylus": "~0.29.0",
-    "nib": "~0.8.2"
+    "nib": "~0.8.2",
+    "perstore": "~0.3.2"
   },
   "volo": {
     "baseDir": "src",
     "dependencies": {
       "dojo": "github:dojo/dojo/1.8.0",
       "dijit": "github:dojo/dijit/1.8.0",
-      "setten": "github:kitsonk/setten/0.1.2"
+      "setten": "github:kitsonk/setten/0.1.2",
+      "compose": "github:kriszyp/compose/v0.2.2"
     }
   }
 }

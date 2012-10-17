@@ -1,5 +1,5 @@
 
-var loadModule = "dote-server/main";
+var loadModule = "dote-server/test";
 
 dojoConfig = {
 	baseUrl: "src/",
@@ -27,4 +27,4 @@ dojoConfig = {
 	deps: [loadModule]
 };
 
-require("../src/dojo/dojo.js");
+require("./src/dojo/dojo.js");

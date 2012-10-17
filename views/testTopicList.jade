@@ -1,0 +1,32 @@
+extends main
+
+prepend head
+  title = "dote Mockup Page"
+
+block scripts
+  script(type="text/javascript")
+    dojoConfig = {
+      async: 1,
+      isDebug: 1,
+      baseUrl: "/src",
+      packages: [{
+        name: "dojo",
+        location: "dojo"
+      },{
+        name: "dijit",
+        location: "dijit"
+      },{
+        name: "dote-client",
+        location: "dote-client"
+      }],
+      deps: ["dote-client/main"]
+    };
+  script(type="text/javascript", src="/src/dojo/dojo.js")
+
+prepend css
+  link(rel="stylesheet", type="text/css", href="/_static/css/dote.css", media="all")
+
+block content
+  h1 Dote Topic Mockup
+
+  #topicList

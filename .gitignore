@@ -3,4 +3,5 @@ _static/css/*.css
 src/dijit
 src/dojo
 src/setten
+src/compose.js
 node_modules/
