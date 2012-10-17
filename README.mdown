@@ -70,3 +70,5 @@ You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cp
 [fontawesome]: http://fortawesome.github.com/Font-Awesome/
 [momentjs]: http://momentjs.com/
 [composejs]: https://github.com/kriszyp/compose
+[stylus]: http://learnboost.github.com/stylus/
+[nib]: http://visionmedia.github.com/nib/
