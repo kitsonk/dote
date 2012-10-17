@@ -8,10 +8,14 @@ A topic based voting system for open collaboration.
 
 * [express][express]
 * [jade][jade]
-* [stylus][stylus]
+* [Stylus][stylus]
+* [Nib][nib]
 * [Font-Awesome][fontawesome]
 * [Dojo Toolkit][dojo]
 * [setten][setten]
+* [ComposeJS][composejs]
+* [Persevere][perstore]
+* [Moment.js][momentjs]
 
 You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cpm] or [volo][volo] to properly install
 **dote**. 
@@ -39,6 +43,7 @@ You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cp
         cpm --packages-path=src install dojo
         cpm --packages-path=src install dijit
         cpm --packages-path=src install setten
+        cpm --packages-path=src install compose
         ```
 
     * Using [volo][volo]:
@@ -60,3 +65,8 @@ You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cp
 [express]: http://expressjs.com/
 [jade]: http://jade-lang.com/
 [git]: http://git-scm.com/
+[setten]: https://github.com/kitsonk/setten
+[perstore]: https://github.com/persvr/perstore
+[fontawesome]: http://fortawesome.github.com/Font-Awesome/
+[momentjs]: http://momentjs.com/
+[composejs]: https://github.com/kriszyp/compose

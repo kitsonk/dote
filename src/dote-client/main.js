@@ -13,9 +13,6 @@ require([
 		store: store,
 		user: "kitsonk"
 	}, "topicList");
-	console.log(tl.get("user"));
 	tl.startup();
-	tl.refresh().then(function(){
-		console.log(tl.total);
-	});
+	tl.refresh();
 });
