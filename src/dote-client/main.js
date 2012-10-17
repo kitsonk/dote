@@ -4,7 +4,7 @@ require([
 	"dojo/store/Memory",
 	"dojo/store/Observable",
 	"dote-client/TopicList",
-	"/src/moment.js"
+	"moment/moment"
 ], function(Cache, JsonRest, Memory, Observable, TopicList, moment){
 	var store = Observable(Cache(new JsonRest({
 		target: "/topics/"
@@ -18,5 +18,4 @@ require([
 	tl.refresh().then(function(){
 		console.log(tl.total);
 	});
-	console.log(moment);
 });

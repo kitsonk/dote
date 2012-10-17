@@ -4,4 +4,5 @@ src/dijit
 src/dojo
 src/setten
 src/compose.js
+store/
 node_modules/

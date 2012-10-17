@@ -7,6 +7,8 @@ require([
 		description: "I think we should make the default theme for Dojo.  We have had blue for a long time with claro and Pink is such a much more attractive colour.",
 		action: "rejected",
 		owner: "wildbill",
+		created: [2012, 9, 10, 22, 15, 30],
+		actioned: [2012, 9, 15, 22, 15, 30],
 		tags: ["dijit", "css", "themes", "ui"],
 		voters: [
 			{ name: "kitsonk", vote: 1 },
@@ -21,6 +23,7 @@ require([
 		description: "We should really consider eliminating the Dojo core wholly and instead adopt Microsoft's TypeScript as the standard.",
 		action: "open",
 		owner: "kriszyp",
+		created: [2012, 9, 13, 22, 15, 30],
 		tags: [ "dojo", "core", "alternatives" ],
 		voters: [
 			{ name: "kitsonk", vote: 1 },

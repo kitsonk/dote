@@ -7,6 +7,7 @@ define([
 	"dojo/dom-construct", // domConst.empty
 	"dojo/dom-style", // style.set
 	"dojo/json", // JSON.parse
+	"moment/moment",
 	"dijit/_Container",
 	"dijit/_Contained",
 	"dijit/_CssStateMixin",
@@ -16,8 +17,9 @@ define([
 	"dijit/layout/_LayoutWidget",
 	"dojo/text!./resources/_TopicListItem.html",
 	"dojo/text!./resources/TopicList.html"
-], function(_StoreMixin, array, declare, lang, domClass, domConst, style, JSON, _Container, _Contained, _CssStateMixin,
-		_OnDijitClickMixin, _TemplatedMixin, _WidgetBase, _LayoutWidget, templateTopicListItem, templateTopicList){
+], function(_StoreMixin, array, declare, lang, domClass, domConst, style, JSON, moment, _Container, _Contained,
+		_CssStateMixin, _OnDijitClickMixin, _TemplatedMixin, _WidgetBase, _LayoutWidget, templateTopicListItem,
+		templateTopicList){
 
 	function percentVote(count, self){
 		return Math.round((count / self.voters.length) * 100);
@@ -109,15 +111,21 @@ define([
 			type: "innerHTML"
 		},
 
-		actionTime: "",
-		_setActionTimeAttr: function(value){
-			this.actionedStatusNode.innerHTML = value ? "Actioned " + value + " ago" : "";
+		actioned: "",
+		_setActionedAttr: function(value){
+			if(value instanceof Date || value instanceof Array){
+				value = moment(value).fromNow();
+			}
+			this.actionedStatusNode.innerHTML = value ? "Actioned " + value : "";
 			this._set("actionTime", value);
 		},
 
-		createdTime: "",
-		_setCreatedTimeAttr: function(value){
-			this.postedStatusNode.innerHTML = value ? "Posted " + value + " ago" : "";
+		created: "",
+		_setCreatedAttr: function(value){
+			if(value instanceof Date || value instanceof Array){
+				value = moment(value).fromNow();
+			}
+			this.postedStatusNode.innerHTML = value ? "Posted " + value : "";
 			this._set("createdTime", value);
 		},
 
