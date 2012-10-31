@@ -23,13 +23,13 @@
 .doteTopicItemVoteUp,
 .doteTopicItemVoteNeutral,
 .doteTopicItemVoteDown {
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4d97e2), color-stop(0.6, #bcd8f4));
-  background: -webkit-linear-gradient(bottom, #4d97e2 0%, #bcd8f4 60%);
-  background: -moz-linear-gradient(bottom, #4d97e2 0%, #bcd8f4 60%);
-  background: -o-linear-gradient(bottom, #4d97e2 0%, #bcd8f4 60%);
-  background: -ms-linear-gradient(bottom, #4d97e2 0%, #bcd8f4 60%);
-  background: linear-gradient(bottom, #4d97e2 0%, #bcd8f4 60%);
   background-color: #bcd8f4;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, rgba(255,255,255,0)), color-stop(1, rgba(255,255,255,0.5)));
+  background-image: -webkit-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -moz-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -o-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -ms-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
   border: 1px solid #2882dc;
   -webkit-border-radius: 2px;
   border-radius: 2px;
@@ -43,6 +43,11 @@
   text-align: center;
   text-decoration: none;
   text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  transition-duration: 0.3s;
   width: 41px;
 }
 .doteTopicItemVoteUp > span,
@@ -53,13 +58,18 @@
 .doteTopicItemVoteUpHover,
 .doteTopicItemVoteNeutralHover,
 .doteTopicItemVoteDownHover {
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #2085e7), color-stop(0.6, #86bdf2));
-  background: -webkit-linear-gradient(bottom, #2085e7 0%, #86bdf2 60%);
-  background: -moz-linear-gradient(bottom, #2085e7 0%, #86bdf2 60%);
-  background: -o-linear-gradient(bottom, #2085e7 0%, #86bdf2 60%);
-  background: -ms-linear-gradient(bottom, #2085e7 0%, #86bdf2 60%);
-  background: linear-gradient(bottom, #2085e7 0%, #86bdf2 60%);
   background-color: #86bdf2;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, rgba(255,255,255,0)), color-stop(1, rgba(255,255,255,0.5)));
+  background-image: -webkit-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -moz-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -o-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -ms-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
 }
 .doteTopicItemVoteUpActive,
 .doteTopicItemVoteNeutralActive,
@@ -68,6 +78,11 @@
   background-color: #bcd8f4;
   -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.75);
   box-shadow: 0 0 1px rgba(0,0,0,0.75);
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
 }
 .doteTopicItemVoteSelected {
   background: none;
@@ -142,11 +157,6 @@
 }
 .doteTopicItemTitle a {
   text-decoration: none;
-  -webkit-transition-property: color;
-  -moz-transition-property: color;
-  -o-transition-property: color;
-  -ms-transition-property: color;
-  transition-property: color;
   -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
@@ -279,3 +289,4 @@
   clear: both;
   font-size: 1px;
 }
+

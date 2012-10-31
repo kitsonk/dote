@@ -6,8 +6,9 @@ define([
 	"./config",
 	"./Storage",
 	"./util",
-	"dojo/_base/lang"
-], function(express, stylus, nib, url, config, Storage, util, lang){
+	"dojo/_base/lang",
+	"dojo/when"
+], function(express, stylus, nib, url, config, Storage, util, lang, when){
 	var app = express(),
 		appPort = process.env.PORT || config.port || 8022;
 
@@ -25,11 +26,13 @@ define([
 		app.locals.pretty = true;
 		app.set("view engine", "jade");
 		app.set("views", "views");
+		app.use(express.logger("dev"));
+		app.use(express.compress());
 		app.use(express.cookieParser());
+		app.use(express.bodyParser());
 		app.use(express.session({ secret: config.secret || "notset" }));
 		app.use(app.router);
 
-		app.use(express.logger("dev"));
 		app.use(stylus.middleware({
 			src: ".",
 			compile: compile,
@@ -102,6 +105,18 @@ define([
 	app.get("/topics/:id", function(request, response, next){
 		var topic = topics.get(request.params.id);
 		if(topic){
+			response.status(200);
+			response.json(topic);
+		}else{
+			response.status(404);
+			next();
+		}
+	});
+
+	app.put("/topics/:id", function(request, response, next){
+		var topic = request.body;
+		topic.id = topic.id || request.params.id;
+		if(topic = topics.put(topic)){
 			response.status(200);
 			response.json(topic);
 		}else{

@@ -11,7 +11,16 @@ require([
 	}), new Memory(), {}));
 	var tl = new TopicList({
 		store: store,
-		user: "kitsonk"
+		queryOptions: {
+			count: 10,
+			sort: [
+				{
+					attribute: "created",
+					descending: false
+				}
+			]
+		},
+		user: "rawld"
 	}, "topicList");
 	tl.startup();
 	tl.refresh();

@@ -31,8 +31,8 @@ neutral-color = #f4e0bc
     &Up
     &Neutral
     &Down
-      background linear-gradient(bottom, darken(button-color, 30%), button-color 60%)
       background-color button-color
+      background-image linear-gradient(white 0px, rgba(white, 0) 3px, rgba(white, 0.5) 100%)
       border 1px solid darken(button-color, 40%)
       border-radius 2px
       box-shadow 0 1px 2px rgba(black,0.5), inset 0 0 1px rgba(white,0.5)
@@ -44,16 +44,19 @@ neutral-color = #f4e0bc
       text-align center
       text-decoration none
       text-shadow 0 1px 1px rgba(white,0.75)
+      transition-duration 0.3s
       width 41px
       > span
         display none
       &Hover
-        background linear-gradient(bottom, darken(button-hover-color, 30%), button-hover-color 60%)
         background-color button-hover-color
+        background-image linear-gradient(white 0px, rgba(white, 0) 3px, rgba(white, 0.5) 100%)
+        transition-duration 0.2s
       &Active
         background none
         background-color button-color
         box-shadow 0 0 1px rgba(black,0.75)
+        transition-duration 0.2s
     &Selected
       background none
       background-color button-color
@@ -96,7 +99,6 @@ neutral-color = #f4e0bc
     font-size 26px
     a
       text-decoration none
-      transition-property color
       transition-duration 0.3s
     &Hover a
       color #0060bf

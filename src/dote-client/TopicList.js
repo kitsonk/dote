@@ -8,7 +8,6 @@ define([
 	"dojo/dom-style", // style.set
 	"dojo/json", // JSON.parse
 	"moment/moment",
-	"dijit/_Container",
 	"dijit/_Contained",
 	"dijit/_CssStateMixin",
 	"dijit/_OnDijitClickMixin",
@@ -17,9 +16,8 @@ define([
 	"dijit/layout/_LayoutWidget",
 	"dojo/text!./resources/_TopicListItem.html",
 	"dojo/text!./resources/TopicList.html"
-], function(_StoreMixin, array, declare, lang, domClass, domConst, style, JSON, moment, _Container, _Contained,
-		_CssStateMixin, _OnDijitClickMixin, _TemplatedMixin, _WidgetBase, _LayoutWidget, templateTopicListItem,
-		templateTopicList){
+], function(_StoreMixin, array, declare, lang, domClass, domConst, style, JSON, moment, _Contained, _CssStateMixin,
+		_OnDijitClickMixin, _TemplatedMixin, _WidgetBase, _LayoutWidget, templateTopicListItem, templateTopicList){
 
 	function percentVote(count, self){
 		return Math.round((count / self.voters.length) * 100);
@@ -44,6 +42,8 @@ define([
 				}
 			}
 		},
+
+		topicList: null,
 
 		title: "",
 		_setTitleAttr: {
@@ -79,11 +79,34 @@ define([
 				}
 			});
 			this.set("votes", votes);
-			if(this.started){
+			if(this._started){
 				this._displayVoters();
 				this._displayVote();
 				this._displaySpark();
 			}
+		},
+
+		vote: null,
+		_setVoteAttr: function(value){
+			if(this.item){
+				var exists = array.some(this.item.voters, function(voter, idx){
+					if(voter.name === this.topicList.user){
+						voter.vote = value;
+						return true;
+					}else{
+						return false;
+					}
+				}, this);
+				if(!exists){
+					this.item.voters.push({
+						name: this.topicList.user,
+						vote: value
+					});
+				}
+				this.set("voters", this.item.voters);
+				this.topicList.store.put(this.item);
+			}
+			this._set("vote", value);
 		},
 
 		tags: [],
@@ -243,17 +266,17 @@ define([
 
 		_onUpClick: function(e){
 			e && e.preventDefault();
-			console.log("up");
+			this.set("vote", 1);
 		},
 
 		_onNeutralClick: function(e){
 			e && e.preventDefault();
-			console.log("neutral");
+			this.set("vote", 0);
 		},
 
 		_onDownClick: function(e){
 			e && e.preventDefault();
-			console.log("down");
+			this.set("vote", -1);
 		}
 
 	});
@@ -273,6 +296,7 @@ define([
 			this.addChild(new _TopicItem({
 				id: this.id + "_topic" + this.getChildren().length,
 				voter: this.user,
+				topicList: this,
 				item: e.item
 			}), 0);
 		},
