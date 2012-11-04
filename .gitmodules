@@ -7,3 +7,6 @@
 [submodule "src/marked"]
 	path = src/marked
 	url = https://github.com/kitsonk/marked.git
+[submodule "src/highlight.js"]
+	path = src/highlight.js
+	url = https://github.com/kitsonk/highlight.js.git
