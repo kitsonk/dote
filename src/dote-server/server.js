@@ -4,11 +4,12 @@ define([
 	"dojo/node!nib",
 	"dojo/node!url",
 	"./config",
+	"./initStores",
 	"./Storage",
 	"./util",
 	"dojo/_base/lang",
 	"dojo/when"
-], function(express, stylus, nib, url, config, Storage, util, lang, when){
+], function(express, stylus, nib, url, config, initStores, Storage, util, lang, when){
 	var app = express(),
 		appPort = process.env.PORT || config.port || 8022;
 
@@ -93,6 +94,12 @@ define([
 	app.get("/", function(request, response, next){
 		response.render("testTopicList", {
 
+		});
+	});
+
+	app.get("/initStores", function(request, response, next){
+		initStores.run().then(function(results){
+			response.json(results);
 		});
 	});
 
