@@ -18,6 +18,19 @@ define([
 			use(nib());
 	}
 
+	function queryStore(store, request, response){
+		var range = request.header("Range") ? util.parseRange(request.header("Range")) : null,
+			query = decodeURIComponent(url.parse(request.url).query || "");
+		var results = store.query(query, range || {});
+		response.status(200);
+		if(range){
+			console.log("totalCount", results.totalCount);
+			response.header("Content-Range", util.getContentRange(range.start, results.length,
+				results.totalCount ? results.totalCount : results.length));
+		}
+		response.json(results);
+	}
+
 	var topics = new Storage("store", "topics.json"),
 		comments = new Storage("store", "comments.json");
 
@@ -88,18 +101,7 @@ define([
 	});
 
 	app.get("/topics", function(request, response, next){
-		var range = request.header("Range") ? util.parseRange(request.header("Range")) : null,
-			query = decodeURIComponent(url.parse(request.url).query || "");
-		console.log("range", range || {});
-		console.log("query", query);
-		var results = topics.query(query, range || {});
-		response.status(200);
-		if(range){
-			console.log("totalCount", results.totalCount);
-			response.header("Content-Range", util.getContentRange(range.start, results.length,
-				results.totalCount ? results.totalCount : results.length));
-		}
-		response.json(results);
+		queryStore(topics, request, response);
 	});
 
 	app.get("/topics/:id", function(request, response, next){
@@ -126,8 +128,22 @@ define([
 	});
 
 	app.get("/comments", function(request, response, next){
-		response.status(200);
-		response.send(comments.query());
+		queryStore(comments, request, response);
+	});
+
+	app.post("/comments", function(request, response, next){
+		var comment = request.body;
+		var results = comments.add(comment);
+		if(results && results.id){
+			response.header("Location", "/comments/" + results.id);
+		}
+		if(results){
+			response.status(200);
+			response.json(results);
+		}else{
+			response.status(500);
+			next(new Error("Unable to add comment"));
+		}
 	});
 
 	app.get("/comments/:id", function(request, response, next){

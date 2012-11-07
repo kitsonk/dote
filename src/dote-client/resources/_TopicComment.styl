@@ -1,3 +1,16 @@
+@import "nib"
+
+topic-border-color = #c0c6cc
+topic-bg-color = white
+
 .doteTopicComment
-  &Container
-    width 90%
+  background-color topic-bg-color
+  padding 1em
+  &Header
+  	border-bottom 1px solid topic-border-color
+  	padding 3px
+  &Text
+  	font-size 12px
+  	margin 0 0.75em
+  &Moment
+  	float right

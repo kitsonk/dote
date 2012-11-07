@@ -1,4 +1,307 @@
 @import "./_TopicComment.css";
-.doteTopicContainer {
-  width: 90%;
+.doteTopic {
+  background-color: #e4ebf2;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fafbfc), color-stop(3, #e4ebf2));
+  background-image: -webkit-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
+  background-image: -moz-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
+  background-image: -o-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
+  background-image: -ms-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
+  background-image: linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
+  border-bottom: 1px solid #c0c6cc;
+  border-top: 1px solid #c0c6cc;
+  margin: 0 auto;
+  padding: 0.5em;
+  width: 924px;
+}
+.doteTopicVoteContainer {
+  float: left;
+  width: 150px;
+}
+.doteTopicVoteInner {
+  padding: 0.5em;
+}
+.doteTopicVoteButtons {
+  width: 100%;
+}
+.doteTopicVoteUp,
+.doteTopicVoteNeutral,
+.doteTopicVoteDown {
+  background-color: #bcd8f4;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, rgba(255,255,255,0)), color-stop(1, rgba(255,255,255,0.5)));
+  background-image: -webkit-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -moz-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -o-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -ms-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  border: 1px solid #2882dc;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
+  color: #050505;
+  display: inline-block;
+  font-size: 11px;
+  margin: 6px 0 0 0;
+  padding: 3px 0 2px;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  width: 41px;
+}
+.doteTopicVoteUp > span,
+.doteTopicVoteNeutral > span,
+.doteTopicVoteDown > span {
+  display: none;
+}
+.doteTopicVoteUpHover,
+.doteTopicVoteNeutralHover,
+.doteTopicVoteDownHover {
+  background-color: #86bdf2;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, rgba(255,255,255,0)), color-stop(1, rgba(255,255,255,0.5)));
+  background-image: -webkit-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -moz-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -o-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -ms-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+.doteTopicVoteUpActive,
+.doteTopicVoteNeutralActive,
+.doteTopicVoteDownActive {
+  background: none;
+  background-color: #bcd8f4;
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.75);
+  box-shadow: 0 0 1px rgba(0,0,0,0.75);
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+.doteTopicVoteSelected {
+  background: none;
+  background-color: #bcd8f4;
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.75);
+  box-shadow: 0 0 1px rgba(0,0,0,0.75);
+}
+.doteTopicVotes {
+  font-size: 48px;
+  text-align: center;
+}
+.doteTopicSpark {
+  border: 1px solid #555;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
+}
+.doteTopicSpark table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.doteTopicSpark table tr {
+  height: 12px;
+}
+.doteTopicSparkPlus {
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #237f0d), color-stop(0.6, #32b512));
+  background: -webkit-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
+  background: -moz-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
+  background: -o-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
+  background: -ms-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
+  background: linear-gradient(bottom, #237f0d 0%, #32b512 60%);
+}
+.doteTopicSparkNeutral {
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #dcb000), color-stop(0.6, #ffd83b));
+  background: -webkit-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
+  background: -moz-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
+  background: -o-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
+  background: -ms-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
+  background: linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
+}
+.doteTopicSparkMinus {
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #b6000c), color-stop(0.6, #ff0516));
+  background: -webkit-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
+  background: -moz-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
+  background: -o-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
+  background: -ms-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
+  background: linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
+}
+.doteTopicVoteButtons ul,
+.doteTopicTagsContainer ul,
+.doteTopicVotersContainer ul {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+.doteTopicVoteButtons ul > li,
+.doteTopicTagsContainer ul > li,
+.doteTopicVotersContainer ul > li {
+  list-style-type: none;
+  display: inline;
+}
+.doteTopicContentContainer {
+  float: right;
+  width: 770px;
+}
+.doteTopicContentInner {
+  padding: 1em;
+}
+.doteTopicTitle {
+  font-size: 26px;
+  padding: 0.25em;
+}
+.doteTopicStatus {
+  width: 130px;
+  float: right;
+  text-align: center;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
+  padding: 0.5em;
+}
+.doteTopicStatus,
+.doteTopicStatusInactive {
+  border: 1px solid #777;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eee), color-stop(1, #fbfbfb));
+  background: -webkit-linear-gradient(top, #eee 0%, #fbfbfb 100%);
+  background: -moz-linear-gradient(top, #eee 0%, #fbfbfb 100%);
+  background: -o-linear-gradient(top, #eee 0%, #fbfbfb 100%);
+  background: -ms-linear-gradient(top, #eee 0%, #fbfbfb 100%);
+  background: linear-gradient(top, #eee 0%, #fbfbfb 100%);
+  background-color: #eee;
+}
+.doteTopicStatusActive {
+  border: 1px solid #007cf0;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e0f0ff), color-stop(1, #f7fbff));
+  background: -webkit-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%);
+  background: -moz-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%);
+  background: -o-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%);
+  background: -ms-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%);
+  background: linear-gradient(top, #e0f0ff 0%, #f7fbff 100%);
+  background-color: #e0f0ff;
+}
+.doteTopicAction {
+  font-size: 18px;
+  padding: 0.2em;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  text-transform: capitalize;
+}
+.doteTopicOwner {
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 2em;
+}
+.doteTopicCommentCount {
+  font-size: 14px;
+  line-height: 2em;
+}
+.doteTopicDescription {
+  padding: 1em;
+  font-size: 14px;
+}
+.doteTopicTagsContainer,
+.doteTopicVotersContainer {
+  font-size: 12px;
+  line-height: 2em;
+  margin: 6px 0;
+}
+.doteTopicTagsContainer i,
+.doteTopicVotersContainer i {
+  padding: 3px;
+}
+.doteTopicTagsContainer ul > li,
+.doteTopicVotersContainer ul > li {
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  color: #050505;
+  margin: 0 0.5em 0 0;
+  padding: 1px 6px;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+}
+.doteTopicTagsContainer ul > li {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, #ddd), color-stop(1, #e4e4e4));
+  background: -webkit-linear-gradient(top, #fff 0px, #ddd 3px, #e4e4e4 100%);
+  background: -moz-linear-gradient(top, #fff 0px, #ddd 3px, #e4e4e4 100%);
+  background: -o-linear-gradient(top, #fff 0px, #ddd 3px, #e4e4e4 100%);
+  background: -ms-linear-gradient(top, #fff 0px, #ddd 3px, #e4e4e4 100%);
+  background: linear-gradient(top, #fff 0px, #ddd 3px, #e4e4e4 100%);
+  background-color: #ddd;
+  border: 1px solid #858585;
+}
+.doteTopicVoterPlus {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, #bcf4c3), color-stop(1, #c9f6cf));
+  background: -webkit-linear-gradient(top, #fff 0px, #bcf4c3 3px, #c9f6cf 100%);
+  background: -moz-linear-gradient(top, #fff 0px, #bcf4c3 3px, #c9f6cf 100%);
+  background: -o-linear-gradient(top, #fff 0px, #bcf4c3 3px, #c9f6cf 100%);
+  background: -ms-linear-gradient(top, #fff 0px, #bcf4c3 3px, #c9f6cf 100%);
+  background: linear-gradient(top, #fff 0px, #bcf4c3 3px, #c9f6cf 100%);
+  background-color: #bcf4c3;
+  border: 1px solid #28dc3e;
+}
+.doteTopicVoterMinus {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, #f4bcbc), color-stop(1, #f6c9c9));
+  background: -webkit-linear-gradient(top, #fff 0px, #f4bcbc 3px, #f6c9c9 100%);
+  background: -moz-linear-gradient(top, #fff 0px, #f4bcbc 3px, #f6c9c9 100%);
+  background: -o-linear-gradient(top, #fff 0px, #f4bcbc 3px, #f6c9c9 100%);
+  background: -ms-linear-gradient(top, #fff 0px, #f4bcbc 3px, #f6c9c9 100%);
+  background: linear-gradient(top, #fff 0px, #f4bcbc 3px, #f6c9c9 100%);
+  background-color: #f4bcbc;
+  border: 1px solid #dc2828;
+}
+.doteTopicVoterNeutral {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, #f4e0bc), color-stop(1, #f6e6c9));
+  background: -webkit-linear-gradient(top, #fff 0px, #f4e0bc 3px, #f6e6c9 100%);
+  background: -moz-linear-gradient(top, #fff 0px, #f4e0bc 3px, #f6e6c9 100%);
+  background: -o-linear-gradient(top, #fff 0px, #f4e0bc 3px, #f6e6c9 100%);
+  background: -ms-linear-gradient(top, #fff 0px, #f4e0bc 3px, #f6e6c9 100%);
+  background: linear-gradient(top, #fff 0px, #f4e0bc 3px, #f6e6c9 100%);
+  background-color: #f4e0bc;
+  border: 1px solid #dc9b28;
+}
+.doteTopicComments {
+  margin: 1em;
+  border: 1px solid #c0c6cc;
+}
+.doteTopicHeightContainer {
+  clear: both;
+  font-size: 1px;
+}
+.doteTopicPost {
+  margin: 1em;
+}
+.doteTopicSubmit {
+  padding: 0.25em;
+}
+.doteTopic .dijitTextArea,
+.doteTopic code,
+.doteTopic pre {
+  font-size: 12px;
+  font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+}
+.doteTopic pre code {
+  border: none;
+  background-color: none;
+}
+.doteTopic pre {
+  padding: 0.25em;
+}
+.doteTopic blockquote {
+  font-size: 12px;
+  margin: 0;
+  padding: 0 1em;
+  border-top: none;
+  border-bottom: none;
+  border-left: 2px solid #c0c6cc;
 }

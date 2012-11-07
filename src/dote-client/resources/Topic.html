@@ -1,4 +1,5 @@
 <div class="${baseClass}">
+	<div class="${baseClass}Title" data-dojo-attach-point="titleNode"></div>
 	<div class="${baseClass}VoteContainer">
 		<div class="${baseClass}VoteInner">
 			<div class="${baseClass}Votes" data-dojo-attach-point="votesNode"></div>
@@ -31,9 +32,9 @@
 	</div>
 	<div class="${baseClass}ContentContainer">
 		<div class="${baseClass}ContentInner">
-			<div class="${baseClass}Title" data-dojo-attach-point="titleNode"></div>
 			<div class="${baseClass}Status" data-dojo-attach-point="statusContainerNode">
 				<div class="${baseClass}Action" data-dojo-attach-point="actionStatusNode"></div>
+				<div class="${baseClass}Poster" data-dojo-attach-point="posterNode"></div>
 				<div class="${baseClass}Owner" data-dojo-attach-point="ownerNode"></div>
 				<div class="${baseClass}Posted" data-dojo-attach-point="postedStatusNode"></div>
 				<div class="${baseClass}Actioned" data-dojo-attach-point="actionedStatusNode"></div>
@@ -49,10 +50,14 @@
 				<ul class="${baseClass}Voters" data-dojo-attach-point="votersNode">
 				</ul>
 			</div>
-			<div class="${baseClass}Description" data-dojo-attach-point="descriptionNode"></div>
-			<div class="${baseClass}Comments" data-dojo-attach-point="containerNode"></div>
 			<div class="${baseClass}HeightContainer"></div>
 		</div>
 	</div>
 	<div class="${baseClass}HeightContainer"></div>
+	<div class="${baseClass}Description" data-dojo-attach-point="descriptionNode"></div>
+	<div class="${baseClass}Comments" data-dojo-attach-point="containerNode"></div>
+	<form class="${baseClass}Post" id="${id}_post" action="" method="post" data-dojo-attach-point="postNode">
+		<div class="${baseClass}PreviewContainer" data-dojo-attach-point="previewContainerNode"></div>
+		<div class="${baseClass}Submit" data-dojo-attach-point="submitNode"></div>
+	</form>
 </div>

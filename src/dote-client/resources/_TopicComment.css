@@ -1,3 +1,15 @@
-.doteTopicCommentContainer {
-  width: 90%;
+.doteTopicComment {
+  background-color: #fff;
+  padding: 1em;
+}
+.doteTopicCommentHeader {
+  border-bottom: 1px solid #c0c6cc;
+  padding: 3px;
+}
+.doteTopicCommentText {
+  font-size: 12px;
+  margin: 0 0.75em;
+}
+.doteTopicCommentMoment {
+  float: right;
 }
