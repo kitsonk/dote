@@ -1,16 +1,16 @@
 require([
 	"dote/util",
 	"dojo/_base/array",
+	"dojo/_base/window",
 	"dojo/ready",
 	"dojo/request",
 	"dijit/form/Button",
 	"dijit/form/TextBox",
 	"dojox/encoding/crypto/RSAKey"
-], function(util, array, ready, request, Button, TextBox, RSAKey){
+], function(util, array, win, ready, request, Button, TextBox, RSAKey){
 
 	var widgets = [],
 		rsakey = new RSAKey();
-	rsakey.setPublic(pubKey.n, pubKey.e);
 
 	ready(function(){
 
@@ -20,11 +20,17 @@ require([
 			request.get("/pubKey",{
 				handleAs: "json"
 			}).then(function(pubKey){
+				rsakey.setPublic(pubKey.n, pubKey.e);
 				request.post("/users/" + username.get("value") + "/auth/", {
 					data: { password: util.hex2b64(rsakey.encrypt(password.get("value"))) },
 					handleAs: "json"
 				}).then(function(results){
-					console.log(results);
+					submit.set("disabled", false);
+					if(results && results.href){
+						win.global.location.href = results.href;
+					}
+				}, function(e){
+					console.log(e);
 				});
 			});
 		}

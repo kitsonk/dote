@@ -3,19 +3,18 @@ define([
 	"dojo/node!stylus",
 	"dojo/node!nib",
 	"dojo/node!url",
-	"dote/util",
+	"./auth",
 	"./config",
 	"./initStores",
 	"./Storage",
 	"./util",
 	"dojo/_base/lang",
-	"dojo/when",
-	"dojo/text!keys/pubKey.json"
-], function(express, stylus, nib, url, doteUtil, config, initStores, Storage, util, lang, when, pubKey){
+	"dote/util",
+	"dojo/text!keys/pubKey.json",
+	"dojo/text!keys/privKey.json"
+], function(express, stylus, nib, url, auth, config, initStores, Storage, util, lang, doteUtil){
 	var app = express(),
 		appPort = process.env.PORT || config.port || 8022;
-
-	pubKey = JSON.parse(pubKey);
 
 	function compile(str, path){
 		return stylus(str).
@@ -47,8 +46,9 @@ define([
 		app.use(express.logger("dev"));
 		app.use(express.compress());
 		app.use(express.cookieParser());
+		app.use(express.cookieSession({ secret: config.secret || "notset" }));
 		app.use(express.bodyParser());
-		app.use(express.session({ secret: config.secret || "notset" }));
+		app.use(express.favicon());
 		app.use(app.router);
 
 		app.use(stylus.middleware({
@@ -95,6 +95,26 @@ define([
 		});
 	});
 
+	/* Login Page */
+	app.get("/login", function(request, response, next){
+		response.render("login", {});
+	});
+
+	function checkLogin(request, response, next){
+		if(!request.session.username){
+			request.session.loginRedirect = request.url;
+			response.redirect("/login");
+		}else{
+			next();
+		}
+	}
+
+	app.all("/views/*", checkLogin);
+	app.all("/", checkLogin);
+	app.all("/initStores", checkLogin);
+	app.all("/topics/*", checkLogin);
+	app.all("/comments/*", checkLogin);
+
 	app.get("/", function(request, response, next){
 		response.render("testTopicList", {
 
@@ -102,12 +122,13 @@ define([
 	});
 
 	app.get("/pubKey", function(request, response, next){
-		response.json(pubKey);
+		response.json(auth.pubKey);
 	});
 
 	app.get("/initStores", function(request, response, next){
 		initStores.run().then(function(results){
 			response.json(results);
+			app.close();
 		});
 	});
 
@@ -118,10 +139,26 @@ define([
 	app.all("/users/:username/auth", function(request, response, next){
 		var username = request.params.username,
 			password = request.body && request.body.password ? request.body.password : "";
-		console.log(username);
-		console.log(doteUtil.b64tohex(password));
-		response.status(200);
-		response.json({ hello: "world" });
+		if(auth.authorized(username, password)){
+			response.status(200);
+			request.session.username = username;
+			var href = request.session.loginRedirect ? request.session.loginRedirect : "/";
+			request.session.loginRedirect = null;
+			response.json({
+				authorized: true,
+				href: href
+			});
+		}else{
+			response.status(401);
+			request.session.username = null;
+			response.json({ authorized: false });
+		}
+	});
+
+	app.get("/topic/:id", function(request, response, next){
+		response.render("topic", {
+			id: request.params.id
+		});
 	});
 
 	app.get("/topics", function(request, response, next){
