@@ -1,0 +1,51 @@
+extends main
+
+prepend head
+  title = "dote Login"
+
+block scripts
+  script(type="text/javascript")
+    dojoConfig = {
+      async: 1,
+      isDebug: 0,
+      baseUrl: "/src",
+      packages: [{
+        name: "dojo",
+        location: "dojo"
+      },{
+        name: "dijit",
+        location: "dijit"
+      },{
+        name: "dojox",
+        location: "dojox"
+      },{
+        name: "dote",
+        location: "dote"
+      },{
+        name: "dote-client",
+        location: "dote-client"
+      }],
+      deps: ["dote-client/login"]
+    };
+  script(type="text/javascript", src="/src/dojo/dojo.js")
+
+block content
+  .loginbox
+    form
+      h1 dote
+      h2 Dojo Topic Discussion
+      table
+        tbody
+          tr
+            th
+              label(for="username") Username:
+            td
+              input#username(type="text", name="username")
+          tr
+            th
+              label(for="password") Password:
+            td
+              input#password(type="password", name="password")
+          tr
+            td(colspan="2")
+              button#submit(type="submit") Login

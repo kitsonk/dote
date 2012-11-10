@@ -14,11 +14,17 @@ dojoConfig = {
 		name: "dojo",
 		location: "dojo"
 	},{
+		name: "dojox",
+		location: "dojox"
+	},{
 		name: "setten",
 		location: "setten"
 	},{
 		name: "compose",
 		location: "compose"
+	},{
+		name: "dote",
+		location: "dote"
 	},{
 		name: "dote-server",
 		location: "dote-server"
@@ -27,4 +33,4 @@ dojoConfig = {
 	deps: [loadModule]
 };
 
-require("../src/dojo/dojo.js");
+require("./src/dojo/dojo.js");

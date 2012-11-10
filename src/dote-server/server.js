@@ -3,15 +3,19 @@ define([
 	"dojo/node!stylus",
 	"dojo/node!nib",
 	"dojo/node!url",
+	"dote/util",
 	"./config",
 	"./initStores",
 	"./Storage",
 	"./util",
 	"dojo/_base/lang",
-	"dojo/when"
-], function(express, stylus, nib, url, config, initStores, Storage, util, lang, when){
+	"dojo/when",
+	"dojo/text!keys/pubKey.json"
+], function(express, stylus, nib, url, doteUtil, config, initStores, Storage, util, lang, when, pubKey){
 	var app = express(),
 		appPort = process.env.PORT || config.port || 8022;
+
+	pubKey = JSON.parse(pubKey);
 
 	function compile(str, path){
 		return stylus(str).
@@ -97,6 +101,10 @@ define([
 		});
 	});
 
+	app.get("/pubKey", function(request, response, next){
+		response.json(pubKey);
+	});
+
 	app.get("/initStores", function(request, response, next){
 		initStores.run().then(function(results){
 			response.json(results);
@@ -105,6 +113,15 @@ define([
 
 	app.get("/views/:view", function(request, response, next){
 		response.render(request.params.view, {});
+	});
+
+	app.all("/users/:username/auth", function(request, response, next){
+		var username = request.params.username,
+			password = request.body && request.body.password ? request.body.password : "";
+		console.log(username);
+		console.log(doteUtil.b64tohex(password));
+		response.status(200);
+		response.json({ hello: "world" });
 	});
 
 	app.get("/topics", function(request, response, next){
