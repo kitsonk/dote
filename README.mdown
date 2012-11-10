@@ -16,6 +16,8 @@ A topic based voting system for open collaboration.
 * [ComposeJS][composejs]
 * [Persevere][perstore]
 * [Moment.js][momentjs]
+* [marked][marked]
+* [Highlight.js][hljs]
 
 You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cpm] or [volo][volo] to properly install
 **dote**. 
@@ -44,6 +46,7 @@ You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cp
         cpm --packages-path=src install dijit
         cpm --packages-path=src install setten
         cpm --packages-path=src install compose
+        cpm --packages-path=src install perstore
         ```
 
     * Using [volo][volo]:
@@ -51,6 +54,12 @@ You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cp
         ```bash
         volo install -amd
         ```
+
+* Generate encryption keys:
+
+    ```bash
+    $ node genkeys
+    ```
 
 * Start the server:
 
@@ -72,3 +81,5 @@ You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cp
 [composejs]: https://github.com/kriszyp/compose
 [stylus]: http://learnboost.github.com/stylus/
 [nib]: http://visionmedia.github.com/nib/
+[marked]: https://github.com/chjj/marked
+[hljs]: http://softwaremaniacs.org/soft/highlight/en/
