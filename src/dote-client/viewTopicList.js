@@ -1,4 +1,4 @@
-require([
+define([
 	"dojo/dom",
 	"dojo/ready",
 	"dojo/store/Cache",
@@ -31,4 +31,6 @@ require([
 		tl.startup();
 		tl.refresh();
 	});
+
+	return {};
 });

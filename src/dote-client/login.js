@@ -1,4 +1,4 @@
-require([
+define([
 	"dote/util",
 	"dojo/_base/array",
 	"dojo/_base/fx",
@@ -76,4 +76,6 @@ require([
 		});
 		username.focus();
 	});
+
+	return {};
 });

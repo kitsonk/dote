@@ -1,4 +1,4 @@
-require([
+define([
 	"dojo/_base/window",
 	"dojo/json",
 	"dojo/ready",
@@ -40,4 +40,6 @@ require([
 			topic.startup();
 		});
 	});
+
+	return {};
 });

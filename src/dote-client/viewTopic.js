@@ -1,4 +1,4 @@
-require([
+define([
 	"dojo/ready",
 	"dojo/store/Cache",
 	"dojo/store/JsonRest",
@@ -41,4 +41,6 @@ require([
 			topic.refresh();
 		});
 	});
+	
+	return {};
 });
