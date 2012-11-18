@@ -32,6 +32,11 @@ define([
 					this.set(attr, value[attr]);
 				}
 			}
+			if("id" in value){
+				this.anchorNode.name = value.id;
+				this.linkNode.href = "#" + value.id;
+			}
+			this._set("item", value);
 		},
 
 		author: "",
@@ -58,6 +63,11 @@ define([
 			}
 			this.textNode.innerHTML = value;
 			this._set("text", value);
+		},
+
+		_onQuote: function(e){
+			e && e.preventDefault();
+			this.emit("quote", { item: this.item });
 		}
 	});
 
@@ -214,6 +224,7 @@ define([
 					item: item,
 					topic: this
 				}));
+				this.own(this.itemWidgets[item.id].on("quote", lang.hitch(this, this._onQuote)));
 			}
 		},
 
@@ -234,6 +245,12 @@ define([
 			}, function(){
 				self.submitButton.set("disabled", false);
 			});
+		},
+
+		_onQuote: function(e){
+			this.postText.set("value",
+				this.postText.get("value") + "\n**" + e.item.author + "** said:\n > " +
+				e.item.text.replace(/\n/g, "\n > ") + "\n");
 		},
 
 		addComment: function(commentInfo){

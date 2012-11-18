@@ -7,10 +7,22 @@ topic-bg-color = white
   background-color topic-bg-color
   padding 1em
   &Header
-  	border-bottom 1px solid topic-border-color
-  	padding 3px
+    font-size 12px
+    border-bottom 1px solid topic-border-color
+    padding 3px
   &Text
-  	font-size 12px
-  	margin 0 0.75em
+    font-size 12px
+    margin 0 0.75em
+  &Right
+    float right
+    a
+      text-decoration none
+      color black
+      transition-duration 0.3s
+      &:hover
+        color #0060bf
+        transition-duration 0.3s
   &Moment
-  	float right
+    padding-right 6px
+  &Label
+    display none

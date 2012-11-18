@@ -1,6 +1,13 @@
 <div class="${baseClass}">
 	<div class="${baseClass}Header">
-		<div class="${baseClass}Moment" data-dojo-attach-point="momentNode"></div>
+		<a name="" data-dojo-attach-point="anchorNode"></a>
+		<div class="${baseClass}Right">
+			<span class="${baseClass}Moment" data-dojo-attach-point="momentNode"></span>
+			<span>
+				<a href="#quote" data-dojo-attach-event="onclick:_onQuote"><i class="icon-comments-alt"></i><span class="${baseClass}Label">Quote</span></a>
+				<a href="#" data-dojo-attach-point="linkNode"><i class="icon-link"></i><span class="${baseClass}Label">Link</span></a>
+			</span>
+		</div>
 		<div class="${baseClass}Author" data-dojo-attach-point="authorNode"></div>
 	</div>
 	<div class="${baseClass}Text" data-dojo-attach-point="textNode"></div>
