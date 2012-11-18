@@ -7,8 +7,7 @@
   background-image: -o-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
   background-image: -ms-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
   background-image: linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
-  border-bottom: 1px solid #c0c6cc;
-  border-top: 1px solid #c0c6cc;
+  border: 1px solid #c0c6cc;
   margin: 0 auto;
   padding: 0.5em;
   width: 924px;
@@ -158,6 +157,7 @@
 .doteTopicTitle {
   font-size: 26px;
   padding: 0.25em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
 }
 .doteTopicStatus {
   width: 130px;
@@ -240,6 +240,17 @@
   background-color: #ddd;
   border: 1px solid #858585;
 }
+.doteTopicTagsContainer .a11yLabel {
+  display: none;
+}
+.doteTopicTagsContainer a {
+  text-decoration: none;
+  color: #050505;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+}
+.doteTopicTagsContainer a:hover {
+  color: #0060bf;
+}
 .doteTopicVoterPlus {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, #bcf4c3), color-stop(1, #c9f6cf));
   background: -webkit-linear-gradient(top, #fff 0px, #bcf4c3 3px, #c9f6cf 100%);
@@ -282,7 +293,11 @@
   margin: 1em;
 }
 .doteTopicSubmit {
+  font-size: 12px;
   padding: 0.25em;
+}
+.doteTopic .dijitTabContainer {
+  font-size: 12px;
 }
 .doteTopic .dijitTextArea,
 .doteTopic code,

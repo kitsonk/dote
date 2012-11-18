@@ -102,6 +102,21 @@ define([
 			this._set("vote", value);
 		},
 
+		tags: [],
+		_setTagsAttr: function(value){
+			if(typeof value === "string"){
+				value = value.split(/\s*,\s*/);
+			}
+			if(this.item && this.tags && value && this._started && (value.join() !== this.tags.join())){
+				this.item.tags = value;
+				this.topicStore.put(this.item);
+			}
+			this._set("tags", value);
+			if(this._started){
+				this._displayTags();
+			}
+		},
+
 		item: null,
 		_setItemAttr: function(value){
 			for(var attr in value){
@@ -113,7 +128,10 @@ define([
 					};
 				}
 			}
+			this._set("item", value);
 		},
+
+		tagsEditable: true,
 
 		buildRendering: function(){
 			this.inherited(arguments);
@@ -176,9 +194,6 @@ define([
 			this.inherited(arguments);
 		},
 
-		previewTimer: null,
-		previewDelay: 2000,
-
 		parser: null,
 
 		previewComment: function(){
@@ -214,6 +229,7 @@ define([
 			}), function(){
 				self.submitButton.set("disabled", false);
 				self.postText.set("value", "");
+				self.set("commentsCount", self.get("commentsCount") + 1);
 				self.refresh();
 			}, function(){
 				self.submitButton.set("disabled", false);

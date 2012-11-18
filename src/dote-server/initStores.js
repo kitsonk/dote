@@ -24,7 +24,7 @@ define([
 					{ name: "wildbill", vote: -1 },
 					{ name: "ttrenka", vote: -1 }
 				],
-				commentsCount: 12
+				commentsCount: 2
 			});
 			topics.add({
 				id: "797329f3-f559-4a58-988d-cd6753dbd894",
@@ -40,7 +40,7 @@ define([
 					{ name: "dylanks", vote: -1 },
 					{ name: "csnover", vote: 0 }
 				],
-				commentsCount: 290
+				commentsCount: 1
 			});
 			return topics.query();
 		}
@@ -68,6 +68,19 @@ define([
 			return comments.query();
 		}
 
+		function initOwners(){
+			var owners = new Storage("store", "owners.json");
+			owners.add({
+				value: "__unassigned",
+				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			});
+			owners.add({
+				value: "kistonk",
+				label: "kitsonk"
+			});
+			return owners.query();
+		}
+
 		if(!dfs.existsSync("store")){
 			dfs.mkdirSync("store");
 		}
@@ -86,6 +99,14 @@ define([
 			if(exists){
 				return dfs.unlink("store/comments.json").then(function(){
 					return initComments();
+				});
+			}
+		}));
+
+		dfds.push(dfs.exists("store/owners.json").then(function(exists){
+			if(exists){
+				return dfs.unlink("store/owners.json").then(function(){
+					return initOwners();
 				});
 			}
 		}));

@@ -18,6 +18,13 @@ define([
 		baseClass: "doteTopicItem",
 		templateString: templateTopicListItem,
 
+		cssStateNodes: {
+			"voteUpNode": "doteTopicItemVoteUp",
+			"voteNeutralNode": "doteTopicItemVoteNeutral",
+			"voteDownNode": "doteTopicItemVoteDown",
+			"titleNode": "doteTopicItemTitle"
+		},
+
 		item: null,
 		_setItemAttr: function(value){
 			for(var attr in value){
@@ -25,6 +32,13 @@ define([
 					this.set(attr, value[attr]);
 				}
 			}
+			this._set("item", value);
+		},
+
+		title: "",
+		_setTitleAttr: function(value){
+			this.titleNode.innerHTML = '<a href="/topic/' + this.item.id + '">' + value + "</a>";
+			this._set("title", value);
 		},
 
 		vote: null,
@@ -49,6 +63,23 @@ define([
 			}
 			this._set("vote", value);
 		},
+
+		tags: [],
+		_setTagsAttr: function(value){
+			if(typeof value === "string"){
+				value = value.split(/\s*,\s*/);
+			}
+			if(this.item && this.tags && value && this._started && (value.join() !== this.tags.join())){
+				this.item.tags = value;
+				this.topicList.store.put(this.item);
+			}
+			this._set("tags", value);
+			if(this._started){
+				this._displayTags();
+			}
+		},
+
+		tagsEditable: true,
 
 		topicList: null
 

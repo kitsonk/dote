@@ -2,11 +2,22 @@
 @import "../../src/dijit/themes/claro/document.css"
 @import "../../src/dote-client/resources/TopicList.css"
 @import "../../src/dote-client/resources/Topic.css"
+@import "../../src/dote-client/resources/TopicAdd.css"
 @import "../Font-Awesome/css/font-awesome.css"
 @import "nib"
 
 login-border-color = #b5bcc7
 login-bg-color = #e4ebf2
+warning-border-color = #c70000
+warning-bg-color = #f2e4e4
+warning-color = #c70000
+header-bg-color = #e6e6e6
+header-border-color = #b5bcc7
+footer-bg-color = #e6e6e6
+footer-border-color = #b5bcc7
+header-button-border-color = #8b9199
+header-button-bg-color = #fcfcfc
+header-button-bg-color-hover = #f2f2f2
 
 .loginbox
   margin 6em auto
@@ -16,7 +27,7 @@ login-bg-color = #e4ebf2
   border-radius 3px
   background-color login-bg-color
   background-image linear-gradient(top, rgba(white, 0.8), rgba(white, 0) 100px)
-  box-shadow 0 0 1px rgba(black,0.75)
+  box-shadow 0 0 1px rgba(black, 0.75)
   h1
   h2
     text-align center
@@ -36,3 +47,76 @@ login-bg-color = #e4ebf2
     text-align center
   > p
     text-align center
+  .warning
+    background-color warning-bg-color
+    background-image linear-gradient(top, rgba(white, 0.8), rgba(white, 0))
+    border 2px solid warning-border-color
+    border-radius 1px
+    box-shadow 0 0 1px rgba(black, 0.5)
+    color warning-color
+    display none
+    font-size 12px
+    margin 0 1em 1em
+    padding 0.5em
+    text-align center
+
+.header
+  border-bottom 1px solid header-border-color
+  background-color header-bg-color
+  background-image linear-gradient(top, rgba(white, 0.8), rgba(white, 0))
+  padding 0.5em 0
+  box-shadow 0 1px 0 rgba(white, 0.4), 0 0 10px rgba(black, 0.1)
+  .content
+    width 926px
+    margin 0 auto
+    .title
+      font-size 28px
+    .subtitle
+      font-size 14px
+      margin-bottom 0.5em
+    .controls
+      float right
+      font-size 12px
+      margin-top 0.75em
+      ul
+        margin 0
+        padding 0
+        display inline
+        > li
+          list-style-type none
+          display inline
+          &:first-child
+            padding-right .5em
+          a
+            text-decoration none
+            color black
+            padding 6px
+            border 1px solid header-button-border-color
+            border-radius 2px
+            background-color header-button-bg-color
+            box-shadow 0 1px 1px rgba(black, 0.15)
+            transition-duration 0.2s
+            &:hover
+              background-color header-button-bg-color-hover
+              transition-duration 0.2s
+
+.main
+  width 926px
+  margin 0 auto
+  padding 1em 0
+  h1
+    font-size 24px
+
+.footer
+  margin-top 2em
+  border-top 1px solid footer-border-color
+  background-color footer-bg-color
+  background-image linear-gradient(top, rgba(white, 0.8), rgba(white, 0))
+  box-shadow 0 1px 0 rgba(white, 0.4), 0 0 10px rgba(black, 0.1)
+  .content
+    padding 1em
+    width 926px
+    margin 0 auto
+
+.clear
+  clear both

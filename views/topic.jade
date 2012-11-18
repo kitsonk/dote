@@ -1,12 +1,13 @@
 extends main
 
 prepend head
-  title = "dote Topic List"
+  title = "dote Topic"
 
 block scripts
   script(type="text/javascript")
     dojoConfig = {
       async: 1,
+      isDebug: 0,
       baseUrl: "/src",
       packages: [{
         name: "dojo",
@@ -15,18 +16,28 @@ block scripts
         name: "dijit",
         location: "dijit"
       },{
-        name: "dote-client",
-        location: "dote-client"
-      },{
         name: "moment",
         location: "moment"
+      },{
+        name: "marked",
+        location: "marked/lib"
+      },{
+        name: "hljs",
+        location: "hljs"
+      },{
+        name: "dote-client",
+        location: "dote-client"
       }],
-      deps: ["dote-client/viewTopicList"]
+      deps: ["dote-client/viewTopic"]
     };
     dote = {
-      username: "#{username}"
+      username: "#{username}",
+      topicId: "#{topicId}"
     };
   script(type="text/javascript", src="/src/dojo/dojo.js")
+
+append css
+  link(rel="stylesheet", type="text/css", href="/src/hljs/default.css", media="all")
 
 block content
   .header
@@ -34,6 +45,10 @@ block content
       .controls
         ul
           li #{username}
+          li
+            a(id="topicList", href="/")
+              i(class="icon-reorder")
+              | list
           li 
             a(id="newTopic", href="/add")
               i(class="icon-comment-alt")
@@ -50,8 +65,7 @@ block content
       .subtitle Dojo Topic Discussion
       .clear
   .main
-    h1 Topics
-    #topicList
+    #topic
 
   .footer
     .content Copyright &copy; 2012 Dojo Foundation &mdash; All Rights Reserved

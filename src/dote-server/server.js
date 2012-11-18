@@ -28,7 +28,6 @@ define([
 		var results = store.query(query, range || {});
 		response.status(200);
 		if(range){
-			console.log("totalCount", results.totalCount);
 			response.header("Content-Range", util.getContentRange(range.start, results.length,
 				results.totalCount ? results.totalCount : results.length));
 		}
@@ -36,7 +35,8 @@ define([
 	}
 
 	var topics = new Storage("store", "topics.json"),
-		comments = new Storage("store", "comments.json");
+		comments = new Storage("store", "comments.json"),
+		owners = new Storage("store", "owners.json");
 
 	// Configure the server
 	app.configure(function(){
@@ -48,7 +48,7 @@ define([
 		app.use(express.cookieParser());
 		app.use(express.cookieSession({ secret: config.secret || "notset" }));
 		app.use(express.bodyParser());
-		app.use(express.favicon());
+		app.use(express.favicon("dote_16.ico"));
 		app.use(app.router);
 
 		app.use(stylus.middleware({
@@ -59,6 +59,7 @@ define([
 
 		app.use("/_static", express["static"]("./_static"));
 		app.use("/src", express["static"]("src"));
+		app.use("/lib", express["static"]("lib"));
 
 		app.use("/500", function(request, response, next){
 			next(new Error("All your base are belong to us!"));
@@ -100,6 +101,11 @@ define([
 		response.render("login", {});
 	});
 
+	app.get("/logout", function(request, response, next){
+		request.session.username = null;
+		response.render("logout", {});
+	});
+
 	function checkLogin(request, response, next){
 		if(!request.session.username){
 			request.session.loginRedirect = request.url;
@@ -112,12 +118,14 @@ define([
 	app.all("/views/*", checkLogin);
 	app.all("/", checkLogin);
 	app.all("/initStores", checkLogin);
+	app.all("/add", checkLogin);
+	app.all("/topic/*", checkLogin);
 	app.all("/topics/*", checkLogin);
 	app.all("/comments/*", checkLogin);
 
 	app.get("/", function(request, response, next){
-		response.render("testTopicList", {
-
+		response.render("index", {
+			username: request.session.username
 		});
 	});
 
@@ -129,6 +137,12 @@ define([
 		initStores.run().then(function(results){
 			response.json(results);
 			app.close();
+		});
+	});
+
+	app.get("/add", function(request, response, next){
+		response.render("add", {
+			username: request.session.username
 		});
 	});
 
@@ -157,12 +171,33 @@ define([
 
 	app.get("/topic/:id", function(request, response, next){
 		response.render("topic", {
-			id: request.params.id
+			topicId: request.params.id,
+			username: request.session.username
 		});
 	});
 
 	app.get("/topics", function(request, response, next){
 		queryStore(topics, request, response);
+	});
+
+	app.post("/topics", function(request, response, next){
+		var topic = request.body;
+		topic.author = request.session.username;
+		topic.created = Math.round((new Date()).getTime() / 1000);
+		topic.voters = [];
+		topic.action = "open";
+		topic.commentsCount = 0;
+		var results = topics.add(topic);
+		if(results){
+			if(results.id){
+				response.header("Location", "/topics/" + results.id);
+			}
+			response.status(200);
+			response.json(results);
+		}else{
+			response.status(500);
+			next(new Error("Unable to add topic"));
+		}
 	});
 
 	app.get("/topics/:id", function(request, response, next){
@@ -195,10 +230,21 @@ define([
 	app.post("/comments", function(request, response, next){
 		var comment = request.body;
 		var results = comments.add(comment);
-		if(results && results.id){
-			response.header("Location", "/comments/" + results.id);
-		}
 		if(results){
+			if(results.id){
+				response.header("Location", "/comments/" + results.id);
+			}
+			if(results.topicId){
+				var topic = topics.get(results.topicId);
+				if(topic){
+					if(topic.commentsCount){
+						topic.commentsCount++;
+					}else{
+						topic.commentsCount = 1;
+					}
+					topics.put(topic);
+				}
+			}
 			response.status(200);
 			response.json(results);
 		}else{
@@ -216,6 +262,10 @@ define([
 			response.status(404);
 			next();
 		}
+	});
+
+	app.get("/owners", function(request, response, next){
+		queryStore(owners, request, response);
 	});
 
 	return {

@@ -1,0 +1,23 @@
+<form class="${baseClass}" action="" method="post">
+	<input class="${baseClass}Title" type="text" name="title" data-dojo-attach-point="titleNode" />
+	<div class="${baseClass}Status" data-dojo-attach-point="statusContainerNode">
+		<div class="${baseClass}Poster" data-dojo-attach-point="posterNode"></div>
+		<div class="${baseClass}OwnerContainer">
+			<label for="name">Owned by</label>
+			<select class="${baseClass}Owner" name="owner" data-dojo-attach-point="ownerNode"></select>
+		</div>
+	</div>
+	<div class="${baseClass}TagsContainer">
+		<i class="icon-tags"></i>
+		<input class="${baseClass}Tags" type="text" name="tags" data-dojo-attach-point="tagsNode" />
+	</div>
+	<div class="${baseClass}HeightContainer"></div>
+	<div class="${baseClass}DescriptionLabel">Description</div>
+	<div class="${baseClass}Description" data-dojo-attach-point="descriptionNode">
+		<div class="${baseClass}PreviewContainer" data-dojo-attach-point="previewContainerNode"></div>
+		<div class="${baseClass}ButtonPanel">
+			<button class="${baseClass}Submit" type="submit" data-dojo-attach-point="submitNode">Add</button>
+			<button class="${baseClass}Cancel" type="button" data-dojo-attach-point="cancelNode">Cancel</button>
+		</div>
+	</form>
+</form>

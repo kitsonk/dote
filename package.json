@@ -20,5 +20,6 @@
       "setten": "github:kitsonk/setten/0.1.2",
       "compose": "github:kriszyp/compose/v0.2.2"
     }
-  }
+  },
+  "dojoBuild": "dote.profile.js"
 }

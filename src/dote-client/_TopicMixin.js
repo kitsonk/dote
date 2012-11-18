@@ -1,13 +1,16 @@
 define([
 	"dojo/_base/array",
 	"dojo/_base/declare", // declare
+	"dojo/_base/lang", // lang
 	"dojo/dom-class", // domClass.add domClass.remove
 	"dojo/dom-construct", // domConst.empty
 	"dojo/dom-style", // style.set
+	"dojo/on",
 	"dijit/_CssStateMixin",
 	"dijit/_OnDijitClickMixin",
+	"dijit/form/TextBox",
 	"moment/moment"
-], function(array, declare, domClass, domConst, style, _CssStateMixin, _OnDijitClickMixin, moment){
+], function(array, declare, lang, domClass, domConst, style, on, _CssStateMixin, _OnDijitClickMixin, TextBox, moment){
 
 	var activeActions = [ "open", "reopened" ],
 		actions = [{
@@ -34,6 +37,7 @@ define([
 			"voteNeutralNode": "doteTopicItemVoteNeutral",
 			"voteDownNode": "doteTopicItemVoteDown"
 		},
+		
 		title: "",
 		_setTitleAttr: {
 			node: "titleNode",
@@ -72,18 +76,6 @@ define([
 				this._displayVoters();
 				this._displayVote();
 				this._displaySpark();
-			}
-		},
-
-		tags: [],
-		_setTagsAttr: function(value){
-			if(value instanceof Array){
-				this._set("tags", value);
-			}else{
-				this._set("tags", value.split(/\s*,\s*/));
-			}
-			if(this._started){
-				this._displayTags();
 			}
 		},
 
@@ -141,6 +133,10 @@ define([
 			type: "innerHTML"
 		},
 
+		tagsEditable: false,
+		addTagNode: null,
+		addTagListener: null,
+
 		constructor: function(){
 			this.voters = [];
 			this.tags = [];
@@ -169,12 +165,49 @@ define([
 		},
 
 		_displayTags: function(){
+			if(this.addTagListener){
+				this.addTagListener.remove();
+			}
 			domConst.empty(this.tagsNode);
 			array.forEach(this.tags, function(tag){
 				domConst.create("li", {
 					innerHTML: tag
 				}, this.tagsNode);
 			}, this);
+			if(this.tagsEditable){
+				this.addTagNode = domConst.create("a", {
+					href: '/editTags',
+					innerHTML: '<i class="icon-edit icon-large"></i><span class="a11yLabel">Add Tag</span>'
+				}, this.tagsNode);
+				this.addTagListener = on(this.addTagNode, "click", lang.hitch(this, this._editTags));
+			}
+		},
+
+		_editTags: function(e){
+
+			function onEditComplete(e){
+				if(!e || (e && e.charOrCode == 13)){
+					var value = editTags.get("value");
+					editTags.destroy();
+					this.set("tags", value);
+				}
+			}
+
+			e && e.preventDefault();
+			this.addTagListener.remove();
+			domConst.empty(this.tagsNode);
+			var editTags = new TextBox({
+				id: this.id + "_editTags",
+				name: "editTags",
+				value: this.get("tags").join(", "),
+				style: {
+					width: "550px"
+				}
+			});
+			editTags.on("blur", lang.hitch(this, onEditComplete));
+			editTags.on("keypress", lang.hitch(this, onEditComplete));
+			editTags.placeAt(this.tagsNode);
+			editTags.startup();
 		},
 
 		_displayVote: function(){

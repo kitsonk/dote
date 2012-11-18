@@ -1,0 +1,6 @@
+{
+	"name": "dote",
+	"version": "0.0.1",
+	"main": "util",
+	"dojoBuild": "dote.profile.js"
+}
