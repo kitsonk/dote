@@ -34,6 +34,7 @@ define([
 		},
 
 		query: function(query, options){
+			console.log("query", query, options);
 			return this.store.query(query, options);
 		}
 	});

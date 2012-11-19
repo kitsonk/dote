@@ -5,12 +5,13 @@ define([
 	"dojo/_base/window",
 	"dojo/dom",
 	"dojo/dom-style",
+	"dojo/on",
 	"dojo/ready",
 	"dojo/request",
 	"dijit/form/Button",
 	"dijit/form/TextBox",
 	"dojox/encoding/crypto/RSAKey"
-], function(util, array, baseFx, win, dom, style, ready, request, Button, TextBox, RSAKey){
+], function(util, array, baseFx, win, dom, style, on, ready, request, Button, TextBox, RSAKey){
 
 	var widgets = [],
 		warningVisible = false,
@@ -67,9 +68,11 @@ define([
 		}, "password");
 		widgets.push(password);
 		var submit = new Button({
-			id: "submit"
+			id: "submit",
+			type: "submit"
 		}, "submit");
 		submit.on("click", doLogin);
+		on(dom.byId("loginForm"), "submit", doLogin);
 		widgets.push(submit);
 		array.forEach(widgets, function(widget){
 			widget.startup();

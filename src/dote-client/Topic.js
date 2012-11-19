@@ -228,6 +228,14 @@ define([
 			}
 		},
 
+		_onActionChange: function(value){
+			this.inherited(arguments);
+			if(this.item.action !== value){
+				this.item.action = value;
+				this.topicStore.put(this.item);
+			}
+		},
+
 		_onSubmit: function(e){
 			e && e.preventDefault();
 			this.submitButton.set("disabled", true);

@@ -3,6 +3,7 @@
 
 topic-border-color = #c0c6cc
 topic-bg-color = #e4ebf2
+empty-bar-color = #eee
 plus-bar-color = #32b512
 neutral-bar-color = #ffd83b
 minus-bar-color = #ff0516
@@ -72,6 +73,7 @@ preview-bg-color = #eee
     border-radius 2px
     box-shadow 0 1px 2px rgba(black,0.5), inset 0 0 1px rgba(white, 0.5)
     table
+      background linear-gradient(bottom, darken(empty-bar-color, 30%), empty-bar-color 60%)
       border-collapse collapse
       width 100%
       tr
@@ -110,7 +112,6 @@ preview-bg-color = #eee
     box-shadow 0 1px 2px rgba(black,0.5), inset 0 0 1px rgba(white,0.5)
     padding 0.5em
     &
-    &Inactive
       border 1px solid darken(status-inactive-color, 50%)
       background linear-gradient(top,status-inactive-color,lighten(status-inactive-color, 75%))
       background-color status-inactive-color

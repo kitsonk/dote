@@ -104,6 +104,12 @@
   box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
 }
 .doteTopicItemSpark table {
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #a7a7a7), color-stop(0.6, #eee));
+  background: -webkit-linear-gradient(bottom, #a7a7a7 0%, #eee 60%);
+  background: -moz-linear-gradient(bottom, #a7a7a7 0%, #eee 60%);
+  background: -o-linear-gradient(bottom, #a7a7a7 0%, #eee 60%);
+  background: -ms-linear-gradient(bottom, #a7a7a7 0%, #eee 60%);
+  background: linear-gradient(bottom, #a7a7a7 0%, #eee 60%);
   border-collapse: collapse;
   width: 100%;
 }
@@ -185,8 +191,7 @@
   box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
   padding: 0.5em;
 }
-.doteTopicItemStatus,
-.doteTopicItemStatusInactive {
+.doteTopicItemStatus {
   border: 1px solid #777;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eee), color-stop(1, #fbfbfb));
   background: -webkit-linear-gradient(top, #eee 0%, #fbfbfb 100%);

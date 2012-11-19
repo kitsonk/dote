@@ -8,9 +8,11 @@ define([
 	"dojo/on",
 	"dijit/_CssStateMixin",
 	"dijit/_OnDijitClickMixin",
+	"dijit/form/Select",
 	"dijit/form/TextBox",
 	"moment/moment"
-], function(array, declare, lang, domClass, domConst, style, on, _CssStateMixin, _OnDijitClickMixin, TextBox, moment){
+], function(array, declare, lang, domClass, domConst, style, on, _CssStateMixin, _OnDijitClickMixin, Select, TextBox,
+		moment){
 
 	var activeActions = [ "open", "reopened" ],
 		actions = [{
@@ -97,9 +99,31 @@ define([
 		},
 
 		owner: "",
-		_setOwnerAttr: {
-			node: "ownerNode",
-			type: "innerHTML"
+		_setOwnerAttr: function(value){
+			var user = this.user || (this.topicList && this.topicList.user) || "";
+			if(value === user){
+				if(!this.actionSelect){
+					this.actionSelect = new Select({
+						id: this.id + "_actionSelect",
+						name: "action",
+						options: actions,
+						value: this.action
+					});
+					domConst.empty(this.actionStatusNode);
+					this.actionSelect.placeAt(this.actionStatusNode);
+					this.actionSelect.startup();
+					var self = this;
+					this.own(this.actionSelect.on("change", lang.hitch(this, this._onActionChange)));
+				}
+			}else{
+				if(this.actionSelect){
+					this.actionSelect.destroy();
+				}
+				domConst.empty(this.actionStatusNode);
+				this.actionStatusNode.innerHTML = this.action;
+			}
+			this.ownerNode.innerHTML = value;
+			this._set("owner", value);
 		},
 
 		author: "",
@@ -277,8 +301,12 @@ define([
 			if(~activeActions.indexOf(this.action)){
 				domClass.add(this.statusContainerNode, this.baseClass + "StatusActive");
 			}else{
-				domClass.remove(this.statusContainerNode, this.baseClass + "StatusInactive");
+				domClass.remove(this.statusContainerNode, this.baseClass + "StatusActive");
 			}
+		},
+
+		_onActionChange: function(e){
+			this.set("action", e);
 		},
 
 		_onUpClick: function(e){

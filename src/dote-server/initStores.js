@@ -75,6 +75,18 @@ define([
 				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 			});
 			owners.add({
+				value: "dylanks",
+				label: "dylanks"
+			});
+			owners.add({
+				value: "kriszyp",
+				label: "kriszyp"
+			});
+			owners.add({
+				value: "wildbill",
+				label: "wildbill"
+			});
+			owners.add({
 				value: "kistonk",
 				label: "kitsonk"
 			});

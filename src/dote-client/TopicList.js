@@ -81,7 +81,15 @@ define([
 
 		tagsEditable: true,
 
-		topicList: null
+		topicList: null,
+
+		_onActionChange: function(value){
+			this.inherited(arguments);
+			if(this.item.action !== value){
+				this.item.action = value;
+				this.topicList.store.put(this.item);
+			}
+		}
 
 	});
 
