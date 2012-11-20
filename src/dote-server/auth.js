@@ -1,25 +1,80 @@
 define([
 	"dojo/_base/lang",
+	"dojo/promise/all",
 	"dojox/encoding/crypto/RSAKey-ext",
 	"dote/util",
-	"dojo/text!keys/pubKey.json",
-	"dojo/text!keys/privKey.json"
-], function(lang, RSAKey, util, pubKey, privKey){
+	"setten/dfs"
+], function(lang, all, RSAKey, util, dfs){
 
-	pubKey = JSON.parse(pubKey);
-	privKey = JSON.parse(privKey);
+	function generate(){
+		console.log("Generating Public/Private Key...");
+		var rk = new RSAKey();
+		rk.generate(1024, "10001");
+		var puk = {
+			n: rk.n.toString(16),
+			e: rk.e.toString(16)
+		};
+		prk = {
+			n: rk.n.toString(16),
+			e: rk.e.toString(16),
+			d: rk.d.toString(16),
+			p: rk.p.toString(16),
+			q: rk.q.toString(16),
+			dmp1: rk.dmp1.toString(16),
+			dmq1: rk.dmq1.toString(16),
+			coeff: rk.coeff.toString(16)
+		};
 
-	var rsakey = new RSAKey();
-	rsakey.setPrivateEx(privKey.n, privKey.e, privKey.d, privKey.p, privKey.q, privKey.dmp1, privKey.dmq1, privKey.coeff);
+		if(!dfs.existsSync("keys")){
+			dfs.mkdirSync("keys");
+		}
 
-	function authorized(username, password){
+		var dfds = [];
+
+		dfds.push(dfs.writeFile("keys/pubKey.json", JSON.stringify(puk), "utf8").then(function(){
+			console.log("Public Key written to 'keys/pubKey.json'");
+		}, function(){
+			console.error("Error writing Public Key!");
+		}));
+		dfds.push(dfs.writeFile("keys/privKey.json", JSON.stringify(prk), "utf8").then(function(){
+			console.log("Private Key written to 'keys/privKey.json'");
+		}, function(){
+			console.error("Error writing Private Key!");
+		}));
+		return all(dfds);
+	}
+
+	var rsakey = new RSAKey(),
+		pubKey,
+		privKey;
+
+	function init(){
+
+		function load(){
+			pubKey = JSON.parse(dfs.readFileSync("keys/pubKey.json"));
+			privKey = JSON.parse(dfs.readFileSync("keys/privKey.json"));
+			rsakey.setPrivateEx(privKey.n, privKey.e, privKey.d, privKey.p, privKey.q, privKey.dmp1, privKey.dmq1, privKey.coeff);
+		}
+
+		if(!dfs.existsSync("keys/pubKey.json")){
+			generate().then(load);
+		}else{
+			load();
+		}
+	}
+
+	function authorize(username, password){
 		password = rsakey.decrypt(util.b64tohex(password));
 		return password == "password";
 	}
 
 	return {
-		pubKey: pubKey,
+		init: init,
+		generate: generate,
+		pubKey: function(){
+			return pubKey;
+		},
 		decrypt: lang.hitch(rsakey, rsakey.decrypt),
-		authorized: authorized
+		authorize: authorize
 	};
 });

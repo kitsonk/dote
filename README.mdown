@@ -58,12 +58,6 @@ You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cp
         volo install -amd
         ```
 
-* Generate encryption keys:
-
-    ```bash
-    $ node genkeys
-    ```
-
 * Start the server:
 
     ```bash

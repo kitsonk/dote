@@ -1,3 +1,7 @@
-require(["dote-server/server"], function(server){
+require([
+	"dote-server/server"
+], function(server){
+
 	server.start();
+
 });

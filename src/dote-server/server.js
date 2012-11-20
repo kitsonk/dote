@@ -10,8 +10,7 @@ define([
 	"./util",
 	"dojo/_base/lang",
 	"dote/util",
-	"dojo/text!keys/pubKey.json",
-	"dojo/text!keys/privKey.json"
+	"setten/dfs"
 ], function(express, stylus, nib, url, auth, config, initStores, Storage, util, lang, doteUtil){
 
 	function compile(str, path){
@@ -49,6 +48,9 @@ define([
 	var topics = new Storage("store", "topics.json"),
 		comments = new Storage("store", "comments.json"),
 		owners = new Storage("store", "owners.json");
+
+	/* Init Authorization */
+	auth.init();
 
 	/* Configure the server */
 	app.configure(function(){
@@ -160,7 +162,7 @@ define([
 
 	/* Provide the Public Key for Logging In */
 	app.get("/pubKey", function(request, response, next){
-		response.json(auth.pubKey);
+		response.json(auth.pubKey());
 	});
 
 	/* Hidden URL for Directing Seeing Views */
@@ -179,7 +181,7 @@ define([
 	app.all("/users/:username/auth", function(request, response, next){
 		var username = request.params.username,
 			password = request.body && request.body.password ? request.body.password : "";
-		if(auth.authorized(username, password)){
+		if(auth.authorize(username, password)){
 			response.status(200);
 			request.session.username = username;
 			var href = request.session.loginRedirect ? request.session.loginRedirect : "/";
