@@ -6,7 +6,10 @@
     "jade": "~0.27.7",
     "stylus": "~0.29.0",
     "nib": "~0.8.2",
-    "perstore": "~0.3.2"
+    "perstore": "~0.3.2",
+    "imap": "~0.6.1",
+    "emailjs": "~0.3.3",
+    "mailparser": "~0.2.31"
   },
   "engines": {
     "node": "0.8.x",
