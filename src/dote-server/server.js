@@ -5,13 +5,9 @@ define([
 	"dojo/node!url",
 	"./auth",
 	"./config",
-	"./initStores",
-	"./Storage",
-	"./util",
-	"dojo/_base/lang",
-	"dote/util",
-	"setten/dfs"
-], function(express, stylus, nib, url, auth, config, initStores, Storage, util, lang, doteUtil){
+	"./stores",
+	"./util"
+], function(express, stylus, nib, url, auth, config, stores, util){
 
 	function compile(str, path){
 		return stylus(str).
@@ -45,9 +41,8 @@ define([
 		appPort = process.env.PORT || config.port || 8022;
 
 	/* Storage */
-	var topics = new Storage("store", "topics.json"),
-		comments = new Storage("store", "comments.json"),
-		owners = new Storage("store", "owners.json");
+	stores.open();
+	
 
 	/* Init Authorization */
 	auth.init();
@@ -154,7 +149,7 @@ define([
 
 	/* Initialise the Stores */
 	app.get("/initStores", function(request, response, next){
-		initStores.run().then(function(results){
+		stores.init().then(function(results){
 			response.json(results);
 			// You need to restart the application now
 		});
@@ -202,7 +197,7 @@ define([
 	 */
 
 	app.get("/topics", function(request, response, next){
-		queryStore(topics, request, response);
+		queryStore(stores.topics, request, response);
 	});
 
 	app.post("/topics", function(request, response, next){
@@ -212,7 +207,7 @@ define([
 		topic.voters = [];
 		topic.action = "open";
 		topic.commentsCount = 0;
-		var results = topics.add(topic);
+		var results = stores.topics.add(topic);
 		if(results){
 			if(results.id){
 				response.header("Location", "/topics/" + results.id);
@@ -226,7 +221,7 @@ define([
 	});
 
 	app.get("/topics/:id", function(request, response, next){
-		var topic = topics.get(request.params.id);
+		var topic = stores.topics.get(request.params.id);
 		if(topic){
 			response.status(200);
 			response.json(topic);
@@ -239,7 +234,7 @@ define([
 	app.put("/topics/:id", function(request, response, next){
 		var topic = request.body;
 		topic.id = topic.id || request.params.id;
-		if(topic = topics.put(topic)){
+		if(topic = stores.topics.put(topic)){
 			response.status(200);
 			response.json(topic);
 		}else{
@@ -253,25 +248,25 @@ define([
 	 */
 
 	app.get("/comments", function(request, response, next){
-		queryStore(comments, request, response);
+		queryStore(stores.comments, request, response);
 	});
 
 	app.post("/comments", function(request, response, next){
 		var comment = request.body;
-		var results = comments.add(comment);
+		var results = stores.comments.add(comment);
 		if(results){
 			if(results.id){
 				response.header("Location", "/comments/" + results.id);
 			}
 			if(results.topicId){
-				var topic = topics.get(results.topicId);
+				var topic = stores.topics.get(results.topicId);
 				if(topic){
 					if(topic.commentsCount){
 						topic.commentsCount++;
 					}else{
 						topic.commentsCount = 1;
 					}
-					topics.put(topic);
+					stores.topics.put(topic);
 				}
 			}
 			response.status(200);
@@ -283,7 +278,7 @@ define([
 	});
 
 	app.get("/comments/:id", function(request, response, next){
-		var comment = comments.get(request.params.id);
+		var comment = stores.comments.get(request.params.id);
 		if(comment){
 			response.status(200);
 			response.send(topic);
@@ -298,7 +293,7 @@ define([
 	 */
 
 	app.get("/owners", function(request, response, next){
-		queryStore(owners, request, response);
+		queryStore(stores.owners, request, response);
 	});
 
 	return {
