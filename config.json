@@ -1,5 +1,6 @@
 {
 	"port": "8011",
 	"secret": "replaceme",
-	"bugs": "https://github.com/kitsonk/dote/issues"
+	"bugs": "https://github.com/kitsonk/dote/issues",
+	"base": "lib"
 }

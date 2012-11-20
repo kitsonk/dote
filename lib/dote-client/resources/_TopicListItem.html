@@ -1,0 +1,57 @@
+<div class="${baseClass}">
+	<div class="${baseClass}VoteContainer">
+		<div class="${baseClass}VoteInner">
+			<div class="${baseClass}Votes" data-dojo-attach-point="votesNode"></div>
+			<div class="${baseClass}Spark">
+				<table>
+					<col class="${baseClass}SparkPlus" data-dojo-attach-point="sparkPlusNode">
+					<col class="${baseClass}SparkNeutral" data-dojo-attach-point="sparkNeutralNode">
+					<col class="${baseClass}SparkMinus" data-dojo-attach-point="sparkMinusNode">
+					<tbody>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tbody>
+				</table>
+			</div>
+			<div class="${baseClass}VoteButtons">
+				<ul>
+					<li role="button">
+						<a href="#" class="${baseClass}VoteUp" data-dojo-attach-point="voteUpNode" data-dojo-attach-event="ondijitclick:_onUpClick"><i class="icon-plus"></i><span>Up</span></a>
+					</li>
+					<li role="button">
+						<a href="#" class="${baseClass}VoteNeutral" data-dojo-attach-point="voteNeutralNode" data-dojo-attach-event="ondijitclick:_onNeutralClick"><i class="icon-check-empty"></i><span>Neutral</span></a>
+					</li>
+					<li role="button">
+						<a href="#" class="${baseClass}VoteDown" data-dojo-attach-point="voteDownNode" data-dojo-attach-event="ondijitclick:_onDownClick"><i class="icon-minus"></i><span>Minus</span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="${baseClass}ContentContainer">
+		<div class="${baseClass}ContentInner">
+			<div class="${baseClass}Title" data-dojo-attach-point="titleNode"></div>
+			<div class="${baseClass}Status" data-dojo-attach-point="statusContainerNode">
+				<div class="${baseClass}Action" data-dojo-attach-point="actionStatusNode"></div>
+				<div class="${baseClass}Owner" data-dojo-attach-point="ownerNode"></div>
+				<div class="${baseClass}Posted" data-dojo-attach-point="postedStatusNode"></div>
+				<div class="${baseClass}Actioned" data-dojo-attach-point="actionedStatusNode"></div>
+				<div class="${baseClass}CommentCount"><i class="icon-comments-alt"></i><span data-dojo-attach-point="commentsCountNode"></span></div>
+			</div>
+			<div class="${baseClass}Description" data-dojo-attach-point="descriptionNode"></div>
+			<div class="${baseClass}TagsContainer">
+				<i class="icon-tags icon-large"></i>
+				<ul class="${baseClass}Tags" data-dojo-attach-point="tagsNode">
+				</ul>
+			</div>
+			<div class="${baseClass}VotersContainer">
+				<i class="icon-check icon-large"></i>
+				<ul class="${baseClass}Voters" data-dojo-attach-point="votersNode">
+				</ul>
+			</div>
+			<div class="${baseClass}HeightContainer"></div>
+		</div>
+	</div>
+	<div class="${baseClass}HeightContainer"></div>
+</div>

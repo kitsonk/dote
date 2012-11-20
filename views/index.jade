@@ -7,7 +7,7 @@ block scripts
   script(type="text/javascript")
     dojoConfig = {
       async: 1,
-      baseUrl: "/src",
+      baseUrl: "/#{base}",
       packages: [{
         name: "dojo",
         location: "dojo"
@@ -26,7 +26,7 @@ block scripts
     dote = {
       username: "#{username}"
     };
-  script(type="text/javascript", src="/src/dojo/dojo.js")
+  script(type="text/javascript", src="/#{base}/dojo/dojo.js")
 
 block content
   .header

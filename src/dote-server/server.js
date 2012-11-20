@@ -107,7 +107,9 @@ define([
 
 	/* Login Page */
 	app.get("/login", function(request, response, next){
-		response.render("login", {});
+		response.render("login", {
+			base: config.base
+		});
 	});
 
 	/* Logout Page */
@@ -128,14 +130,16 @@ define([
 	/* Index Page */
 	app.get("/", function(request, response, next){
 		response.render("index", {
-			username: request.session.username
+			username: request.session.username,
+			base: config.base
 		});
 	});
 
 	/* Add a Topic */
 	app.get("/add", function(request, response, next){
 		response.render("add", {
-			username: request.session.username
+			username: request.session.username,
+			base: config.base
 		});
 	});
 
@@ -143,7 +147,8 @@ define([
 	app.get("/topic/:id", function(request, response, next){
 		response.render("topic", {
 			topicId: request.params.id,
-			username: request.session.username
+			username: request.session.username,
+			base: config.base
 		});
 	});
 
@@ -164,7 +169,8 @@ define([
 	app.get("/views/:view", function(request, response, next){
 		response.render(request.params.view, {
 			topicId: "3af990e5-036a-4e01-80a4-0a46d158038c",
-			username: request.session.username
+			username: request.session.username,
+			base: "src"
 		});
 	});
 
