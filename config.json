@@ -2,7 +2,7 @@
 	"port": "8011",
 	"secret": "replaceme",
 	"bugs": "https://github.com/kitsonk/dote/issues",
-	"base": "src",
+	"base": "lib",
 	"mail": {
 		"user": "dote@kitsonkelly.com",
 		"imapHost": "imap.google.com",
