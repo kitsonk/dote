@@ -89,7 +89,10 @@ define([
 			this.inherited(arguments);
 			if(this.item.action !== value){
 				this.item.action = value;
-				this.topicList.store.put(this.item);
+				var self = this;
+				when(this.topicList.store.put(this.item), function(item){
+					self.set("item", item);
+				});
 			}
 		}
 

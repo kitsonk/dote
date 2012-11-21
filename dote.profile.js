@@ -70,6 +70,9 @@ var profile = (function(){
 			"dote-client/viewTopicList": {
 				include: []
 			},
+			"dote-client/viewSettings": {
+				include: []
+			},
 			"dote-client/login": {
 				include: []
 			},

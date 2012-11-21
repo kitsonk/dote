@@ -290,7 +290,7 @@ define([
 		topic.id = topic.id || request.params.id;
 		var original = stores.topics.get(topic.id);
 		if(original && (original.action !== topic.action)){
-			topic.actioned = Math.round((new Data()).getTime() / 1000);
+			topic.actioned = Math.round((new Date()).getTime() / 1000);
 		}
 		if(topic = stores.topics.put(topic)){
 			response.status(200);

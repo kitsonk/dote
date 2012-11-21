@@ -62,8 +62,39 @@ block content
       .clear
   .main
     h1 User Settings
-    form(action="")
-      button(type="submit") Save
+    form(id="userSettings", class="settings", action="")
+      table
+        tbody
+          tr
+            th Username:
+            td #{username}
+          tr
+            th
+              label(for="email") E-Mail Address:
+            td
+              input(type="text", id="email", name="email", placeholder="name@example.com")
+          tr
+            th Send E-Mails:
+            td
+              fieldset
+                input(type="checkbox", id="onnew", name="onnew")
+                label(for="onnew") On All New Topics
+                br
+                input(type="checkbox", id="onwatched", name="onwatched", checked="checked")
+                label(for="onwatched") For Topics I am Watching
+                br
+                input(type="checkbox", id="onparticipate", name="onparticipate")
+                label(for="onparticipate") On Topics I am Partcipating In
+                br
+                input(type="checkbox", id="onown", name="onown")
+                label(for="onown") On Topics I Own
+                br
+                input(type="checkbox", id="onassigned", name="onassigned")
+                label(for="onassigned") When Topics are Assigned to Me
+                br
+                label(for="ontags")For Topics with Tags:
+                input(type="text", id="ontags", name="ontags", placeholder="Comma seperated list")
+      button(type="submit", id="save") Save
 
   .footer
     .content Copyright &copy; 2012 Dojo Foundation &mdash; All Rights Reserved

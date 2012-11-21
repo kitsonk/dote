@@ -242,7 +242,10 @@ define([
 			this.inherited(arguments);
 			if(this.item.action !== value){
 				this.item.action = value;
-				this.topicStore.put(this.item);
+				var self = this;
+				when(this.topicStore.put(this.item), function(item){
+					self.set("item", item);
+				});
 			}
 		},
 
