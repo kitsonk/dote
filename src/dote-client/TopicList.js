@@ -64,6 +64,8 @@ define([
 			this._set("vote", value);
 		},
 
+		_setDescriptionAttr: null,
+
 		tags: [],
 		_setTagsAttr: function(value){
 			if(typeof value === "string"){

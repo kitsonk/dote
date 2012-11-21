@@ -1,15 +1,11 @@
 require([
-	"dote-server/Mail"
-], function(Mail){
+	"dote-server/Mail",
+	"dote-server/config"
+], function(Mail, config){
 
-	var mail = new Mail({
-		user: "dote@kitsonkelly.com",
-		password: "Drag00n$%!",
-		imapHost: "imap.gmail.com",
-		imapPort: 993,
-		smtpHost: "smtp.gmail.com",
-		secure: true
-	});
+	config.mail.password = "Drag00n$%!";
+
+	var mail = new Mail(config.mail);
 
 	// mail.on("message", function(e){
 	// 	var mail = e.mail;

@@ -7,7 +7,7 @@ define([
 	return {
 		topics: null,
 		comments: null,
-		owners: null,
+		users: null,
 
 		init: function(){
 
@@ -16,7 +16,8 @@ define([
 				topics.add({
 					id: "3af990e5-036a-4e01-80a4-0a46d158038c",
 					title: "Convert Dijit Buttons Background to be Pink",
-					description: "I think we should make the default theme for Dojo.  We have had blue for a long time with claro and Pink is such a much more attractive colour.",
+					summary: "I think we should make the default theme for Dojo.  We have had blue for a long time with claro and Pink is such a much more attractive colour.",
+					description: "I think we should make the default theme for Dojo.\n\nWe have had blue for a long time with ``claro`` and Pink is such a much more attractive colour.",
 					action: "rejected",
 					owner: "wildbill",
 					author: "kitsonk",
@@ -34,7 +35,8 @@ define([
 				topics.add({
 					id: "797329f3-f559-4a58-988d-cd6753dbd894",
 					title: "Eliminate Core and Adopt TypeScript as the New Dojo Standard",
-					description: "We should really consider eliminating the Dojo core wholly and instead adopt Microsoft's TypeScript as the standard.",
+					summary: "We should really consider eliminating the Dojo core wholly and instead adopt Microsoft's TypeScript as the standard.",
+					description: "We should **really** consider eliminating the Dojo core wholly and instead adopt Microsoft's *TypeScript* as the standard.",
 					action: "open",
 					owner: "kriszyp",
 					author: "kitsonk",
@@ -73,29 +75,39 @@ define([
 				return comments.query();
 			}
 
-			function initOwners(){
-				var owners = self.owners = new Storage("store", "owners.json");
-				owners.add({
-					value: "__unassigned",
-					label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			function initUsers(){
+				var users = self.users = new Storage("store", "users.json");
+				users.add({
+					id: "dylanks",
+					email: "dylanks@kitsonkelly.com",
+					admin: false,
+					owner: true
 				});
-				owners.add({
-					value: "dylanks",
-					label: "dylanks"
+				users.add({
+					id: "kriszyp",
+					email: "kriszyp@kitsonkelly.com",
+					admin: false,
+					owner: true
 				});
-				owners.add({
-					value: "kriszyp",
-					label: "kriszyp"
+				users.add({
+					id: "wildbill",
+					email: "wildbill@kitsonkelly.com",
+					admin: false,
+					owner: true
 				});
-				owners.add({
-					value: "wildbill",
-					label: "wildbill"
+				users.add({
+					id: "ttrenka",
+					email: "ttrenka@kitsonkelly.com",
+					admin: false,
+					owner: false
 				});
-				owners.add({
-					value: "kistonk",
-					label: "kitsonk"
+				users.add({
+					id: "kitsonk",
+					email: "dojo@kitsonkelly.com",
+					admin: true,
+					owner: true
 				});
-				return owners.query();
+				return users.query();
 			}
 
 			if(!dfs.existsSync("store")){
@@ -127,10 +139,10 @@ define([
 
 			self.comments = null;
 
-			dfds.push(dfs.exists("store/owners.json").then(function(exists){
+			dfds.push(dfs.exists("store/users.json").then(function(exists){
 				if(exists){
-					return dfs.unlink("store/owners.json").then(function(){
-						return initOwners();
+					return dfs.unlink("store/users.json").then(function(){
+						return initUsers();
 					});
 				}
 			}));
@@ -144,7 +156,7 @@ define([
 			}
 			this.topics = new Storage("store", "topics.json");
 			this.comments = new Storage("store", "comments.json");
-			this.owners = new Storage("store", "owners.json");
+			this.users = new Storage("store", "users.json");
 		}
 	};
 

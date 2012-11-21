@@ -141,6 +141,16 @@ define([
 			this._set("item", value);
 		},
 
+		_setDescriptionAttr: function(value){
+			if(this.parser){
+				value = this.parser(value);
+			}
+			this.descriptionNode.innerHTML = value;
+			this._set("description", value);
+		},
+
+		_setSummaryAttr: null,
+
 		tagsEditable: true,
 
 		buildRendering: function(){

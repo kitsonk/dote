@@ -1,7 +1,7 @@
 extends main
 
 prepend head
-  title = "dote Topic"
+  title = "dote User Settings"
 
 block scripts
   script(type="text/javascript")
@@ -28,16 +28,12 @@ block scripts
         name: "dote-client",
         location: "dote-client"
       }],
-      deps: ["dote-client/viewTopic"]
+      deps: ["dote-client/viewSettings"]
     };
     dote = {
-      username: "#{username}",
-      topicId: "#{topicId}"
+      username: "#{username}"
     };
   script(type="text/javascript", src="/#{base}/dojo/dojo.js")
-
-append css
-  link(rel="stylesheet", type="text/css", href="/#{base}/hljs/default.css", media="all")
 
 block content
   .header
@@ -49,10 +45,6 @@ block content
             a(id="topicList", href="/")
               i(class="icon-reorder")
               | list
-          li
-            a(id="settings", href="/settings")
-              i(class="icon-cog")
-              | settings
           li 
             a(id="newTopic", href="/add")
               i(class="icon-comment-alt")
@@ -69,7 +61,9 @@ block content
       .subtitle Dojo Topic Discussion
       .clear
   .main
-    #topic
+    h1 User Settings
+    form(action="")
+      button(type="submit") Save
 
   .footer
     .content Copyright &copy; 2012 Dojo Foundation &mdash; All Rights Reserved

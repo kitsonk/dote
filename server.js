@@ -23,6 +23,9 @@ dojoConfig = {
 		name: "compose",
 		location: "compose"
 	},{
+		name: "marked",
+		location: "marked/lib"
+	},{
 		name: "dote",
 		location: "dote"
 	},{

@@ -52,6 +52,12 @@ define([
 			type: "innerHTML"
 		},
 
+		summary: "",
+		_setSummaryAttr: {
+			node: "summaryNode",
+			type: "innerHTML"
+		},
+
 		votes: 0,
 		_setVotesAttr: {
 			node: "votesNode",

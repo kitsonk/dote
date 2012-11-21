@@ -3,11 +3,12 @@ define([
 	"dojo/node!stylus",
 	"dojo/node!nib",
 	"dojo/node!url",
+	"marked/marked",
 	"./auth",
 	"./config",
 	"./stores",
 	"./util"
-], function(express, stylus, nib, url, auth, config, stores, util){
+], function(express, stylus, nib, url, marked, auth, config, stores, util){
 
 	function compile(str, path){
 		return stylus(str).
@@ -24,10 +25,13 @@ define([
 		}
 	}
 
-	function queryStore(store, request, response){
+	function queryStore(store, request, response, forEach){
 		var range = request.header("Range") ? util.parseRange(request.header("Range")) : null,
 			query = decodeURIComponent(url.parse(request.url).query || "");
 		var results = store.query(query, range || {});
+		if(forEach){
+			results.forEach(forEach);
+		}
 		response.status(200);
 		if(range){
 			response.header("Content-Range", util.getContentRange(range.start, results.length,
@@ -42,10 +46,16 @@ define([
 
 	/* Storage */
 	stores.open();
-	
 
 	/* Init Authorization */
 	auth.init();
+
+	/* Markdown Parser */
+	marked.setOptions({
+		gfm: true,
+		pendantic: false,
+		sanitize: false
+	});
 
 	/* Configure the server */
 	app.configure(function(){
@@ -126,6 +136,10 @@ define([
 	app.all("/topic/*", checkLogin);
 	app.all("/topics/*", checkLogin);
 	app.all("/comments/*", checkLogin);
+	app.all("/users", checkLogin);
+	app.all("/users/:id", checkLogin);
+	app.all("/owners", checkLogin);
+	app.all("/settings", checkLogin);
 
 	/* Index Page */
 	app.get("/", function(request, response, next){
@@ -147,6 +161,14 @@ define([
 	app.get("/topic/:id", function(request, response, next){
 		response.render("topic", {
 			topicId: request.params.id,
+			username: request.session.username,
+			base: config.base
+		});
+	});
+
+	/* User Settings */
+	app.get("/settings", function(request, response, next){
+		response.render("settings", {
 			username: request.session.username,
 			base: config.base
 		});
@@ -179,8 +201,8 @@ define([
 	 */
 
 	/* Authorise User */
-	app.all("/users/:username/auth", function(request, response, next){
-		var username = request.params.username,
+	app.all("/users/:id/auth", function(request, response, next){
+		var username = request.params.id,
 			password = request.body && request.body.password ? request.body.password : "";
 		if(auth.authorize(username, password)){
 			response.status(200);
@@ -198,6 +220,21 @@ define([
 		}
 	});
 
+	app.all("/users", function(request, response, next){
+		queryStore(stores.users, request, response);
+	});
+
+	app.all("/users/:id", function(request, response, next){
+		var user = stores.users.get(request.params.id);
+		if(user){
+			response.status(200);
+			response.json(user);
+		}else{
+			response.status(404);
+			next();
+		}
+	});
+
 	/*
 	 * Topics
 	 */
@@ -207,7 +244,18 @@ define([
 	});
 
 	app.post("/topics", function(request, response, next){
-		var topic = request.body;
+		var topic = request.body,
+			summary = "";
+
+		console.log(topic.description);
+		marked.lexer(topic.description).forEach(function(token){
+			console.log(token);
+			if(token && token.text){
+				summary = summary.concat(token.text.replace(/\n/g, " ") + " ");
+			}
+		});
+		console.log(summary);
+		topic.summary = summary.substring(0, 120);
 		topic.author = request.session.username;
 		topic.created = Math.round((new Date()).getTime() / 1000);
 		topic.voters = [];
@@ -240,6 +288,10 @@ define([
 	app.put("/topics/:id", function(request, response, next){
 		var topic = request.body;
 		topic.id = topic.id || request.params.id;
+		var original = stores.topics.get(topic.id);
+		if(original && (original.action !== topic.action)){
+			topic.actioned = Math.round((new Data()).getTime() / 1000);
+		}
 		if(topic = stores.topics.put(topic)){
 			response.status(200);
 			response.json(topic);
@@ -299,7 +351,20 @@ define([
 	 */
 
 	app.get("/owners", function(request, response, next){
-		queryStore(stores.owners, request, response);
+		var query = "owner=true",
+			results = stores.users.query(query, {}),
+			owners = [{
+				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+				value: "__undefined"
+			}];
+		results.forEach(function(owner){
+			owners.push({
+				label: owner.id,
+				value: owner.id
+			});
+		});
+		response.status(200);
+		response.json(owners);
 	});
 
 	return {
