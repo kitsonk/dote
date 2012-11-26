@@ -38,44 +38,46 @@ define([
 	}
 
 	function setSettings(username, settings){
-		var user = stores.users.get(username);
-		if(user){
+		return stores.users.get(username).then(function(user){
 			user.settings = lang.clone(settings);
-			stores.users.put(user);
-			return user.settings;
-		}
-	}
-
-	function mailTopic(username, topic){
-		var user = stores.users.get(username);
-		if(user && user.settings && user.settings.email && !user.settings.optout){
-			var message = {
-				from: config.mail.username + " <" + config.mail.address + ">",
-				to: username + " <" + user.settings.email + ">",
-				subject: "[" + config.mail.list.name + "] " + topic.title,
-				"Reply-To": string.substitute(replyToTemplate, topic),
-				"List-ID": config.mail.list.name + " <" + config.mail.list.id + ">",
-				"List-Unsubscribe": unsubscribeAddress,
-				"List-Post": postAddress,
-				"List-Archive": config.address,
-				"Message-ID": topic.id + "@" + config.mail.list.id,
-				text: topic.description,
-				attachment:{
-					data: marked(topic.description),
-					alternative: true
-				}
-			};
-			return mail.send(message);
-		}
+			return stores.users.put(user).then(function(){
+				return user.settings;
+			});
+		});
 	}
 
 	function getSettings(username){
-		var user = stores.users.get(username);
-		if(user && user.settings){
-			return lang.clone(user.settings);
-		}else{
-			return lang.clone(defaultSettings);
-		}
+		return stores.users.get(username).then(function(user){
+			if(user && user.settings){
+				return lang.clone(user.settings);
+			}else{
+				return lang.clone(defaultSettings);
+			}
+		});
+	}
+
+	function mailTopic(username, topic){
+		return stores.users.get(username).then(function(user){
+			if(user && user.settings && user.settings.email && !user.settings.optout){
+				var message = {
+					from: config.mail.username + " <" + config.mail.address + ">",
+					to: username + " <" + user.settings.email + ">",
+					subject: "[" + config.mail.list.name + "] " + topic.title,
+					"Reply-To": string.substitute(replyToTemplate, topic),
+					"List-ID": config.mail.list.name + " <" + config.mail.list.id + ">",
+					"List-Unsubscribe": unsubscribeAddress,
+					"List-Post": postAddress,
+					"List-Archive": config.address,
+					"Message-ID": topic.id + "@" + config.mail.list.id,
+					text: topic.description,
+					attachment:{
+						data: marked(topic.description),
+						alternative: true
+					}
+				};
+				return mail.send(message);
+			}
+		});
 	}
 
 	return {

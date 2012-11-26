@@ -216,12 +216,24 @@ define([
 	 */
 
 	app.get("/userSettings", function(request, response, next){
-		response.json(messages.settings.get(request.session.username));
+		messages.settings.get(request.session.username).then(function(settings){
+			response.status(200);
+			response.json(settings);
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
 	});
 
 	app.post("/userSettings", function(request, response, next){
 		var settings = JSON.parse(request.body.settings);
-		response.json(messages.settings.set(request.session.username, settings));
+		messages.settings.set(request.session.username, settings).then(function(results){
+			response.status(200);
+			response.json(results);
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
 	});
 
 	/*
@@ -290,6 +302,7 @@ define([
 		topic.voters = [];
 		topic.action = "open";
 		topic.commentsCount = 0;
+		if(topic.owner === "__undefined") delete topic.owner;
 		stores.topics.add(topic).then(function(results){
 			if(results){
 				if(results.id){
@@ -359,15 +372,16 @@ define([
 					response.header("Location", "/comments/" + results.id);
 				}
 				if(results.topicId){
-					var topic = stores.topics.get(results.topicId);
-					if(topic){
-						if(topic.commentsCount){
-							topic.commentsCount++;
-						}else{
-							topic.commentsCount = 1;
+					stores.topics.get(results.topicId).then(function(topic){
+						if(topic){
+							if(topic.commentsCount){
+								topic.commentsCount++;
+							}else{
+								topic.commentsCount = 1;
+							}
+							stores.topics.put(topic);
 						}
-						stores.topics.put(topic);
-					}
+					});
 				}
 				response.status(200);
 				response.json(results);
@@ -401,8 +415,8 @@ define([
 	 */
 
 	app.get("/owners", function(request, response, next){
-		var query = "owner=true",
-			results = stores.users.query(query, {}),
+		var query = "owner=true&select(id,owner)",
+			results = stores.users.query(query, { allowBulkFetch: true }),
 			owners = [{
 				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
 				value: "__undefined"
