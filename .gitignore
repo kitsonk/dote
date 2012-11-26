@@ -1,5 +1,4 @@
 .DS_Store
 /_static/css/*.css
-/store/
 /node_modules/
 /keys/
