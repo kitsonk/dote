@@ -10,11 +10,10 @@ define([
 			collection: collection
 		};
 		if(process.env.REDISTOGO_URL){
+			console.log("Detected RedisToGo. URL: '" + process.env.REDISTOGO_URL + "'");
 			options.url = process.env.REDISTOGO_URL;
 		}
-		this.store = stores.Redis({
-			collection: collection
-		});
+		this.store = stores.Redis(options);
 	},{
 		store: null,
 
