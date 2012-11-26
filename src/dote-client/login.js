@@ -1,17 +1,16 @@
 define([
+	"./fade",
 	"dote/util",
 	"dojo/_base/array",
-	"dojo/_base/fx",
 	"dojo/_base/window",
 	"dojo/dom",
-	"dojo/dom-style",
 	"dojo/on",
 	"dojo/ready",
 	"dojo/request",
 	"dijit/form/Button",
 	"dijit/form/TextBox",
 	"dojox/encoding/crypto/RSAKey"
-], function(util, array, baseFx, win, dom, style, on, ready, request, Button, TextBox, RSAKey){
+], function(fade, util, array, win, dom, on, ready, request, Button, TextBox, RSAKey){
 
 	var widgets = [],
 		warningVisible = false,
@@ -23,13 +22,8 @@ define([
 
 		function showWarning(text){
 			if(!warningVisible){
-				style.set(warnNode, "opacity", "0");
-				style.set(warnNode, "display", "block");
 				warnNode.innerHTML = text;
-				baseFx.fadeIn({
-					node: warnNode,
-					duration: 750
-				}).play();
+				fade.show(warnNode, 750);
 				warningVisible = true;
 			}else{
 				warnNode.innerHTML = text;

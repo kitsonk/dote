@@ -1,13 +1,22 @@
 {
 	"port": "8011",
+	"address": "http://livi.kitsonkelly.com:8011/",
 	"secret": "replaceme",
 	"bugs": "https://github.com/kitsonk/dote/issues",
-	"base": "lib",
+	"base": "src",
 	"mail": {
-		"user": "dote@kitsonkelly.com",
-		"imapHost": "imap.google.com",
-		"imapPort": 993,
-		"smtpHost": "smtp.google.com",
-		"secure": true
+		"username": "dote",
+		"address": "dote@kitsonkelly.com",
+		"list": {
+			"name": "dote",
+			"id": "dote.kitsonkelly.com"
+		},
+		"severconfig": {
+			"user": "dote@kitsonkelly.com",
+			"imapHost": "imap.gmail.com",
+			"imapPort": 993,
+			"smtpHost": "smtp.gmail.com",
+			"secure": true
+		}
 	}
 }

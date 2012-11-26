@@ -3,12 +3,15 @@ define([
 	"dojo/node!stylus",
 	"dojo/node!nib",
 	"dojo/node!url",
+	"dojo/promise/all",
 	"marked/marked",
+	"dote/timer",
 	"./auth",
 	"./config",
+	"./messages",
 	"./stores",
 	"./util"
-], function(express, stylus, nib, url, marked, auth, config, stores, util){
+], function(express, stylus, nib, url, all, marked, timer, auth, config, messages, stores, util){
 
 	function compile(str, path){
 		return stylus(str).
@@ -27,17 +30,27 @@ define([
 
 	function queryStore(store, request, response, forEach){
 		var range = request.header("Range") ? util.parseRange(request.header("Range")) : null,
-			query = decodeURIComponent(url.parse(request.url).query || "");
-		var results = store.query(query, range || {});
-		if(forEach){
-			results.forEach(forEach);
-		}
-		response.status(200);
-		if(range){
-			response.header("Content-Range", util.getContentRange(range.start, results.length,
-				results.totalCount ? results.totalCount : results.length));
-		}
-		response.json(results);
+			query = decodeURIComponent(url.parse(request.url).query || ""),
+			options = range || {};
+		options.allowBulkFetch = true;
+		return store.query(query, options).then(function(results){
+			var gets = [],
+				totalCount = results.totalCount || results.length;
+			results.forEach(function(item){
+				gets.push(store.get(item.id));
+			});
+			return all(gets).then(function(items){
+				if(forEach){
+					items.forEach(forEach);
+				}
+				response.status(200);
+				if(range){
+					response.header("Content-Range", util.getContentRange(range. start, results.length,
+						results.totalCount ? results.totalCount : results.length));
+				}
+				response.json(items);
+			});
+		});
 	}
 
 	/* Express Application */
@@ -49,6 +62,9 @@ define([
 
 	/* Init Authorization */
 	auth.init();
+
+	/* Init Messages */
+	messages.init("Drag00n$%!");
 
 	/* Markdown Parser */
 	marked.setOptions({
@@ -178,7 +194,6 @@ define([
 	app.get("/initStores", function(request, response, next){
 		stores.init().then(function(results){
 			response.json(results);
-			// You need to restart the application now
 		});
 	});
 
@@ -194,6 +209,19 @@ define([
 			username: request.session.username,
 			base: "src"
 		});
+	});
+
+	/*
+	 * Other Services
+	 */
+
+	app.get("/userSettings", function(request, response, next){
+		response.json(messages.settings.get(request.session.username));
+	});
+
+	app.post("/userSettings", function(request, response, next){
+		var settings = JSON.parse(request.body.settings);
+		response.json(messages.settings.set(request.session.username, settings));
 	});
 
 	/*
@@ -225,14 +253,18 @@ define([
 	});
 
 	app.all("/users/:id", function(request, response, next){
-		var user = stores.users.get(request.params.id);
-		if(user){
-			response.status(200);
-			response.json(user);
-		}else{
-			response.status(404);
-			next();
-		}
+		stores.users.get(request.params.id).then(function(user){
+			if(user){
+				response.status(200);
+				response.json(user);
+			}else{
+				response.status(404);
+				next();
+			}
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
 	});
 
 	/*
@@ -247,42 +279,52 @@ define([
 		var topic = request.body,
 			summary = "";
 
-		console.log(topic.description);
 		marked.lexer(topic.description).forEach(function(token){
-			console.log(token);
 			if(token && token.text){
 				summary = summary.concat(token.text.replace(/\n/g, " ") + " ");
 			}
 		});
-		console.log(summary);
 		topic.summary = summary.substring(0, 120);
 		topic.author = request.session.username;
 		topic.created = Math.round((new Date()).getTime() / 1000);
 		topic.voters = [];
 		topic.action = "open";
 		topic.commentsCount = 0;
-		var results = stores.topics.add(topic);
-		if(results){
-			if(results.id){
-				response.header("Location", "/topics/" + results.id);
+		stores.topics.add(topic).then(function(results){
+			if(results){
+				if(results.id){
+					response.header("Location", "/topics/" + results.id);
+				}
+				response.status(200);
+				response.json(results);
+				messages.mailTopic(request.session.username, results).then(function(){
+					console.log("message sent...");
+				}, function(e){
+					console.error("message error!", e);
+				});
+			}else{
+				response.status(500);
+				next(new Error("Unable to add topic"));
 			}
-			response.status(200);
-			response.json(results);
-		}else{
+		}, function(err){
 			response.status(500);
-			next(new Error("Unable to add topic"));
-		}
+			next(err);
+		});
 	});
 
 	app.get("/topics/:id", function(request, response, next){
-		var topic = stores.topics.get(request.params.id);
-		if(topic){
-			response.status(200);
-			response.json(topic);
-		}else{
-			response.status(404);
-			next();
-		}
+		stores.topics.get(request.params.id).then(function(topic){
+			if(topic){
+				response.status(200);
+				response.json(topic);
+			}else{
+				response.status(404);
+				next();
+			}
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
 	});
 
 	app.put("/topics/:id", function(request, response, next){
@@ -311,39 +353,47 @@ define([
 
 	app.post("/comments", function(request, response, next){
 		var comment = request.body;
-		var results = stores.comments.add(comment);
-		if(results){
-			if(results.id){
-				response.header("Location", "/comments/" + results.id);
-			}
-			if(results.topicId){
-				var topic = stores.topics.get(results.topicId);
-				if(topic){
-					if(topic.commentsCount){
-						topic.commentsCount++;
-					}else{
-						topic.commentsCount = 1;
-					}
-					stores.topics.put(topic);
+		stores.comments.add(comment).then(function(results){
+			if(results){
+				if(results.id){
+					response.header("Location", "/comments/" + results.id);
 				}
+				if(results.topicId){
+					var topic = stores.topics.get(results.topicId);
+					if(topic){
+						if(topic.commentsCount){
+							topic.commentsCount++;
+						}else{
+							topic.commentsCount = 1;
+						}
+						stores.topics.put(topic);
+					}
+				}
+				response.status(200);
+				response.json(results);
+			}else{
+				response.status(500);
+				next(new Error("Unable to add comment"));
 			}
-			response.status(200);
-			response.json(results);
-		}else{
+		}, function(err){
 			response.status(500);
-			next(new Error("Unable to add comment"));
-		}
+			next(err);
+		});
 	});
 
 	app.get("/comments/:id", function(request, response, next){
-		var comment = stores.comments.get(request.params.id);
-		if(comment){
-			response.status(200);
-			response.send(topic);
-		}else{
-			response.status(404);
-			next();
-		}
+		stores.comments.get(request.params.id).then(function(comment){
+			if(comment){
+				response.status(200);
+				response.send(topic);
+			}else{
+				response.status(404);
+				next();
+			}
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
 	});
 
 	/*
@@ -357,14 +407,19 @@ define([
 				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
 				value: "__undefined"
 			}];
-		results.forEach(function(owner){
-			owners.push({
-				label: owner.id,
-				value: owner.id
+		results.then(function(items){
+			items.forEach(function(owner){
+				owners.push({
+					label: owner.id,
+					value: owner.id
+				});
 			});
+			response.status(200);
+			response.json(owners);
+		}, function(err){
+			response.status(500);
+			next(err);
 		});
-		response.status(200);
-		response.json(owners);
 	});
 
 	return {

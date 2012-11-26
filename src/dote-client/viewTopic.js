@@ -1,12 +1,12 @@
 define([
 	"dojo/ready",
 	"dojo/store/Cache",
-	"dojo/store/JsonRest",
 	"dojo/store/Memory",
-	"dote-client/marked",
-	"dote-client/Topic",
-	"dote-client/userControls"
-], function(ready, Cache, JsonRest, Memory, marked, Topic, userControls){
+	"./marked",
+	"./store/JsonRest",
+	"./Topic",
+	"./userControls"
+], function(ready, Cache, Memory, marked, JsonRest, Topic, userControls){
 
 	var topicStore = new JsonRest({
 		target: "/topics/"
@@ -29,7 +29,8 @@ define([
 						attribute: "created",
 						descending: false
 					}
-				]
+				],
+				select: [ "id", "topicId" ]
 			},
 			topicStore: topicStore,
 			user: dote.username

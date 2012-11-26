@@ -5,7 +5,7 @@ define([
 	"dojo/Evented",
 	"dojo/node!mailparser",
 	"dojo/node!imap",
-	"dojo/node!emailjs"
+	"dojo/node!emailjs/email"
 ], function(declare, lang, Deferred, Evented, mailparser, imap, email){
 
 	return declare([Evented], {
@@ -83,6 +83,8 @@ define([
 
 		send: function(mail){
 			if(!this.smtp){
+				console.log(email);
+				console.log(this._smtpConfig);
 				this.smtp = email.server.connect(this._smtpConfig);
 			}
 			var dfd = new Deferred();

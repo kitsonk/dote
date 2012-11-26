@@ -1,19 +1,21 @@
 define([
 	"./Storage",
 	"dojo/promise/all",
+	"dojo/when",
 	"setten/dfs"
-], function(Storage, all, dfs){
+], function(Storage, all, when, dfs){
 
 	return {
 		topics: null,
 		comments: null,
 		users: null,
-
+		
 		init: function(){
 
 			function initTopics(){
-				var topics = self.topics = new Storage("store", "topics.json");
-				topics.add({
+				var topics = self.topics,
+					dfds = [];
+				dfds.push(topics.add({
 					id: "3af990e5-036a-4e01-80a4-0a46d158038c",
 					title: "Convert Dijit Buttons Background to be Pink",
 					summary: "I think we should make the default theme for Dojo.  We have had blue for a long time with claro and Pink is such a much more attractive colour.",
@@ -31,8 +33,8 @@ define([
 						{ name: "ttrenka", vote: -1 }
 					],
 					commentsCount: 2
-				});
-				topics.add({
+				}));
+				dfds.push(topics.add({
 					id: "797329f3-f559-4a58-988d-cd6753dbd894",
 					title: "Eliminate Core and Adopt TypeScript as the New Dojo Standard",
 					summary: "We should really consider eliminating the Dojo core wholly and instead adopt Microsoft's TypeScript as the standard.",
@@ -48,12 +50,14 @@ define([
 						{ name: "csnover", vote: 0 }
 					],
 					commentsCount: 1
+				}));
+				return all(dfds).then(function(){
+					return topics.query();
 				});
-				return topics.query();
 			}
 
 			function initComments(){
-				var comments = self.comments = new Storage("store", "comments.json");
+				var comments = self.comments;
 				comments.add({
 					author: "kitsonk",
 					text: "I really like this idea, pink **RULZ** and other inine lexing: ``dojo/has``.\n\nNow another paragraph.",
@@ -76,7 +80,7 @@ define([
 			}
 
 			function initUsers(){
-				var users = self.users = new Storage("store", "users.json");
+				var users = self.users;
 				users.add({
 					id: "dylanks",
 					email: "dylanks@kitsonkelly.com",
@@ -103,60 +107,51 @@ define([
 				});
 				users.add({
 					id: "kitsonk",
-					email: "dojo@kitsonkelly.com",
+					email: "me@kitsonkelly.com",
 					admin: true,
-					owner: true
+					owner: true,
+					settings: {
+						email: "me@kitsonkelly.com",
+						onnew:false,
+						onwatched:false,
+						onparticipate:true,
+						onown:false,
+						onassigned:false,
+						ontags:[],
+						optout:false
+					}
 				});
 				return users.query();
-			}
-
-			if(!dfs.existsSync("store")){
-				dfs.mkdirSync("store");
 			}
 
 			var dfds = [],
 				self = this;
 
-			self.topics = null;
-
-			dfds.push(dfs.exists("store/topics.json").then(function(exists){
-				if(exists){
-					return dfs.unlink("store/topics.json").then(function(){
-						return initTopics();
-					});
-				}
+			dfds.push(this.topics.empty().then(function(){
+				return initTopics();
 			}));
-
-			self.comments = null;
-
-			dfds.push(dfs.exists("store/comments.json").then(function(exists){
-				if(exists){
-					return dfs.unlink("store/comments.json").then(function(){
-						return initComments();
-					});
-				}
+			dfds.push(this.comments.empty().then(function(){
+				return initComments();
 			}));
-
-			self.comments = null;
-
-			dfds.push(dfs.exists("store/users.json").then(function(exists){
-				if(exists){
-					return dfs.unlink("store/users.json").then(function(){
-						return initUsers();
-					});
-				}
+			dfds.push(this.comments.empty().then(function(){
+				return initUsers();
 			}));
 
 			return all(dfds);
 		},
 
 		open: function(init){
-			if(!dfs.existsSync("store")){
-				dfs.mkdirSync("store");
-			}
-			this.topics = new Storage("store", "topics.json");
-			this.comments = new Storage("store", "comments.json");
-			this.users = new Storage("store", "users.json");
+			var dfds = [],
+				self = this;
+			this.topics = new Storage("topics");
+			dfds.push(this.topics.ready());
+			this.comments = new Storage("comments");
+			dfds.push(this.comments.ready());
+			this.users = new Storage("users");
+			dfds.push(this.users.ready());
+			return init ? all(dfds).then(function(){
+				return self.init();
+			}) : all(dfds);
 		}
 	};
 
