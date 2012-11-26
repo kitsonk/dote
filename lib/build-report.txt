@@ -1,4 +1,4 @@
-Build started: Wed Nov 21 2012 21:26:38 GMT+0000 (GMT)
+Build started: Mon Nov 26 2012 18:27:37 GMT+0000 (GMT)
 Build application version: 1.7.0dev (23930)
 Messages:
 info(100) Assumed module uses legacy loader API.
@@ -121,25 +121,25 @@ info(100) Assumed module uses legacy loader API.
 	module: moment/test/moment/sod_eod
 	module: moment/test/moment/utc
 info(103) Optimizing module complete.
-	/Users/kitsonk/github/dote/lib/dojo/dojo.js (compile time:1.111s)
-	/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js (compile time:27.897s)
-	/Users/kitsonk/github/dote/lib/dote-client/login.js (compile time:31.079s)
-	/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js (compile time:39.296s)
-	/Users/kitsonk/github/dote/lib/dote-client/addTopic.js (compile time:50.318s)
-	/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js (compile time:52.263s)
+	/Users/kitsonk/github/dote/lib/dojo/dojo.js (compile time:0.885s)
+	/Users/kitsonk/github/dote/lib/dote-client/login.js (compile time:28.776s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js (compile time:30.732s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js (compile time:36.494s)
+	/Users/kitsonk/github/dote/lib/dote-client/addTopic.js (compile time:45.387s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js (compile time:46.762s)
 info(104) Optimizer messages.
-	/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-Done (compile time:27.897s)
-/Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:31.079s)
+	/Users/kitsonk/github/dote/lib/dote-client/login.js:
+Done (compile time:28.776s)
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
+Done (compile time:30.732s)
 /Users/kitsonk/github/dote/lib/dojo/dojo.js:
-Done (compile time:1.111s)
+Done (compile time:0.885s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
-Done (compile time:39.296s)
+Done (compile time:36.494s)
 /Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
-Done (compile time:50.318s)
+Done (compile time:45.387s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:
-Done (compile time:52.263s)
+Done (compile time:46.762s)
 
 info(106) Optimizing CSS.
 	file: /Users/kitsonk/github/dote/src/dojo/_firebug/firebug.css
@@ -486,18 +486,18 @@ dote-client/addTopic:
 
 dote-client/login:
 	dote-client/login
-	dote/util
-	dojo/_base/array
+	dote-client/fade
+	dojo/_base/fx
 	dojo/_base/kernel
 	dojo/has
 	dojo/_base/config
 	dojo/_base/lang
 	dojo/sniff
-	dojo/_base/fx
 	dojo/Evented
 	dojo/aspect
 	dojo/on
 	dojo/_base/Color
+	dojo/_base/array
 	dojo/_base/connect
 	dojo/topic
 	dojo/_base/event
@@ -508,6 +508,7 @@ dote-client/login:
 	dojo/mouse
 	dojo/_base/sniff
 	dojo/keys
+	dote/util
 	dojo/ready
 	dojo/domReady
 	dojo/request
@@ -577,23 +578,38 @@ dote-client/login:
 
 dote-client/viewSettings:
 	dote-client/viewSettings
-	dojo/_base/array
+	dote-client/fade
+	dojo/_base/fx
 	dojo/_base/kernel
 	dojo/has
 	dojo/_base/config
 	dojo/_base/lang
 	dojo/sniff
-	dojo/dom
-	dojo/_base/window
+	dojo/Evented
+	dojo/aspect
 	dojo/on
+	dojo/_base/Color
+	dojo/_base/array
+	dojo/_base/connect
+	dojo/topic
+	dojo/_base/event
+	dojo/dom-geometry
+	dojo/_base/window
+	dojo/dom
+	dojo/dom-style
+	dojo/mouse
+	dojo/_base/sniff
+	dojo/keys
+	dote-client/userControls
+	dojo/json
 	dojo/ready
 	dojo/domReady
+	dojo/request
+	dojo/request/default
 	dojo/store/JsonRest
 	dojo/_base/xhr
-	dojo/_base/sniff
 	dojo/io-query
 	dojo/dom-form
-	dojo/json
 	dojo/_base/Deferred
 	dojo/Deferred
 	dojo/errors/CancelError
@@ -601,8 +617,6 @@ dote-client/viewSettings:
 	dojo/promise/Promise
 	dojo/promise/instrumentation
 	dojo/promise/tracer
-	dojo/Evented
-	dojo/aspect
 	dojo/when
 	dojo/_base/json
 	dojo/request/watch
@@ -617,13 +631,6 @@ dote-client/viewSettings:
 	dojo/dom-class
 	dijit/form/_FormWidget
 	dijit/_Widget
-	dojo/_base/connect
-	dojo/topic
-	dojo/_base/event
-	dojo/dom-geometry
-	dojo/dom-style
-	dojo/mouse
-	dojo/keys
 	dojo/query
 	dojo/selector/_loader
 	dojo/selector/lite
@@ -654,12 +661,26 @@ dote-client/viewSettings:
 	dijit/form/_FormWidgetMixin
 	dijit/form/_ButtonMixin
 	dijit/form/templates/Button.html
+	dijit/form/CheckBox
+	dijit/form/ToggleButton
+	dijit/form/_ToggleButtonMixin
+	dijit/form/_CheckBoxMixin
+	dijit/form/templates/CheckBox.html
+	dojo/NodeList-dom
 	dijit/form/TextBox
 	dijit/form/_FormValueWidget
 	dijit/form/_FormValueMixin
 	dijit/form/_TextBoxMixin
 	dijit/form/templates/TextBox.html
-	dote-client/userControls
+	dijit/form/ValidationTextBox
+	dojo/i18n
+	dijit/Tooltip
+	dijit/_base/manager
+	dijit/place
+	dijit/BackgroundIframe
+	dijit/templates/Tooltip.html
+	dijit/form/templates/ValidationTextBox.html
+	dijit/form/nls/validate
 
 dote-client/viewTopic:
 	dote-client/viewTopic
@@ -683,7 +704,14 @@ dote-client/viewTopic:
 	dojo/on
 	dojo/_base/array
 	dojo/when
-	dojo/store/JsonRest
+	dojo/store/Memory
+	dojo/_base/declare
+	dojo/store/util/QueryResults
+	dojo/store/util/SimpleQueryEngine
+	dote-client/marked
+	marked/marked
+	hljs/highlight.pack
+	dote-client/store/JsonRest
 	dojo/_base/xhr
 	dojo/_base/sniff
 	dojo/io-query
@@ -698,13 +726,7 @@ dote-client/viewTopic:
 	dojo/errors/RequestTimeoutError
 	dojo/request/xhr
 	dojo/request/handlers
-	dojo/_base/declare
-	dojo/store/util/QueryResults
-	dojo/store/Memory
-	dojo/store/util/SimpleQueryEngine
-	dote-client/marked
-	marked/marked
-	hljs/highlight.pack
+	dojo/store/JsonRest
 	dote-client/Topic
 	dote-client/_StoreMixin
 	dote-client/_TopicMixin
@@ -937,45 +959,45 @@ dote-client/viewTopicList:
 	dote-client/userControls
 
 Optimizer Messages:
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-Done (compile time:27.897s)
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-Done (compile time:27.897s)
 /Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:31.079s)
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-Done (compile time:27.897s)
+Done (compile time:28.776s)
 /Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:31.079s)
+Done (compile time:28.776s)
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
+Done (compile time:30.732s)
+/Users/kitsonk/github/dote/lib/dote-client/login.js:
+Done (compile time:28.776s)
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
+Done (compile time:30.732s)
 /Users/kitsonk/github/dote/lib/dojo/dojo.js:
-Done (compile time:1.111s)
+Done (compile time:0.885s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
-Done (compile time:39.296s)
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-Done (compile time:27.897s)
+Done (compile time:36.494s)
 /Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:31.079s)
+Done (compile time:28.776s)
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
+Done (compile time:30.732s)
 /Users/kitsonk/github/dote/lib/dojo/dojo.js:
-Done (compile time:1.111s)
+Done (compile time:0.885s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
-Done (compile time:39.296s)
+Done (compile time:36.494s)
 /Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
-Done (compile time:50.318s)
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-Done (compile time:27.897s)
+Done (compile time:45.387s)
 /Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:31.079s)
+Done (compile time:28.776s)
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
+Done (compile time:30.732s)
 /Users/kitsonk/github/dote/lib/dojo/dojo.js:
-Done (compile time:1.111s)
+Done (compile time:0.885s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
-Done (compile time:39.296s)
+Done (compile time:36.494s)
 /Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
-Done (compile time:50.318s)
+Done (compile time:45.387s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:
-Done (compile time:52.263s)
+Done (compile time:46.762s)
 
 
 Process finished normally
 	errors: 0
 	warnings: 16
-	build time: 59.027 seconds
+	build time: 54.891 seconds
