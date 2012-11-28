@@ -6,6 +6,7 @@ var profile = (function(){
 		action: "release",
 		mini: true,
 		selectorEngine: "lite",
+		layerOptimize: "closure",
 		cssOptimize: "comments",
 
 		packages: [{
