@@ -25,6 +25,9 @@ block scripts
         name: "hljs",
         location: "hljs"
       },{
+        name: "dote",
+        location: "dote"
+      },{
         name: "dote-client",
         location: "dote-client"
       }],
@@ -94,6 +97,11 @@ block content
                 br
                 label(for="ontags")For Topics with Tags:
                 input(type="text", id="ontags", name="ontags", placeholder="Comma seperated list")
+          tr
+            th
+            td
+              input(type="checkbox", id="excreated", name="excreated")
+              label(for="excreated") Do Not E-mail My Activities
           tr
             th
             td

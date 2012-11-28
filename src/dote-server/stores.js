@@ -83,31 +83,48 @@ define([
 				var users = self.users;
 				users.add({
 					id: "dylanks",
-					email: "dylanks@kitsonkelly.com",
 					admin: false,
 					owner: true
 				});
 				users.add({
 					id: "kriszyp",
-					email: "kriszyp@kitsonkelly.com",
 					admin: false,
 					owner: true
 				});
 				users.add({
 					id: "wildbill",
-					email: "wildbill@kitsonkelly.com",
 					admin: false,
-					owner: true
+					owner: true,
+					settings: {
+						email: "wildbill@kitsonkelly.com",
+						onnew:false,
+						onwatched:false,
+						onparticipate:true,
+						onown:false,
+						onassigned:false,
+						ontags:[],
+						excreated: true,
+						optout:false
+					}
 				});
 				users.add({
 					id: "ttrenka",
-					email: "ttrenka@kitsonkelly.com",
 					admin: false,
-					owner: false
+					owner: false,
+					settings: {
+						email: "ttrenka@kitsonkelly.com",
+						onnew:false,
+						onwatched:false,
+						onparticipate:true,
+						onown:false,
+						onassigned:false,
+						ontags:[],
+						excreated: true,
+						optout:false
+					}
 				});
 				users.add({
 					id: "kitsonk",
-					email: "me@kitsonkelly.com",
 					admin: true,
 					owner: true,
 					settings: {
@@ -118,6 +135,7 @@ define([
 						onown:false,
 						onassigned:false,
 						ontags:[],
+						excreated: false,
 						optout:false
 					}
 				});

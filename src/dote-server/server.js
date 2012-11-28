@@ -325,6 +325,14 @@ define([
 		});
 	});
 
+	app.get("/messages", function(request, response, next){
+		stores.topics.get("3af990e5-036a-4e01-80a4-0a46d158038c").then(function(topic){
+			return messages.calculateTopicRecipients(topic, true);
+		}).then(function(recipients){
+			response.json(recipients);
+		});
+	});
+
 	app.get("/topics/:id", function(request, response, next){
 		stores.topics.get(request.params.id).then(function(topic){
 			if(topic){

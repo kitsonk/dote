@@ -2,7 +2,7 @@ define([
 	"dojo/ready",
 	"dojo/store/Cache",
 	"dojo/store/Memory",
-	"./marked",
+	"dote/marked",
 	"./store/JsonRest",
 	"./Topic",
 	"./userControls"

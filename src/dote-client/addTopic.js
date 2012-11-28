@@ -6,9 +6,9 @@ define([
 	"dojo/store/JsonRest",
 	"dojo/store/Memory",
 	"dojo/when",
-	"dote-client/marked",
-	"dote-client/TopicAdd",
-	"dote-client/userControls"
+	"dote/marked",
+	"./TopicAdd",
+	"./userControls"
 ], function(win, JSON, ready, Cache, JsonRest, Memory, when, marked, TopicAdd, userControls){
 
 	var topicStore = new JsonRest({

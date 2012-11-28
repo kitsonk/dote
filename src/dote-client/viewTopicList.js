@@ -4,8 +4,8 @@ define([
 	"dojo/store/Cache",
 	"dojo/store/JsonRest",
 	"dojo/store/Memory",
-	"dote-client/TopicList",
-	"dote-client/userControls",
+	"./TopicList",
+	"./userControls",
 	"moment/moment"
 ], function(dom, ready, Cache, JsonRest, Memory, TopicList, userControls, moment){
 

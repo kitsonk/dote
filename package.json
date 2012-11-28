@@ -11,7 +11,8 @@
     "mailparser": "~0.2.31",
     "perstore": "https://github.com/kitsonk/perstore/archive/redis.tar.gz",
     "redis": "~0.8.2",
-    "hiredis": "~0.1.14"
+    "hiredis": "~0.1.14",
+    "juice": "0.0.6"
   },
   "engines": {
     "node": "0.8.x",

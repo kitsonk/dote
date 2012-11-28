@@ -3,7 +3,7 @@
 	"address": "http://livi.kitsonkelly.com:8011/",
 	"secret": "replaceme",
 	"bugs": "https://github.com/kitsonk/dote/issues",
-	"base": "lib",
+	"base": "src",
 	"mail": {
 		"username": "dote",
 		"address": "dote@kitsonkelly.com",

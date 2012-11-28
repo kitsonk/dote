@@ -43,7 +43,7 @@ define([
 			type: "text",
 			placeholder: "Comma seperated list"
 		}, "ontags"));
-		array.forEach(["onnew", "onwatched", "onparticipate", "onown", "onassigned", "optout"], function(id){
+		array.forEach(["onnew", "onwatched", "onparticipate", "onown", "onassigned", "excreated", "optout"], function(id){
 			widgets.push(new CheckBox({
 				id: id,
 				name: id
@@ -73,7 +73,7 @@ define([
 
 		var optout = registry.byId("optout");
 		optout.on("change", function(value){
-			array.forEach(["onnew", "onwatched", "onparticipate", "onown", "onassigned", "ontags", "email"],
+			array.forEach(["onnew", "onwatched", "onparticipate", "onown", "onassigned", "ontags", "excreated", "email"],
 			function(id){
 				registry.byId(id).set("disabled", value);
 			});

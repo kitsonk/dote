@@ -6,27 +6,32 @@ A topic based voting system for open collaboration.
 
 **dote** depends on the following projects:
 
-* [express][express]
-* [jade][jade]
-* [Stylus][stylus]
-* [Nib][nib]
-* [Font-Awesome][fontawesome]
-* [Dojo Toolkit][dojo]
-* [setten][setten]
-* [ComposeJS][composejs]
-* [Persevere][perstore]
-* [Moment.js][momentjs]
-* [marked][marked]
-* [Highlight.js][hljs]
-* [emailjs][emailjs]
-* [node-imap][nodeimap]
-* [mailparser][mailparser]
+* [express][express] - HTTP Server Framework
+* [jade][jade] - HTML Templating
+* [Stylus][stylus] - CSS Templating
+* [Nib][nib] - CSS3 Enhancements for Stylus
+* [Font-Awesome][fontawesome] - Font Based Icons
+* [Dojo Toolkit][dojo] - JavaScript Framework
+* [setten][setten] - Dojo-style Modules for Node
+* [ComposeJS][composejs] - JavaScript Object Composition
+* [Persevere][perstore] - Storage Abstraction Layer
+* [Moment.js][momentjs] - Date Handling (including humanisation)
+* [marked][marked] - markdown Parser
+* [Highlight.js][hljs] - Code Block Highlighting
+* [emailjs][emailjs] - NodeJS STMP Client
+* [node-imap][nodeimap] - NodeJS IMAP Client
+* [mailparser][mailparser] - Mail Parsing Library
+* [node_redis][noderedis] - Redis Interface for NodeJS
+* [hiredis-node][hiredis] - Native Client Library for Redis
+* [juice][juice] - Inlining CSS into HTML
+* [Redis][redis] - Persistent Key-Value Store
 
-You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cpm] or [volo][volo] to properly install
-**dote**. 
+You will need [git][git] and [NodeJS][nodejs] including ``npm`` to properly install **dote**.  **dote** has been tested 
+on NodeJS 0.8.4 - 0.8.15.
 
 ## Installation ##
 
+* Install [Redis][redis] and have available.
 * Clone the repository recursively with ``git``:
 
     ```bash
@@ -40,24 +45,7 @@ You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cp
     $ npm install
     ```
 
-* Install AMD dependencies.
-
-    * Using [cpm][cpm]:
-
-        ```bash
-        cpm --packages-path=src install dojo
-        cpm --packages-path=src install dijit
-        cpm --packages-path=src install setten
-        cpm --packages-path=src install compose
-        cpm --packages-path=src install perstore
-        ```
-
-    * Using [volo][volo]:
-
-        ```bash
-        volo install -amd
-        ```
-
+* Edit the ``config.json`` in the root directory.
 * Start the server:
 
     ```bash
@@ -83,3 +71,7 @@ You will need [git][git], [NodeJS][nodejs] including ``npm`` and either [cpm][cp
 [emailjs]: https://github.com/eleith/emailjs
 [nodeimap]: https://github.com/mscdex/node-imap
 [mailparser]: https://github.com/andris9/mailparser
+[juice]: https://github.com/LearnBoost/juice
+[noderedis]: https://github.com/mranney/node_redis
+[hiredis]: https://github.com/pietern/hiredis-node
+[redis]: http://redis.io/

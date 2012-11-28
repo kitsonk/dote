@@ -26,6 +26,9 @@ dojoConfig = {
 		name: "marked",
 		location: "marked/lib"
 	},{
+		name: "hljs",
+		location: "hljs"
+	},{
 		name: "dote",
 		location: "dote"
 	},{
