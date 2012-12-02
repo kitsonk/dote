@@ -9,6 +9,16 @@ define([
 		topics: null,
 		comments: null,
 		users: null,
+		emails: null,
+
+		defaultUser: function(id){
+			return {
+				id: id,
+				admin: false,
+				owner: false,
+				settings: {}
+			};
+		},
 		
 		init: function(){
 
@@ -97,6 +107,7 @@ define([
 					owner: true,
 					settings: {
 						email: "wildbill@kitsonkelly.com",
+						fromaddress: "",
 						onnew:false,
 						onwatched:false,
 						onparticipate:true,
@@ -113,6 +124,7 @@ define([
 					owner: false,
 					settings: {
 						email: "ttrenka@kitsonkelly.com",
+						fromaddress: "",
 						onnew:false,
 						onwatched:false,
 						onparticipate:true,
@@ -128,7 +140,8 @@ define([
 					admin: true,
 					owner: true,
 					settings: {
-						email: "me@kitsonkelly.com",
+						email: "dojo@kitsonkelly.com",
+						fromaddress: "me@kitsonkelly.com",
 						onnew:false,
 						onwatched:false,
 						onparticipate:true,
@@ -166,6 +179,8 @@ define([
 			this.comments = new Storage("comments");
 			dfds.push(this.comments.ready());
 			this.users = new Storage("users");
+			dfds.push(this.users.ready());
+			this.emails = new Storage("emails");
 			dfds.push(this.users.ready());
 			return init ? all(dfds).then(function(){
 				return self.init();

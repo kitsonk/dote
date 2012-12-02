@@ -3,6 +3,7 @@ define([
 	"dojo/node!stylus",
 	"dojo/node!nib",
 	"dojo/node!url",
+	"dojo/node!colors",
 	"dojo/promise/all",
 	"marked/marked",
 	"dote/timer",
@@ -11,7 +12,7 @@ define([
 	"./messages",
 	"./stores",
 	"./util"
-], function(express, stylus, nib, url, all, marked, timer, auth, config, messages, stores, util){
+], function(express, stylus, nib, url, colors, all, marked, timer, auth, config, messages, stores, util){
 
 	function compile(str, path){
 		return stylus(str).
@@ -53,6 +54,17 @@ define([
 		});
 	}
 
+	function checkMail(){
+		console.log("Checking inbound mail...".grey);
+		return messages.fetch(true).then(function(results){
+			results.forEach(function(email){
+				stores.emails.add(email);
+			});
+			console.log("Fetched ".grey + results.length.toString().cyan + " emails.".grey);
+			return results;
+		});
+	}
+
 	/* Express Application */
 	var app = express(),
 		appPort = process.env.PORT || config.port || 8022;
@@ -65,6 +77,10 @@ define([
 
 	/* Init Messages */
 	messages.init("Drag00n$%!");
+
+	/* Setup Mail Check Timer */
+	var checkMailTimer = timer(config.mail.checkInterval || 60000);
+	var checkMailSignal = checkMailTimer.on("tick", checkMail);
 
 	/* Markdown Parser */
 	marked.setOptions({
@@ -190,6 +206,14 @@ define([
 		});
 	});
 
+	/* New User Welcome */
+	app.get("/welcome", function(request, response, next){
+		response.render("welcome", {
+			username: request.session.username,
+			base: config.base
+		});
+	});
+
 	/* Initialise the Stores */
 	app.get("/initStores", function(request, response, next){
 		stores.init().then(function(results){
@@ -237,6 +261,32 @@ define([
 	});
 
 	/*
+	 * Manual mail check
+	 */
+
+	app.get("/checkMail", function(request, response, next){
+		checkMail.then(function(emails){
+			response.json(emails);
+		}).otherwise(function(err){
+			response.status(500);
+			next(err);
+		});
+	});
+
+	/*
+	 * Manual mail process
+	 */
+
+	app.get("/processMail", function(request, response, next){
+		messages.process().then(function(results){
+			response.json(results);
+		}).otherwise(function(err){
+			response.status(500);
+			next(err);
+		});
+	});
+
+	/*
 	 * Restful Services
 	 */
 
@@ -246,12 +296,15 @@ define([
 			password = request.body && request.body.password ? request.body.password : "";
 		if(auth.authorize(username, password)){
 			response.status(200);
-			request.session.username = username;
-			var href = request.session.loginRedirect ? request.session.loginRedirect : "/";
-			request.session.loginRedirect = null;
-			response.json({
-				authorized: true,
-				href: href
+			stores.users.get(username).then(function(user){
+				request.session.username = username;
+				if(user) request.session.user = user;
+				var href = user ? (request.session.loginRedirect ? request.session.loginRedirect : "/") : "/welcome";
+				request.session.loginRedirect = null;
+				response.json({
+					authorized: true,
+					href: href
+				});
 			});
 		}else{
 			response.status(401);
@@ -322,14 +375,6 @@ define([
 		}, function(err){
 			response.status(500);
 			next(err);
-		});
-	});
-
-	app.get("/messages", function(request, response, next){
-		stores.topics.get("3af990e5-036a-4e01-80a4-0a46d158038c").then(function(topic){
-			return messages.calculateTopicRecipients(topic, true);
-		}).then(function(recipients){
-			response.json(recipients);
 		});
 	});
 
@@ -407,7 +452,30 @@ define([
 		stores.comments.get(request.params.id).then(function(comment){
 			if(comment){
 				response.status(200);
-				response.send(topic);
+				response.send(comment);
+			}else{
+				response.status(404);
+				next();
+			}
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
+	});
+
+	/*
+	 * EMails
+	 */
+
+	app.get("/emails", function(request, response, next){
+		queryStore(stores.emails, request, response);
+	});
+
+	app.get("/emails/:id", function(request, response, next){
+		stores.emails.get(request.params.id).then(function(email){
+			if(email){
+				response.status(200);
+				response.send(email);
 			}else{
 				response.status(404);
 				next();
@@ -447,7 +515,7 @@ define([
 	return {
 		start: function(){
 			app.listen(appPort);
-			console.log("HTTP server started on port: " + appPort);
+			console.log("HTTP server started on port: ".grey + appPort.yellow);
 			return app;
 		}
 	};

@@ -1,4 +1,4 @@
-@import "./_TopicComment.css";
+@import url("_TopicComment.css");
 .doteTopic {
   background-color: #e4ebf2;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fafbfc), color-stop(3, #e4ebf2));

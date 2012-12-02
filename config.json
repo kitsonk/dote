@@ -11,6 +11,7 @@
 			"name": "dote",
 			"id": "dote.kitsonkelly.com"
 		},
+		"checkInterval": 60000,
 		"severconfig": {
 			"user": "dote@kitsonkelly.com",
 			"imapHost": "imap.gmail.com",

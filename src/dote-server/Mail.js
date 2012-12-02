@@ -95,8 +95,8 @@ define([
 			return dfd.promise;
 		},
 
-		logout: function(){
-			return this.imap.logout();
+		logout: function(cb){
+			this.imap.logout(cb);
 		}
 	});
 

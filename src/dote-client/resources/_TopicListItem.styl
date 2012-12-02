@@ -3,9 +3,9 @@
 item-line-color = #c0c6cc
 item-bg-color = #e4ebf2
 empty-bar-color = #eee
-plus-bar-color = #32b512
-neutral-bar-color = #ffd83b
-minus-bar-color = #ff0516
+plus-bar-color = #4be639
+neutral-bar-color = #e6cf39
+minus-bar-color = #e63939
 button-color = #bcd8f4
 button-hover-color = #86bdf2
 status-active-color = #e0f0ff
@@ -68,21 +68,25 @@ neutral-color = #f4e0bc
     font-size 48px
     text-align center
   &Spark
-    border 1px solid #555
+    border 1px solid #759dc0
     border-radius 2px
     box-shadow 0 1px 2px rgba(black,0.5), inset 0 0 1px rgba(white, 0.5)
     table
-      background linear-gradient(bottom, darken(empty-bar-color, 30%), empty-bar-color 60%)
+      background-color empty-bar-color
       border-collapse collapse
       width 100%
       tr
         height 12px
     &Plus
-      background linear-gradient(bottom, darken(plus-bar-color, 30%), plus-bar-color 60%)
     &Neutral
-      background linear-gradient(bottom, darken(neutral-bar-color, 30%), neutral-bar-color 60%)
     &Minus
-      background linear-gradient(bottom, darken(minus-bar-color, 30%), minus-bar-color 60%)
+      background-image linear-gradient(rgba(white, 0.93) 0px, rgba(white, 0.41) 1px, rgba(white, 0.7) 2px, rgba(white, 0) 100%)
+    &Plus
+      background-color plus-bar-color
+    &Neutral
+      background-color neutral-bar-color
+    &Minus
+      background-color minus-bar-color
   &VoteButtons
   &TagsContainer
   &VotersContainer

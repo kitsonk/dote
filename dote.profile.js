@@ -1,5 +1,37 @@
 var profile = (function(){
 
+	var generalModules = [
+		"dijit/_base/manager",
+		"dijit/_CssStateMixin",
+		"dijit/_FocusMixin",
+		"dijit/_OnDijitClickMixin",
+		"dijit/_TemplatedMixin",
+		"dijit/_Widget",
+		"dijit/_WidgetBase",
+		"dijit/a11y",
+		"dijit/a11yclick",
+		"dijit/form/Button",
+		"dojo/_base/array",
+		"dojo/_base/Color",
+		"dojo/_base/config",
+		"dojo/_base/connect",
+		"dojo/_base/declare",
+		"dojo/_base/Deferred",
+		"dojo/_base/event",
+		"dojo/_base/fx",
+		"dojo/_base/html",
+		"dojo/_base/json",
+		"dojo/_base/kernel",
+		"dojo/_base/lang",
+		"dojo/_base/sniff",
+		"dojo/_base/unload",
+		"dojo/_base/url",
+		"dojo/_base/window",
+		"dojo/_base/xhr",
+		"dojo/i18n",
+		"dojo/request"
+	];
+
 	return {
 		releaseDir: "../lib",
 		basePath: "src",
@@ -61,24 +93,27 @@ var profile = (function(){
 
 		layers: {
 			"dojo/dojo": {
-				include: [ "dojo/dojo" ],
+				include: [ "dojo/dojo" ].concat(generalModules),
 				customBase: true,
 				boot: true
 			},
 			"dote-client/viewTopic": {
-				include: []
+				exclude: generalModules
 			},
 			"dote-client/viewTopicList": {
-				include: []
+				exclude: generalModules
 			},
 			"dote-client/viewSettings": {
-				include: []
+				exclude: generalModules
+			},
+			"dote-client/viewWelcome": {
+				exclude: generalModules
 			},
 			"dote-client/login": {
-				include: []
+				exclude: generalModules
 			},
 			"dote-client/addTopic": {
-				include: []
+				exclude: generalModules
 			}
 		}
 	};

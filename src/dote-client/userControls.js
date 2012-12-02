@@ -1,8 +1,9 @@
 define([
 	"dojo/_base/window",
 	"dojo/dom",
-	"dojo/on"
-], function(win, dom, on){
+	"dojo/on",
+	"./displayHelp"
+], function(win, dom, on, displayHelp){
 
 	function newTopic(e){
 		e.preventDefault();
@@ -11,7 +12,7 @@ define([
 
 	function help(e){
 		e.preventDefault();
-		console.log("help");
+		displayHelp.display();
 	}
 
 	function logout(e){

@@ -97,48 +97,38 @@
   text-align: center;
 }
 .doteTopicItemSpark {
-  border: 1px solid #555;
+  border: 1px solid #759dc0;
   -webkit-border-radius: 2px;
   border-radius: 2px;
   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
   box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
 }
 .doteTopicItemSpark table {
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #a7a7a7), color-stop(0.6, #eee));
-  background: -webkit-linear-gradient(bottom, #a7a7a7 0%, #eee 60%);
-  background: -moz-linear-gradient(bottom, #a7a7a7 0%, #eee 60%);
-  background: -o-linear-gradient(bottom, #a7a7a7 0%, #eee 60%);
-  background: -ms-linear-gradient(bottom, #a7a7a7 0%, #eee 60%);
-  background: linear-gradient(bottom, #a7a7a7 0%, #eee 60%);
+  background-color: #eee;
   border-collapse: collapse;
   width: 100%;
 }
 .doteTopicItemSpark table tr {
   height: 12px;
 }
+.doteTopicItemSparkPlus,
+.doteTopicItemSparkNeutral,
+.doteTopicItemSparkMinus {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(255,255,255,0.93)), color-stop(0.01, rgba(255,255,255,0.41)), color-stop(0.02, rgba(255,255,255,0.7)), color-stop(1, rgba(255,255,255,0)));
+  background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.93) 0px, rgba(255,255,255,0.41) 1px, rgba(255,255,255,0.7) 2px, rgba(255,255,255,0) 100%);
+  background-image: -moz-linear-gradient(top, rgba(255,255,255,0.93) 0px, rgba(255,255,255,0.41) 1px, rgba(255,255,255,0.7) 2px, rgba(255,255,255,0) 100%);
+  background-image: -o-linear-gradient(top, rgba(255,255,255,0.93) 0px, rgba(255,255,255,0.41) 1px, rgba(255,255,255,0.7) 2px, rgba(255,255,255,0) 100%);
+  background-image: -ms-linear-gradient(top, rgba(255,255,255,0.93) 0px, rgba(255,255,255,0.41) 1px, rgba(255,255,255,0.7) 2px, rgba(255,255,255,0) 100%);
+  background-image: linear-gradient(top, rgba(255,255,255,0.93) 0px, rgba(255,255,255,0.41) 1px, rgba(255,255,255,0.7) 2px, rgba(255,255,255,0) 100%);
+}
 .doteTopicItemSparkPlus {
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #237f0d), color-stop(0.6, #32b512));
-  background: -webkit-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
-  background: -moz-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
-  background: -o-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
-  background: -ms-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
-  background: linear-gradient(bottom, #237f0d 0%, #32b512 60%);
+  background-color: #4be639;
 }
 .doteTopicItemSparkNeutral {
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #dcb000), color-stop(0.6, #ffd83b));
-  background: -webkit-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
-  background: -moz-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
-  background: -o-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
-  background: -ms-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
-  background: linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
+  background-color: #e6cf39;
 }
 .doteTopicItemSparkMinus {
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #b6000c), color-stop(0.6, #ff0516));
-  background: -webkit-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
-  background: -moz-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
-  background: -o-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
-  background: -ms-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
-  background: linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
+  background-color: #e63939;
 }
 .doteTopicItemVoteButtons ul,
 .doteTopicItemTagsContainer ul,

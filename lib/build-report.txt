@@ -1,4 +1,4 @@
-Build started: Wed Nov 28 2012 20:35:07 GMT+0000 (GMT)
+Build started: Sun Dec 02 2012 10:20:16 GMT+0000 (GMT)
 Build application version: 1.7.0dev (23930)
 Messages:
 info(100) Assumed module uses legacy loader API.
@@ -121,91 +121,45 @@ info(100) Assumed module uses legacy loader API.
 	module: moment/test/moment/sod_eod
 	module: moment/test/moment/utc
 info(103) Optimizing module complete.
-	/Users/kitsonk/github/dote/lib/dojo/dojo.js (compile time:14.138s)
-	/Users/kitsonk/github/dote/lib/dote-client/login.js (compile time:41.852s)
-	/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js (compile time:43.009s)
-	/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js (compile time:30.096s)
-	/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js (compile time:47.146s)
-	/Users/kitsonk/github/dote/lib/dote-client/addTopic.js (compile time:47.412s)
+	/Users/kitsonk/github/dote/lib/dote-client/login.js (compile time:14.728s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js (compile time:24.33s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js (compile time:16.694s)
+	/Users/kitsonk/github/dote/lib/dote-client/addTopic.js (compile time:34.669s)
+	/Users/kitsonk/github/dote/lib/dojo/dojo.js (compile time:37.909s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js (compile time:38.525s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js (compile time:1.376s)
 info(104) Optimizer messages.
-	/Users/kitsonk/github/dote/lib/dote-client/login.js:
-/Users/kitsonk/github/dote/lib/dote-client/login.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1017: WARNING - unreachable code
-	if(! 1 ){
+	/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:3608: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
 	        ^
 
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1345: WARNING - unreachable code
-	}else{
-	     ^
+0 error(s), 1 warning(s)
+Done (compile time:24.33s)
+/Users/kitsonk/github/dote/lib/dote-client/login.js:
+Done (compile time:14.728s)
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:4533: WARNING - If this if/for/while really shouldnt have a body, use {}
+		for(var top=this; top.parentMenu; top=top.parentMenu);
+		^
 
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5260: WARNING - unreachable code
-	if(! 1 ){
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:11331: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
 	        ^
 
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5614: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
+0 error(s), 2 warning(s)
+Done (compile time:16.694s)
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:5117: WARNING - If this if/for/while really shouldnt have a body, use {}
+		for(var top=this; top.parentMenu; top=top.parentMenu);
+		^
 
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5625: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5822: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:12193: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:14164: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:41.852s)
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:1017: WARNING - unreachable code
-	if(! 1 ){
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:9091: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
 	        ^
 
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:1345: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5260: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5734: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5745: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5942: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:14656: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:16627: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:43.009s)
+0 error(s), 2 warning(s)
+Done (compile time:34.669s)
 /Users/kitsonk/github/dote/lib/dojo/dojo.js:
 /Users/kitsonk/github/dote/lib/dojo/dojo.js:148: WARNING - unreachable code
 	if( 0 ){
@@ -355,133 +309,62 @@ Done (compile time:43.009s)
 	if(! 1 ){
 	        ^
 
-0 error(s), 37 warning(s)
-Done (compile time:14.138s)
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:245: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1149: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2456: WARNING - unreachable code
 	if( 0 ){
 	       ^
 
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1483: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1759: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1770: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:5181: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2638: WARNING - unreachable code
 	if(! 1 ){
 	        ^
 
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:11870: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:18232: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2966: WARNING - unreachable code
 	}else{
 	     ^
 
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:20706: WARNING - If this if/for/while really shouldnt have a body, use {}
-		for(var top=this; top.parentMenu; top=top.parentMenu);
-		^
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6562: WARNING - unreachable code
+	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
+	                                                   ^
 
-0 error(s), 9 warning(s)
-Done (compile time:30.096s)
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6573: WARNING - unreachable code
+	}else{
+	     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:9704: WARNING - unreachable code
+	if(! 1 ){
+	        ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:12573: WARNING - unreachable code
+	return ret;
+	^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:13276: WARNING - unreachable code
+	}else{
+	     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:19840: WARNING - unreachable code
+	}else if( 0 ){
+	      ^
+
+0 error(s), 46 warning(s)
+Done (compile time:37.909s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:122: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:133: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:280: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:462: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:790: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:7125: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:13055: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:19417: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:21891: WARNING - If this if/for/while really shouldnt have a body, use {}
+/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:5718: WARNING - If this if/for/while really shouldnt have a body, use {}
 		for(var top=this; top.parentMenu; top=top.parentMenu);
 		^
 
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:28203: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:10890: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
 	new Date("X"); // workaround for #11279, new Date("") == NaN
 	        ^
 
-0 error(s), 10 warning(s)
-Done (compile time:47.146s)
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:278: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:460: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:788: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:1763: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:1774: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:5185: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:10140: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:14561: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:21502: WARNING - If this if/for/while really shouldnt have a body, use {}
-		for(var top=this; top.parentMenu; top=top.parentMenu);
-		^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:26404: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+0 error(s), 2 warning(s)
+Done (compile time:38.525s)
+/Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js:3608: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
 	new Date("X"); // workaround for #11279, new Date("") == NaN
 	        ^
 
-0 error(s), 10 warning(s)
-Done (compile time:47.412s)
+0 error(s), 1 warning(s)
+Done (compile time:1.376s)
 
 info(106) Optimizing CSS.
 	file: /Users/kitsonk/github/dote/src/dojo/_firebug/firebug.css
@@ -674,37 +557,63 @@ warn(226) A package without a profile could throw errors or warnings.
 Layer Contents:
 dojo/dojo:
 	dojo/dojo
-
-dote-client/addTopic:
-	dote-client/addTopic
-	dojo/_base/window
+	dijit/_base/manager
+	dojo/_base/array
 	dojo/_base/kernel
 	dojo/has
 	dojo/_base/config
 	dojo/_base/lang
 	dojo/sniff
-	dojo/json
+	dijit/registry
+	dojo/_base/unload
+	dojo/on
+	dojo/_base/window
+	dijit/main
+	dijit/_CssStateMixin
+	dojo/_base/declare
+	dojo/dom
+	dojo/dom-class
 	dojo/ready
 	dojo/domReady
-	dojo/store/Cache
-	dojo/_base/Deferred
+	dijit/_FocusMixin
+	dijit/focus
+	dojo/aspect
+	dojo/dom-attr
+	dojo/dom-style
+	dojo/dom-prop
+	dojo/dom-construct
+	dojo/_base/connect
+	dojo/topic
+	dojo/Evented
+	dojo/_base/event
+	dojo/dom-geometry
+	dojo/mouse
+	dojo/_base/sniff
+	dojo/keys
+	dojo/Stateful
+	dojo/when
 	dojo/Deferred
 	dojo/errors/CancelError
 	dojo/errors/create
 	dojo/promise/Promise
 	dojo/promise/instrumentation
 	dojo/promise/tracer
-	dojo/Evented
-	dojo/aspect
-	dojo/on
-	dojo/_base/array
-	dojo/when
-	dojo/store/JsonRest
+	dojo/window
+	dijit/a11y
+	dijit/_WidgetBase
+	dijit/Destroyable
+	dijit/_OnDijitClickMixin
+	dijit/a11yclick
+	dijit/_TemplatedMixin
+	dojo/touch
+	dojo/string
+	dojo/cache
+	dojo/text
 	dojo/_base/xhr
-	dojo/_base/sniff
 	dojo/io-query
-	dojo/dom
 	dojo/dom-form
+	dojo/json
+	dojo/_base/Deferred
 	dojo/_base/json
 	dojo/request/watch
 	dojo/request/util
@@ -712,7 +621,30 @@ dote-client/addTopic:
 	dojo/errors/RequestTimeoutError
 	dojo/request/xhr
 	dojo/request/handlers
-	dojo/_base/declare
+	dijit/_Widget
+	dojo/query
+	dojo/selector/_loader
+	dojo/selector/lite
+	dojo/uacss
+	dijit/hccss
+	dojo/hccss
+	dijit/form/Button
+	dijit/form/_FormWidget
+	dijit/form/_FormWidgetMixin
+	dijit/form/_ButtonMixin
+	dijit/form/templates/Button.html
+	dojo/_base/Color
+	dojo/_base/fx
+	dojo/_base/html
+	dojo/_base/url
+	dojo/i18n
+	dojo/request
+	dojo/request/default
+
+dote-client/addTopic:
+	dote-client/addTopic
+	dojo/store/Cache
+	dojo/store/JsonRest
 	dojo/store/util/QueryResults
 	dojo/store/Memory
 	dojo/store/util/SimpleQueryEngine
@@ -720,49 +652,7 @@ dote-client/addTopic:
 	marked/marked
 	hljs/highlight.pack
 	dote-client/TopicAdd
-	dijit/_CssStateMixin
-	dojo/dom-class
-	dijit/registry
-	dojo/_base/unload
-	dijit/main
-	dijit/_OnDijitClickMixin
-	dojo/keys
-	dijit/a11yclick
-	dijit/_TemplatedMixin
-	dojo/touch
-	dojo/mouse
-	dijit/_WidgetBase
-	dojo/_base/connect
-	dojo/topic
-	dojo/_base/event
-	dojo/dom-geometry
-	dojo/dom-style
-	dojo/dom-attr
-	dojo/dom-prop
-	dojo/dom-construct
-	dojo/Stateful
-	dijit/Destroyable
-	dojo/string
-	dojo/cache
-	dojo/text
-	dijit/form/Button
-	dijit/form/_FormWidget
-	dijit/_Widget
-	dojo/query
-	dojo/selector/_loader
-	dojo/selector/lite
-	dijit/_FocusMixin
-	dijit/focus
-	dojo/window
-	dijit/a11y
-	dojo/uacss
-	dijit/hccss
-	dojo/hccss
-	dijit/form/_FormWidgetMixin
-	dijit/form/_ButtonMixin
-	dijit/form/templates/Button.html
 	dijit/form/Select
-	dojo/i18n
 	dijit/form/_FormSelectWidget
 	dojo/data/util/sorter
 	dijit/form/_FormValueWidget
@@ -783,9 +673,6 @@ dote-client/addTopic:
 	dijit/MenuSeparator
 	dijit/templates/MenuSeparator.html
 	dijit/Tooltip
-	dojo/_base/fx
-	dojo/_base/Color
-	dijit/_base/manager
 	dijit/templates/Tooltip.html
 	dijit/form/templates/Select.html
 	dijit/form/nls/validate
@@ -802,8 +689,6 @@ dote-client/addTopic:
 	dijit/layout/utils
 	dojo/html
 	dojo/parser
-	dojo/_base/html
-	dojo/_base/url
 	dojo/date/stamp
 	dijit/nls/loading
 	dijit/layout/TabContainer
@@ -825,90 +710,22 @@ dote-client/addTopic:
 	dojo/NodeList-dom
 	dote-client/resources/TopicAdd.html
 	dote-client/userControls
+	dote-client/displayHelp
+	dijit/Dialog
+	dojo/dnd/Moveable
+	dojo/dnd/common
+	dojo/dnd/Mover
+	dojo/dnd/autoscroll
+	dojo/dnd/TimedMoveable
+	dijit/form/_FormMixin
+	dijit/_DialogMixin
+	dijit/DialogUnderlay
+	dijit/templates/Dialog.html
 
 dote-client/login:
 	dote-client/login
 	dote-client/fade
-	dojo/_base/fx
-	dojo/_base/kernel
-	dojo/has
-	dojo/_base/config
-	dojo/_base/lang
-	dojo/sniff
-	dojo/Evented
-	dojo/aspect
-	dojo/on
-	dojo/_base/Color
-	dojo/_base/array
-	dojo/_base/connect
-	dojo/topic
-	dojo/_base/event
-	dojo/dom-geometry
-	dojo/_base/window
-	dojo/dom
-	dojo/dom-style
-	dojo/mouse
-	dojo/_base/sniff
-	dojo/keys
 	dote/util
-	dojo/ready
-	dojo/domReady
-	dojo/request
-	dojo/request/default
-	dijit/form/Button
-	dojo/_base/declare
-	dojo/dom-class
-	dijit/form/_FormWidget
-	dijit/_Widget
-	dojo/query
-	dojo/selector/_loader
-	dojo/selector/lite
-	dijit/registry
-	dojo/_base/unload
-	dijit/main
-	dijit/_WidgetBase
-	dojo/dom-attr
-	dojo/dom-prop
-	dojo/dom-construct
-	dojo/Stateful
-	dojo/when
-	dojo/Deferred
-	dojo/errors/CancelError
-	dojo/errors/create
-	dojo/promise/Promise
-	dojo/promise/instrumentation
-	dojo/promise/tracer
-	dijit/Destroyable
-	dijit/_OnDijitClickMixin
-	dijit/a11yclick
-	dijit/_FocusMixin
-	dijit/focus
-	dojo/window
-	dijit/a11y
-	dojo/uacss
-	dijit/hccss
-	dojo/hccss
-	dijit/_CssStateMixin
-	dijit/_TemplatedMixin
-	dojo/touch
-	dojo/string
-	dojo/cache
-	dojo/text
-	dojo/_base/xhr
-	dojo/io-query
-	dojo/dom-form
-	dojo/json
-	dojo/_base/Deferred
-	dojo/_base/json
-	dojo/request/watch
-	dojo/request/util
-	dojo/errors/RequestError
-	dojo/errors/RequestTimeoutError
-	dojo/request/xhr
-	dojo/request/handlers
-	dijit/form/_FormWidgetMixin
-	dijit/form/_ButtonMixin
-	dijit/form/templates/Button.html
 	dijit/form/TextBox
 	dijit/form/_FormValueWidget
 	dijit/form/_FormValueMixin
@@ -921,88 +738,31 @@ dote-client/login:
 dote-client/viewSettings:
 	dote-client/viewSettings
 	dote-client/fade
-	dojo/_base/fx
-	dojo/_base/kernel
-	dojo/has
-	dojo/_base/config
-	dojo/_base/lang
-	dojo/sniff
-	dojo/Evented
-	dojo/aspect
-	dojo/on
-	dojo/_base/Color
-	dojo/_base/array
-	dojo/_base/connect
-	dojo/topic
-	dojo/_base/event
-	dojo/dom-geometry
-	dojo/_base/window
-	dojo/dom
-	dojo/dom-style
-	dojo/mouse
-	dojo/_base/sniff
-	dojo/keys
 	dote-client/userControls
-	dojo/json
-	dojo/ready
-	dojo/domReady
-	dojo/request
-	dojo/request/default
+	dote-client/displayHelp
+	dijit/Dialog
+	dojo/dnd/Moveable
+	dojo/dnd/common
+	dojo/dnd/Mover
+	dojo/dnd/autoscroll
+	dojo/dnd/TimedMoveable
+	dijit/form/_FormMixin
+	dijit/_DialogMixin
+	dijit/DialogUnderlay
+	dijit/BackgroundIframe
+	dijit/layout/ContentPane
+	dijit/_Container
+	dijit/layout/_ContentPaneResizeMixin
+	dijit/Viewport
+	dijit/layout/utils
+	dojo/html
+	dojo/parser
+	dojo/date/stamp
+	dijit/nls/loading
+	dijit/templates/Dialog.html
+	dijit/nls/common
 	dojo/store/JsonRest
-	dojo/_base/xhr
-	dojo/io-query
-	dojo/dom-form
-	dojo/_base/Deferred
-	dojo/Deferred
-	dojo/errors/CancelError
-	dojo/errors/create
-	dojo/promise/Promise
-	dojo/promise/instrumentation
-	dojo/promise/tracer
-	dojo/when
-	dojo/_base/json
-	dojo/request/watch
-	dojo/request/util
-	dojo/errors/RequestError
-	dojo/errors/RequestTimeoutError
-	dojo/request/xhr
-	dojo/request/handlers
-	dojo/_base/declare
 	dojo/store/util/QueryResults
-	dijit/form/Button
-	dojo/dom-class
-	dijit/form/_FormWidget
-	dijit/_Widget
-	dojo/query
-	dojo/selector/_loader
-	dojo/selector/lite
-	dijit/registry
-	dojo/_base/unload
-	dijit/main
-	dijit/_WidgetBase
-	dojo/dom-attr
-	dojo/dom-prop
-	dojo/dom-construct
-	dojo/Stateful
-	dijit/Destroyable
-	dijit/_OnDijitClickMixin
-	dijit/a11yclick
-	dijit/_FocusMixin
-	dijit/focus
-	dojo/window
-	dijit/a11y
-	dojo/uacss
-	dijit/hccss
-	dojo/hccss
-	dijit/_CssStateMixin
-	dijit/_TemplatedMixin
-	dojo/touch
-	dojo/string
-	dojo/cache
-	dojo/text
-	dijit/form/_FormWidgetMixin
-	dijit/form/_ButtonMixin
-	dijit/form/templates/Button.html
 	dijit/form/CheckBox
 	dijit/form/ToggleButton
 	dijit/form/_ToggleButtonMixin
@@ -1015,106 +775,30 @@ dote-client/viewSettings:
 	dijit/form/_TextBoxMixin
 	dijit/form/templates/TextBox.html
 	dijit/form/ValidationTextBox
-	dojo/i18n
 	dijit/Tooltip
-	dijit/_base/manager
 	dijit/place
-	dijit/BackgroundIframe
 	dijit/templates/Tooltip.html
 	dijit/form/templates/ValidationTextBox.html
 	dijit/form/nls/validate
 
 dote-client/viewTopic:
 	dote-client/viewTopic
-	dojo/ready
-	dojo/_base/kernel
-	dojo/has
-	dojo/_base/config
-	dojo/domReady
-	dojo/_base/lang
-	dojo/sniff
 	dojo/store/Cache
-	dojo/_base/Deferred
-	dojo/Deferred
-	dojo/errors/CancelError
-	dojo/errors/create
-	dojo/promise/Promise
-	dojo/promise/instrumentation
-	dojo/promise/tracer
-	dojo/Evented
-	dojo/aspect
-	dojo/on
-	dojo/_base/array
-	dojo/when
 	dojo/store/Memory
-	dojo/_base/declare
 	dojo/store/util/QueryResults
 	dojo/store/util/SimpleQueryEngine
 	dote/marked
 	marked/marked
 	hljs/highlight.pack
 	dote-client/store/JsonRest
-	dojo/_base/xhr
-	dojo/_base/sniff
-	dojo/io-query
-	dojo/dom
-	dojo/_base/window
-	dojo/dom-form
-	dojo/json
-	dojo/_base/json
-	dojo/request/watch
-	dojo/request/util
-	dojo/errors/RequestError
-	dojo/errors/RequestTimeoutError
-	dojo/request/xhr
-	dojo/request/handlers
 	dojo/store/JsonRest
 	dote-client/Topic
 	dote-client/_StoreMixin
 	dote-client/_TopicMixin
-	dojo/dom-class
-	dojo/dom-construct
-	dojo/dom-attr
-	dojo/dom-style
-	dojo/dom-prop
-	dojo/_base/connect
-	dojo/topic
-	dojo/_base/event
-	dojo/dom-geometry
-	dojo/mouse
-	dojo/keys
-	dijit/_CssStateMixin
-	dijit/registry
-	dojo/_base/unload
-	dijit/main
-	dijit/_OnDijitClickMixin
-	dijit/a11yclick
 	dijit/form/Select
-	dojo/i18n
 	dijit/form/_FormSelectWidget
 	dojo/data/util/sorter
-	dojo/query
-	dojo/selector/_loader
-	dojo/selector/lite
 	dijit/form/_FormValueWidget
-	dijit/form/_FormWidget
-	dijit/_Widget
-	dijit/_WidgetBase
-	dojo/Stateful
-	dijit/Destroyable
-	dijit/_FocusMixin
-	dijit/focus
-	dojo/window
-	dijit/a11y
-	dojo/uacss
-	dijit/hccss
-	dojo/hccss
-	dijit/_TemplatedMixin
-	dojo/touch
-	dojo/string
-	dojo/cache
-	dojo/text
-	dijit/form/_FormWidgetMixin
 	dijit/form/_FormValueMixin
 	dijit/_HasDropDown
 	dijit/popup
@@ -1132,9 +816,6 @@ dote-client/viewTopic:
 	dijit/MenuSeparator
 	dijit/templates/MenuSeparator.html
 	dijit/Tooltip
-	dojo/_base/fx
-	dojo/_base/Color
-	dijit/_base/manager
 	dijit/templates/Tooltip.html
 	dijit/form/templates/Select.html
 	dijit/form/nls/validate
@@ -1142,9 +823,6 @@ dote-client/viewTopic:
 	dijit/form/_TextBoxMixin
 	dijit/form/templates/TextBox.html
 	moment/moment
-	dijit/form/Button
-	dijit/form/_ButtonMixin
-	dijit/form/templates/Button.html
 	dijit/form/Textarea
 	dijit/form/_ExpandingTextAreaMixin
 	dijit/Viewport
@@ -1155,8 +833,6 @@ dote-client/viewTopic:
 	dijit/layout/utils
 	dojo/html
 	dojo/parser
-	dojo/_base/html
-	dojo/_base/url
 	dojo/date/stamp
 	dijit/nls/loading
 	dijit/layout/TabContainer
@@ -1179,94 +855,32 @@ dote-client/viewTopic:
 	dote-client/resources/_TopicComment.html
 	dote-client/resources/Topic.html
 	dote-client/userControls
+	dote-client/displayHelp
+	dijit/Dialog
+	dojo/dnd/Moveable
+	dojo/dnd/common
+	dojo/dnd/Mover
+	dojo/dnd/autoscroll
+	dojo/dnd/TimedMoveable
+	dijit/form/_FormMixin
+	dijit/_DialogMixin
+	dijit/DialogUnderlay
+	dijit/templates/Dialog.html
 
 dote-client/viewTopicList:
 	dote-client/viewTopicList
-	dojo/dom
-	dojo/sniff
-	dojo/has
-	dojo/_base/lang
-	dojo/_base/kernel
-	dojo/_base/config
-	dojo/_base/window
-	dojo/ready
-	dojo/domReady
 	dojo/store/Cache
-	dojo/_base/Deferred
-	dojo/Deferred
-	dojo/errors/CancelError
-	dojo/errors/create
-	dojo/promise/Promise
-	dojo/promise/instrumentation
-	dojo/promise/tracer
-	dojo/Evented
-	dojo/aspect
-	dojo/on
-	dojo/_base/array
-	dojo/when
 	dojo/store/JsonRest
-	dojo/_base/xhr
-	dojo/_base/sniff
-	dojo/io-query
-	dojo/dom-form
-	dojo/json
-	dojo/_base/json
-	dojo/request/watch
-	dojo/request/util
-	dojo/errors/RequestError
-	dojo/errors/RequestTimeoutError
-	dojo/request/xhr
-	dojo/request/handlers
-	dojo/_base/declare
 	dojo/store/util/QueryResults
 	dojo/store/Memory
 	dojo/store/util/SimpleQueryEngine
 	dote-client/TopicList
 	dote-client/_StoreMixin
 	dote-client/_TopicMixin
-	dojo/dom-class
-	dojo/dom-construct
-	dojo/dom-attr
-	dojo/dom-style
-	dojo/dom-prop
-	dojo/_base/connect
-	dojo/topic
-	dojo/_base/event
-	dojo/dom-geometry
-	dojo/mouse
-	dojo/keys
-	dijit/_CssStateMixin
-	dijit/registry
-	dojo/_base/unload
-	dijit/main
-	dijit/_OnDijitClickMixin
-	dijit/a11yclick
 	dijit/form/Select
-	dojo/i18n
 	dijit/form/_FormSelectWidget
 	dojo/data/util/sorter
-	dojo/query
-	dojo/selector/_loader
-	dojo/selector/lite
 	dijit/form/_FormValueWidget
-	dijit/form/_FormWidget
-	dijit/_Widget
-	dijit/_WidgetBase
-	dojo/Stateful
-	dijit/Destroyable
-	dijit/_FocusMixin
-	dijit/focus
-	dojo/window
-	dijit/a11y
-	dojo/uacss
-	dijit/hccss
-	dojo/hccss
-	dijit/_TemplatedMixin
-	dojo/touch
-	dojo/string
-	dojo/cache
-	dojo/text
-	dijit/form/_FormWidgetMixin
 	dijit/form/_FormValueMixin
 	dijit/_HasDropDown
 	dijit/popup
@@ -1284,9 +898,6 @@ dote-client/viewTopicList:
 	dijit/MenuSeparator
 	dijit/templates/MenuSeparator.html
 	dijit/Tooltip
-	dojo/_base/fx
-	dojo/_base/Color
-	dijit/_base/manager
 	dijit/templates/Tooltip.html
 	dijit/form/templates/Select.html
 	dijit/form/nls/validate
@@ -1299,1061 +910,588 @@ dote-client/viewTopicList:
 	dote-client/resources/_TopicListItem.html
 	dote-client/resources/TopicList.html
 	dote-client/userControls
+	dote-client/displayHelp
+	dijit/Dialog
+	dojo/dnd/Moveable
+	dojo/dnd/common
+	dojo/dnd/Mover
+	dojo/dnd/autoscroll
+	dojo/dnd/TimedMoveable
+	dijit/form/_FormMixin
+	dijit/_DialogMixin
+	dijit/DialogUnderlay
+	dijit/layout/ContentPane
+	dijit/layout/_ContentPaneResizeMixin
+	dijit/layout/utils
+	dojo/html
+	dojo/parser
+	dojo/date/stamp
+	dijit/nls/loading
+	dijit/templates/Dialog.html
+	dijit/nls/common
+
+dote-client/viewWelcome:
+	dote-client/viewWelcome
+	dote-client/fade
+	dote-client/userControls
+	dote-client/displayHelp
+	dijit/Dialog
+	dojo/dnd/Moveable
+	dojo/dnd/common
+	dojo/dnd/Mover
+	dojo/dnd/autoscroll
+	dojo/dnd/TimedMoveable
+	dijit/form/_FormMixin
+	dijit/_DialogMixin
+	dijit/DialogUnderlay
+	dijit/BackgroundIframe
+	dijit/layout/ContentPane
+	dijit/_Container
+	dijit/layout/_ContentPaneResizeMixin
+	dijit/Viewport
+	dijit/layout/utils
+	dojo/html
+	dojo/parser
+	dojo/date/stamp
+	dijit/nls/loading
+	dijit/templates/Dialog.html
+	dijit/nls/common
+	dojo/store/JsonRest
+	dojo/store/util/QueryResults
+	dijit/form/CheckBox
+	dijit/form/ToggleButton
+	dijit/form/_ToggleButtonMixin
+	dijit/form/_CheckBoxMixin
+	dijit/form/templates/CheckBox.html
+	dojo/NodeList-dom
+	dijit/form/TextBox
+	dijit/form/_FormValueWidget
+	dijit/form/_FormValueMixin
+	dijit/form/_TextBoxMixin
+	dijit/form/templates/TextBox.html
+	dijit/form/ValidationTextBox
+	dijit/Tooltip
+	dijit/place
+	dijit/templates/Tooltip.html
+	dijit/form/templates/ValidationTextBox.html
+	dijit/form/nls/validate
 
 Optimizer Messages:
-/Users/kitsonk/github/dote/lib/dote-client/login.js:
-/Users/kitsonk/github/dote/lib/dote-client/login.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1017: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1345: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5260: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5614: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5625: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5822: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:12193: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:14164: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:41.852s)
-/Users/kitsonk/github/dote/lib/dote-client/login.js:
-/Users/kitsonk/github/dote/lib/dote-client/login.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1017: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1345: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5260: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5614: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5625: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5822: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:12193: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:14164: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:41.852s)
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:1017: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:1345: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5260: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5734: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5745: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5942: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:14656: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:16627: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:43.009s)
-/Users/kitsonk/github/dote/lib/dote-client/login.js:
-/Users/kitsonk/github/dote/lib/dote-client/login.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1017: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1345: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5260: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5614: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5625: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5822: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:12193: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:14164: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:41.852s)
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:1017: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:1345: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5260: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5734: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5745: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5942: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:14656: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:16627: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:43.009s)
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:148: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:158: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:189: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:206: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:524: WARNING - unreachable code
-					if( 0  && p=="async"){
-					                     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:617: WARNING - unreachable code
-		if( 0  ||  0 ){
-		              ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:651: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:666: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:678: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:694: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:707: WARNING - unreachable code
-				if( 0  && comboPending && !comboPendingTimer){
-				                                             ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:806: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:811: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:898: WARNING - unreachable code
-			if( 0 ){
-			       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:971: WARNING - unreachable code
-			}else if( 0 ){
-			             ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1002: WARNING - unreachable code
-				if( 0  && legacyMode == sync && !plugin.executed){
-				                                                 ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1074: WARNING - unreachable code
-			if( 0 ){
-			       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1184: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1260: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1327: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1360: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1396: WARNING - unreachable code
-					if( 0  && legacyMode){
-					                     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1412: WARNING - unreachable code
-				if( 0  && legacyMode){
-				                     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1497: WARNING - unreachable code
-				if( 0  && module.plugin && module.plugin.isCombo){
-				                                                 ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1533: WARNING - unreachable code
-				if( 0  && legacyMode && !waiting[mid]){
-				                                      ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1573: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1655: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1667: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1734: WARNING - unreachable code
-		if( 0  && args[1]===defaultDeps){
-		                                ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1768: WARNING - unreachable code
-				if( 0  && !targetModule){
-				                        ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1778: WARNING - unreachable code
-			if( 0  && isArray(targetModule)){
-			                                ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1796: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1826: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1855: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1862: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1867: WARNING - unreachable code
-	if( 0  && req.combo && req.combo.plugins){
-	                                         ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1880: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-0 error(s), 37 warning(s)
-Done (compile time:14.138s)
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:245: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1149: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1483: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1759: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1770: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:5181: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:11870: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:18232: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:20706: WARNING - If this if/for/while really shouldnt have a body, use {}
-		for(var top=this; top.parentMenu; top=top.parentMenu);
-		^
-
-0 error(s), 9 warning(s)
-Done (compile time:30.096s)
-/Users/kitsonk/github/dote/lib/dote-client/login.js:
-/Users/kitsonk/github/dote/lib/dote-client/login.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1017: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1345: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5260: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5614: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5625: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5822: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:12193: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:14164: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:41.852s)
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:1017: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:1345: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5260: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5734: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5745: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5942: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:14656: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:16627: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:43.009s)
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:148: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:158: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:189: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:206: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:524: WARNING - unreachable code
-					if( 0  && p=="async"){
-					                     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:617: WARNING - unreachable code
-		if( 0  ||  0 ){
-		              ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:651: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:666: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:678: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:694: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:707: WARNING - unreachable code
-				if( 0  && comboPending && !comboPendingTimer){
-				                                             ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:806: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:811: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:898: WARNING - unreachable code
-			if( 0 ){
-			       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:971: WARNING - unreachable code
-			}else if( 0 ){
-			             ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1002: WARNING - unreachable code
-				if( 0  && legacyMode == sync && !plugin.executed){
-				                                                 ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1074: WARNING - unreachable code
-			if( 0 ){
-			       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1184: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1260: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1327: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1360: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1396: WARNING - unreachable code
-					if( 0  && legacyMode){
-					                     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1412: WARNING - unreachable code
-				if( 0  && legacyMode){
-				                     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1497: WARNING - unreachable code
-				if( 0  && module.plugin && module.plugin.isCombo){
-				                                                 ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1533: WARNING - unreachable code
-				if( 0  && legacyMode && !waiting[mid]){
-				                                      ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1573: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1655: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1667: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1734: WARNING - unreachable code
-		if( 0  && args[1]===defaultDeps){
-		                                ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1768: WARNING - unreachable code
-				if( 0  && !targetModule){
-				                        ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1778: WARNING - unreachable code
-			if( 0  && isArray(targetModule)){
-			                                ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1796: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1826: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1855: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1862: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1867: WARNING - unreachable code
-	if( 0  && req.combo && req.combo.plugins){
-	                                         ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1880: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-0 error(s), 37 warning(s)
-Done (compile time:14.138s)
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:245: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1149: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1483: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1759: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1770: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:5181: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:11870: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:18232: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:20706: WARNING - If this if/for/while really shouldnt have a body, use {}
-		for(var top=this; top.parentMenu; top=top.parentMenu);
-		^
-
-0 error(s), 9 warning(s)
-Done (compile time:30.096s)
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:122: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:133: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:280: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:462: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:790: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:7125: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:13055: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:19417: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:21891: WARNING - If this if/for/while really shouldnt have a body, use {}
-		for(var top=this; top.parentMenu; top=top.parentMenu);
-		^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:28203: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:3608: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
 	new Date("X"); // workaround for #11279, new Date("") == NaN
 	        ^
 
-0 error(s), 10 warning(s)
-Done (compile time:47.146s)
-/Users/kitsonk/github/dote/lib/dote-client/login.js:
-/Users/kitsonk/github/dote/lib/dote-client/login.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1017: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:1345: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5260: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5614: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5625: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:5822: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:12193: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/login.js:14164: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:41.852s)
+0 error(s), 1 warning(s)
+Done (compile time:24.33s)
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:835: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:1017: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:1345: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5260: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5734: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5745: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:5942: WARNING - unreachable code
-	}else if( 0 ){
-	      ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:14656: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:16627: WARNING - unreachable code
-	}else{
-	     ^
-
-0 error(s), 9 warning(s)
-Done (compile time:43.009s)
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:148: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:158: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:189: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:206: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:524: WARNING - unreachable code
-					if( 0  && p=="async"){
-					                     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:617: WARNING - unreachable code
-		if( 0  ||  0 ){
-		              ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:651: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:666: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:678: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:694: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:707: WARNING - unreachable code
-				if( 0  && comboPending && !comboPendingTimer){
-				                                             ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:806: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:811: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:898: WARNING - unreachable code
-			if( 0 ){
-			       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:971: WARNING - unreachable code
-			}else if( 0 ){
-			             ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1002: WARNING - unreachable code
-				if( 0  && legacyMode == sync && !plugin.executed){
-				                                                 ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1074: WARNING - unreachable code
-			if( 0 ){
-			       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1184: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1260: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1327: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1360: WARNING - unreachable code
-				if( 0 ){
-				       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1396: WARNING - unreachable code
-					if( 0  && legacyMode){
-					                     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1412: WARNING - unreachable code
-				if( 0  && legacyMode){
-				                     ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1497: WARNING - unreachable code
-				if( 0  && module.plugin && module.plugin.isCombo){
-				                                                 ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1533: WARNING - unreachable code
-				if( 0  && legacyMode && !waiting[mid]){
-				                                      ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1573: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1655: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1667: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1734: WARNING - unreachable code
-		if( 0  && args[1]===defaultDeps){
-		                                ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1768: WARNING - unreachable code
-				if( 0  && !targetModule){
-				                        ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1778: WARNING - unreachable code
-			if( 0  && isArray(targetModule)){
-			                                ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1796: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1826: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1855: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1862: WARNING - unreachable code
-		if( 0 ){
-		       ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1867: WARNING - unreachable code
-	if( 0  && req.combo && req.combo.plugins){
-	                                         ^
-
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:1880: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-0 error(s), 37 warning(s)
-Done (compile time:14.138s)
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:245: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1149: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1483: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1759: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:1770: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:5181: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:11870: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:18232: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:20706: WARNING - If this if/for/while really shouldnt have a body, use {}
-		for(var top=this; top.parentMenu; top=top.parentMenu);
-		^
-
-0 error(s), 9 warning(s)
-Done (compile time:30.096s)
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:122: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:133: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:280: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:462: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:790: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:7125: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:13055: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:19417: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:21891: WARNING - If this if/for/while really shouldnt have a body, use {}
-		for(var top=this; top.parentMenu; top=top.parentMenu);
-		^
-
-/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:28203: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:3608: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
 	new Date("X"); // workaround for #11279, new Date("") == NaN
 	        ^
 
-0 error(s), 10 warning(s)
-Done (compile time:47.146s)
+0 error(s), 1 warning(s)
+Done (compile time:24.33s)
+/Users/kitsonk/github/dote/lib/dote-client/login.js:
+Done (compile time:14.728s)
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:4533: WARNING - If this if/for/while really shouldnt have a body, use {}
+		for(var top=this; top.parentMenu; top=top.parentMenu);
+		^
+
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:11331: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 2 warning(s)
+Done (compile time:16.694s)
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:3608: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 1 warning(s)
+Done (compile time:24.33s)
+/Users/kitsonk/github/dote/lib/dote-client/login.js:
+Done (compile time:14.728s)
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:4533: WARNING - If this if/for/while really shouldnt have a body, use {}
+		for(var top=this; top.parentMenu; top=top.parentMenu);
+		^
+
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:11331: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 2 warning(s)
+Done (compile time:16.694s)
 /Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:278: WARNING - unreachable code
-	if( 0 ){
-	       ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:460: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:788: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:1763: WARNING - unreachable code
-	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
-	                                                   ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:1774: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:5185: WARNING - unreachable code
-	if(! 1 ){
-	        ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:10140: WARNING - unreachable code
-	return ret;
-	^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:14561: WARNING - unreachable code
-	}else{
-	     ^
-
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:21502: WARNING - If this if/for/while really shouldnt have a body, use {}
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:5117: WARNING - If this if/for/while really shouldnt have a body, use {}
 		for(var top=this; top.parentMenu; top=top.parentMenu);
 		^
 
-/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:26404: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:9091: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
 	new Date("X"); // workaround for #11279, new Date("") == NaN
 	        ^
 
-0 error(s), 10 warning(s)
-Done (compile time:47.412s)
+0 error(s), 2 warning(s)
+Done (compile time:34.669s)
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:3608: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 1 warning(s)
+Done (compile time:24.33s)
+/Users/kitsonk/github/dote/lib/dote-client/login.js:
+Done (compile time:14.728s)
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:4533: WARNING - If this if/for/while really shouldnt have a body, use {}
+		for(var top=this; top.parentMenu; top=top.parentMenu);
+		^
+
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:11331: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 2 warning(s)
+Done (compile time:16.694s)
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:5117: WARNING - If this if/for/while really shouldnt have a body, use {}
+		for(var top=this; top.parentMenu; top=top.parentMenu);
+		^
+
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:9091: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 2 warning(s)
+Done (compile time:34.669s)
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:148: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:158: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:189: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:206: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:524: WARNING - unreachable code
+					if( 0  && p=="async"){
+					                     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:617: WARNING - unreachable code
+		if( 0  ||  0 ){
+		              ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:651: WARNING - unreachable code
+		if( 0 ){
+		       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:666: WARNING - unreachable code
+		if( 0 ){
+		       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:678: WARNING - unreachable code
+	}else{
+	     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:694: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:707: WARNING - unreachable code
+				if( 0  && comboPending && !comboPendingTimer){
+				                                             ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:806: WARNING - unreachable code
+				if( 0 ){
+				       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:811: WARNING - unreachable code
+				if( 0 ){
+				       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:898: WARNING - unreachable code
+			if( 0 ){
+			       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:971: WARNING - unreachable code
+			}else if( 0 ){
+			             ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1002: WARNING - unreachable code
+				if( 0  && legacyMode == sync && !plugin.executed){
+				                                                 ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1074: WARNING - unreachable code
+			if( 0 ){
+			       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1184: WARNING - unreachable code
+				if( 0 ){
+				       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1260: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1327: WARNING - unreachable code
+				if( 0 ){
+				       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1360: WARNING - unreachable code
+				if( 0 ){
+				       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1396: WARNING - unreachable code
+					if( 0  && legacyMode){
+					                     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1412: WARNING - unreachable code
+				if( 0  && legacyMode){
+				                     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1497: WARNING - unreachable code
+				if( 0  && module.plugin && module.plugin.isCombo){
+				                                                 ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1533: WARNING - unreachable code
+				if( 0  && legacyMode && !waiting[mid]){
+				                                      ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1573: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1655: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1667: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1734: WARNING - unreachable code
+		if( 0  && args[1]===defaultDeps){
+		                                ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1768: WARNING - unreachable code
+				if( 0  && !targetModule){
+				                        ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1778: WARNING - unreachable code
+			if( 0  && isArray(targetModule)){
+			                                ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1796: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1826: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1855: WARNING - unreachable code
+		if( 0 ){
+		       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1862: WARNING - unreachable code
+		if( 0 ){
+		       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1867: WARNING - unreachable code
+	if( 0  && req.combo && req.combo.plugins){
+	                                         ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1880: WARNING - unreachable code
+	if(! 1 ){
+	        ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2456: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2638: WARNING - unreachable code
+	if(! 1 ){
+	        ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2966: WARNING - unreachable code
+	}else{
+	     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6562: WARNING - unreachable code
+	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
+	                                                   ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6573: WARNING - unreachable code
+	}else{
+	     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:9704: WARNING - unreachable code
+	if(! 1 ){
+	        ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:12573: WARNING - unreachable code
+	return ret;
+	^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:13276: WARNING - unreachable code
+	}else{
+	     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:19840: WARNING - unreachable code
+	}else if( 0 ){
+	      ^
+
+0 error(s), 46 warning(s)
+Done (compile time:37.909s)
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:3608: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 1 warning(s)
+Done (compile time:24.33s)
+/Users/kitsonk/github/dote/lib/dote-client/login.js:
+Done (compile time:14.728s)
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:4533: WARNING - If this if/for/while really shouldnt have a body, use {}
+		for(var top=this; top.parentMenu; top=top.parentMenu);
+		^
+
+/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:11331: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 2 warning(s)
+Done (compile time:16.694s)
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:5117: WARNING - If this if/for/while really shouldnt have a body, use {}
+		for(var top=this; top.parentMenu; top=top.parentMenu);
+		^
+
+/Users/kitsonk/github/dote/lib/dote-client/addTopic.js:9091: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 2 warning(s)
+Done (compile time:34.669s)
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:148: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:158: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:189: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:206: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:524: WARNING - unreachable code
+					if( 0  && p=="async"){
+					                     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:617: WARNING - unreachable code
+		if( 0  ||  0 ){
+		              ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:651: WARNING - unreachable code
+		if( 0 ){
+		       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:666: WARNING - unreachable code
+		if( 0 ){
+		       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:678: WARNING - unreachable code
+	}else{
+	     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:694: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:707: WARNING - unreachable code
+				if( 0  && comboPending && !comboPendingTimer){
+				                                             ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:806: WARNING - unreachable code
+				if( 0 ){
+				       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:811: WARNING - unreachable code
+				if( 0 ){
+				       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:898: WARNING - unreachable code
+			if( 0 ){
+			       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:971: WARNING - unreachable code
+			}else if( 0 ){
+			             ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1002: WARNING - unreachable code
+				if( 0  && legacyMode == sync && !plugin.executed){
+				                                                 ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1074: WARNING - unreachable code
+			if( 0 ){
+			       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1184: WARNING - unreachable code
+				if( 0 ){
+				       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1260: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1327: WARNING - unreachable code
+				if( 0 ){
+				       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1360: WARNING - unreachable code
+				if( 0 ){
+				       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1396: WARNING - unreachable code
+					if( 0  && legacyMode){
+					                     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1412: WARNING - unreachable code
+				if( 0  && legacyMode){
+				                     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1497: WARNING - unreachable code
+				if( 0  && module.plugin && module.plugin.isCombo){
+				                                                 ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1533: WARNING - unreachable code
+				if( 0  && legacyMode && !waiting[mid]){
+				                                      ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1573: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1655: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1667: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1734: WARNING - unreachable code
+		if( 0  && args[1]===defaultDeps){
+		                                ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1768: WARNING - unreachable code
+				if( 0  && !targetModule){
+				                        ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1778: WARNING - unreachable code
+			if( 0  && isArray(targetModule)){
+			                                ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1796: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1826: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1855: WARNING - unreachable code
+		if( 0 ){
+		       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1862: WARNING - unreachable code
+		if( 0 ){
+		       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1867: WARNING - unreachable code
+	if( 0  && req.combo && req.combo.plugins){
+	                                         ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:1880: WARNING - unreachable code
+	if(! 1 ){
+	        ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2456: WARNING - unreachable code
+	if( 0 ){
+	       ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2638: WARNING - unreachable code
+	if(! 1 ){
+	        ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2966: WARNING - unreachable code
+	}else{
+	     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6562: WARNING - unreachable code
+	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
+	                                                   ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6573: WARNING - unreachable code
+	}else{
+	     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:9704: WARNING - unreachable code
+	if(! 1 ){
+	        ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:12573: WARNING - unreachable code
+	return ret;
+	^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:13276: WARNING - unreachable code
+	}else{
+	     ^
+
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:19840: WARNING - unreachable code
+	}else if( 0 ){
+	      ^
+
+0 error(s), 46 warning(s)
+Done (compile time:37.909s)
+/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:5718: WARNING - If this if/for/while really shouldnt have a body, use {}
+		for(var top=this; top.parentMenu; top=top.parentMenu);
+		^
+
+/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:10890: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 2 warning(s)
+Done (compile time:38.525s)
+/Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js:
+/Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js:3608: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+	new Date("X"); // workaround for #11279, new Date("") == NaN
+	        ^
+
+0 error(s), 1 warning(s)
+Done (compile time:1.376s)
 
 
 Process finished normally
 	errors: 0
 	warnings: 16
-	build time: 52.516 seconds
+	build time: 45.789 seconds

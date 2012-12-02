@@ -1,0 +1,145 @@
+extends main
+
+prepend head
+  title = "dote Welcome"
+
+block scripts
+  script(type="text/javascript")
+    dojoConfig = {
+      async: 1,
+      baseUrl: "/#{base}",
+      packages: [{
+        name: "dojo",
+        location: "dojo"
+      },{
+        name: "dijit",
+        location: "dijit"
+      },{
+        name: "dote-client",
+        location: "dote-client"
+      },{
+        name: "moment",
+        location: "moment"
+      }],
+      deps: ["dote-client/viewWelcome"]
+    };
+    dote = {
+      username: "#{username}"
+    };
+  script(type="text/javascript", src="/#{base}/dojo/dojo.js")
+
+block content
+  .header
+    .content
+      .controls
+        ul
+          li #{username}
+          li
+            a(id="topicList", href="/")
+              i(class="icon-reorder")
+              | list
+          li
+            a(id="settings", href="/settings")
+              i(class="icon-cog")
+              | settings
+          li 
+            a(id="newTopic", href="/add")
+              i(class="icon-comment-alt")
+              | new
+          li
+            a(id="help", href="/help")
+              i(class="icon-question-sign")
+              | help
+          li
+            a(id="logout", href="/logout")
+              i(class="icon-signout")
+              | logout
+      .title dote
+      .subtitle Dojo Topic Discussion
+      .clear
+  .main
+    h1 Welcome
+    .instructions
+      p
+        | Welcome to <strong>dote</strong>, a topic discussion tool for open-collaberation.  This appears to be the
+        | first time you have logged into <strong>dote</strong>.  We will give you some information to guide you on the
+        | way.
+      p
+        | The main purpose of the forum is for people to post topics, have those topics voted upon and discussed, and 
+        | a topic owner to choose what action will be taken on the particular topic.  This is designed to make the 
+        | decesion process around Dojo transparent, but allow collaberation in a flexible fashion.  To that end, 
+        | <strong>dote</strong> supports fairly robust e-mail integration as well as an interactive website.  This means 
+        | in order to do most types of participations, you won't have to actually visit this site if you don't want to.
+      p
+        | While most of the concepts and the user interface of the website should be straight forward, there are a few
+        | things you may want to know.  The posting of topic text and comments utilise <code>markdown</code> syntax.  It
+        | supports all of the documented <a href="http://github.github.com/github-flavored-markdown/" 
+        | target="_blank">GFM</a> and some of the undocumented features (like tables).
+      p
+        | If you are assigned as an owner of a topic, your repsonsability is to decide what action will be taken on the 
+        | topic after a reasonable amount of time of voting and commentary.  The voting reflects how the community
+        | feels.  Obviously, if you decide to accept or reject a topic that isn't aligned to the communities feedback
+        | then please justify your decision.
+      p
+        | Voting allows for "+1", "-1" and "0" voting.  Obviously not voting at all is an option as well.  All votes are
+        | displayed in the order received, and you can change your vote once you have voted.  Anyone can vote on any
+        | topic.  The tags allow for categorization of topics and future enhancements will allow filtering of the topics
+        | in the user interface (but can already be filtered in e-mail).
+      p
+        | Because this is your first time, here are some settings you should check to make sure they are accurate. They
+        | can be changed at any point by selecting the <span class="action"><i class="icon-cog"></i> settings</span>
+        | from above:
+      form(id="userSettings", class="settings", action="")
+        table
+          tbody
+            tr
+              th Username:
+              td #{username}
+            tr
+              th
+                label(for="email") Send to Address:
+              td
+                input(type="text", id="email", name="email", placeholder="name@example.com")
+            tr
+              th
+                label(for="fromaddress") From Address:
+              td
+                input(type="text", id="fromaddress", name="fromaddress", placeholder="name@example.com")
+            tr
+              th Send E-Mails:
+              td
+                fieldset
+                  input(type="checkbox", id="onnew", name="onnew")
+                  label(for="onnew") On All New Topics
+                  br
+                  input(type="checkbox", id="onwatched", name="onwatched", checked="checked")
+                  label(for="onwatched") For Topics I am Watching
+                  br
+                  input(type="checkbox", id="onparticipate", name="onparticipate")
+                  label(for="onparticipate") On Topics I am Partcipating In
+                  br
+                  input(type="checkbox", id="onown", name="onown")
+                  label(for="onown") On Topics I Own
+                  br
+                  input(type="checkbox", id="onassigned", name="onassigned")
+                  label(for="onassigned") When Topics are Assigned to Me
+                  br
+                  label(for="ontags")For Topics with Tags:
+                  input(type="text", id="ontags", name="ontags", placeholder="Comma seperated list")
+            tr
+              th
+              td
+                input(type="checkbox", id="excreated", name="excreated")
+                label(for="excreated") Do Not E-mail My Activities
+            tr
+              th
+              td
+                input(type="checkbox", id="optout", name="optout")
+                label(for="optout") Do Not Send Any E-mails
+      p
+        | Again, welcome and you won't see this introduction again.
+      button.next(type="button", id="next") Next
+      .clear
+
+  .footer
+    .content Copyright &copy; 2012 Dojo Foundation &mdash; All Rights Reserved

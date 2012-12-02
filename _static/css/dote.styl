@@ -1,5 +1,5 @@
-@import "../../lib/dote-client/resources/client.css"
-@import "../Font-Awesome/css/font-awesome.css"
+@import url("../../lib/dote-client/resources/client.css")
+@import url("../Font-Awesome/css/font-awesome.css")
 @import "nib"
 
 login-border-color = #b5bcc7
@@ -102,6 +102,30 @@ header-button-bg-color-hover = #f2f2f2
   padding 1em 0
   h1
     font-size 24px
+    text-shadow 0 1px 2px rgba(black, 0.15)
+
+.instructions
+  margin 1em
+  padding 1em
+  border 1px solid #ddd
+  background-color #f9f9f9
+  border-radius 3px
+  box-shadow 0 1px 1px rgba(black, 0.25)
+  p
+    font-size 14px
+    code
+      font-size 100%
+      padding 3px 3px 0
+      font-family "Consolas","Bitstream Vera Sans Mono","Courier New",Courier,monospace;
+    .action
+      padding 3px 6px
+      font-size 85%
+      border 1px solid header-button-border-color
+      border-radius 2px
+      background-color header-button-bg-color
+      box-shadow 0 1px 1px rgba(black, 0.15)
+  .next
+    float right
 
 .settings
   font-size 14px
