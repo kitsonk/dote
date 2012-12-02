@@ -2,15 +2,8 @@ var profile = (function(){
 
 	var generalModules = [
 		"dijit/_base/manager",
-		"dijit/_CssStateMixin",
-		"dijit/_FocusMixin",
-		"dijit/_OnDijitClickMixin",
-		"dijit/_TemplatedMixin",
-		"dijit/_Widget",
-		"dijit/_WidgetBase",
-		"dijit/a11y",
-		"dijit/a11yclick",
 		"dijit/form/Button",
+		"dijit/form/TextBox",
 		"dojo/_base/array",
 		"dojo/_base/Color",
 		"dojo/_base/config",
@@ -88,7 +81,12 @@ var profile = (function(){
 			"dojo-cdn": 0,
 			"config-strip-strict": 0,
 			"dojo-loader-eval-hint-url": 1,
-			"dojo-firebug": 0
+			"dojo-firebug": 0,
+			"native-xhr": 1,
+			"dojo-debug-messages": 0,
+			"quirks": 0,
+			"dijit-legacy-requires": 0,
+			"opera": 0
 		},
 
 		layers: {
