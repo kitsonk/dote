@@ -9,12 +9,13 @@
     "imap": "~0.6.1",
     "emailjs": "~0.3.3",
     "mailparser": "~0.2.31",
-    "perstore": "https://github.com/kitsonk/perstore/archive/redis.tar.gz",
-    "redis": "~0.8.2",
-    "hiredis": "~0.1.14",
+    "perstore": "https://github.com/kitsonk/perstore/archive/mongodb.tar.gz",
     "juice": "0.0.6",
     "colors": "~0.6.0-1",
-    "ldapauth": "~2.2.0"
+    "ldapauth": "~2.2.0",
+    "rql": "~0.3.1",
+    "mongodb": "~1.2.3",
+    "bson": "~0.1.5"
   },
   "engines": {
     "node": "0.8.x",

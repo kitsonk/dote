@@ -21,17 +21,17 @@ A topic based voting system for open collaboration.
 * [emailjs][emailjs] - NodeJS STMP Client
 * [node-imap][nodeimap] - NodeJS IMAP Client
 * [mailparser][mailparser] - Mail Parsing Library
-* [node_redis][noderedis] - Redis Interface for NodeJS
-* [hiredis-node][hiredis] - Native Client Library for Redis
+* [node-mongodb-native][nodemongdodb] - Node Native MongoDB Library
 * [juice][juice] - Inlining CSS into HTML
-* [Redis][redis] - Persistent Key-Value Store
+* [colors][colors] - Node Console Colors
+* [MongoDB][mongodb] - Persistent Document Store
 
 You will need [git][git] and [NodeJS][nodejs] including ``npm`` to properly install **dote**.  **dote** has been tested 
 on NodeJS 0.8.4 - 0.8.15.
 
 ## Installation ##
 
-* Install [Redis][redis] and have available.
+* Install [MongoDB][mondgodb] and have available.
 * Clone the repository recursively with ``git``:
 
     ```bash
@@ -51,6 +51,28 @@ on NodeJS 0.8.4 - 0.8.15.
     ```bash
     $ node server
     ```
+
+### Optimised Client Build ###
+
+dote allows you to utilise the Dojo Builder to optimise the client side JavaScript that is used.  In order to utilise 
+the optimised build, run the [builder][dojobuilder] (which is not included):
+
+```bash
+$ path/to/dtk/util/buildScripts/build.sh --profile dote.profile.js
+```
+
+This will output an optimised build to ``./lib/``.  Then you need to point the instance at it by changing the ``base``
+parameter in the ``config.json`` file:
+
+```json
+"base": "lib"
+```
+
+And changing the ``_static/css/dote.styl`` to point at the optimised CSS:
+
+```css
+@import url("../../lib/dote-client/resources/client.css")
+```
 
 [volo]: http://volojs.org/
 [cpm]: https://github.com/kriszyp/cpm/
@@ -72,6 +94,7 @@ on NodeJS 0.8.4 - 0.8.15.
 [nodeimap]: https://github.com/mscdex/node-imap
 [mailparser]: https://github.com/andris9/mailparser
 [juice]: https://github.com/LearnBoost/juice
-[noderedis]: https://github.com/mranney/node_redis
-[hiredis]: https://github.com/pietern/hiredis-node
-[redis]: http://redis.io/
+[mongodb]: http://www.mongodb.org/
+[nodemongodb]: https://github.com/mongodb/node-mongodb-native
+[colors]: https://github.com/Marak/colors.js
+[dojobuilder]: http://dojotoolkit.org/download/
