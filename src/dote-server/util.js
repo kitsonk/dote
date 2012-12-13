@@ -14,10 +14,13 @@ define([
 	}
 
 	function parseRange(range){
-		var r = range.match(/^items=(\d+)-(\d+)$/i);
+		var r = range.match(/^items=(\d+)-(\d+)$/i),
+			start = parseInt(r[1], 10),
+			count = parseInt(r[2], 10) - start + 1;
 		return {
-			start: parseInt(r[1], 10),
-			end: parseInt(r[2], 10)
+			query: "limit(" + count + "," + start + ",Infinity)",
+			start: start,
+			count: count
 		};
 	}
 

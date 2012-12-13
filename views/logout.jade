@@ -1,12 +1,12 @@
 extends main
 
 prepend head
-  title = "dote Logout"
+  title = app.title + " Logout"
 
 block content
   .loginbox
-    h1 dote
-    h2 Dojo Topic Discussion
+    h1 #{app.title}
+    h2 #{app.subtitle}
     #warn.message
       | You have been logged out.
     p

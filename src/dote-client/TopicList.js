@@ -6,13 +6,15 @@ define([
 	"dojo/_base/lang", // lang.mixin
 	"dojo/json", // JSON.parse
 	"dijit/_Contained",
+	"dijit/_CssStateMixin",
+	"dijit/_OnDijitClickMixin",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetBase",
 	"dijit/layout/_LayoutWidget",
 	"dojo/text!./resources/_TopicListItem.html",
 	"dojo/text!./resources/TopicList.html"
-], function(_StoreMixin, _TopicMixin, array, declare, lang, JSON, _Contained, _TemplatedMixin, _WidgetBase,
-		_LayoutWidget, templateTopicListItem, templateTopicList){
+], function(_StoreMixin, _TopicMixin, array, declare, lang, JSON, _Contained, _CssStateMixin, _OnDijitClickMixin,
+		_TemplatedMixin, _WidgetBase, _LayoutWidget, templateTopicListItem, templateTopicList){
 
 	var _TopicItem = declare([_WidgetBase, _Contained, _TemplatedMixin, _TopicMixin], {
 		baseClass: "doteTopicItem",
@@ -98,9 +100,15 @@ define([
 
 	});
 
-	return declare([_LayoutWidget, _TemplatedMixin, _StoreMixin], {
+	return declare([_LayoutWidget, _TemplatedMixin, _CssStateMixin, _OnDijitClickMixin, _StoreMixin], {
+
 		baseClass: "doteTopicList",
 		templateString: templateTopicList,
+		moreLabel: "More...",
+
+		cssStateNodes: {
+			"moreLinkNode": "doteTopicListMoreLink"
+		},
 
 		user: "",
 
@@ -115,14 +123,19 @@ define([
 				voter: this.user,
 				topicList: this,
 				item: e.item
-			}), 0);
+			}));
+		},
+
+		_onMoreClick: function(e){
+			e && e.preventDefault();
+			console.log("hello!");
 		},
 
 		addTopic: function(topicInfo){
 			var topicSettings = lang.mixin(topicInfo, {
 				id: this.id + "_topic" + this.getChildren().length
 			});
-			this.addChild(new _TopicItem(topicSettings), 0);
+			this.addChild(new _TopicItem(topicSettings));
 		}
 	});
 });

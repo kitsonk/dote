@@ -1,7 +1,7 @@
 extends main
 
 prepend head
-  title = "dote Add Topic"
+  title = app.title + " Add Topic"
 
 block scripts
   script(type="text/javascript")
@@ -67,8 +67,8 @@ block content
             a(id="logout", href="/logout")
               i(class="icon-signout")
               | logout
-      .title dote
-      .subtitle Dojo Topic Discussion
+      .title #{app.title}
+      .subtitle #{app.title}
       .clear
   .main
     #topic

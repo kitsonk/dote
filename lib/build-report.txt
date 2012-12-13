@@ -1,4 +1,4 @@
-Build started: Sun Dec 02 2012 10:59:30 GMT+0000 (GMT)
+Build started: Tue Dec 04 2012 06:29:22 GMT+0000 (GMT)
 Build application version: 1.7.0dev (23930)
 Messages:
 info(100) Assumed module uses legacy loader API.
@@ -121,16 +121,16 @@ info(100) Assumed module uses legacy loader API.
 	module: moment/test/moment/sod_eod
 	module: moment/test/moment/utc
 info(103) Optimizing module complete.
-	/Users/kitsonk/github/dote/lib/dote-client/login.js (compile time:12.358s)
-	/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js (compile time:21.332s)
-	/Users/kitsonk/github/dote/lib/dote-client/addTopic.js (compile time:30.706s)
-	/Users/kitsonk/github/dote/lib/dojo/dojo.js (compile time:33.702s)
-	/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js (compile time:35.003s)
-	/Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js (compile time:4.766s)
-	/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js (compile time:3.05s)
+	/Users/kitsonk/github/dote/lib/dote-client/login.js (compile time:13.82s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewSettings.js (compile time:23.865s)
+	/Users/kitsonk/github/dote/lib/dote-client/addTopic.js (compile time:32.648s)
+	/Users/kitsonk/github/dote/lib/dojo/dojo.js (compile time:37.296s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewTopic.js (compile time:38.14s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js (compile time:6.326s)
+	/Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js (compile time:3.557s)
 info(104) Optimizer messages.
 	/Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:12.358s)
+Done (compile time:13.82s)
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:701: WARNING - unreachable code
 	if( 0 ){
@@ -149,7 +149,7 @@ Done (compile time:12.358s)
 	       ^
 
 0 error(s), 4 warning(s)
-Done (compile time:21.332s)
+Done (compile time:23.865s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:4964: WARNING - unreachable code
 if( 0 ){
@@ -180,7 +180,7 @@ if( 0 ){
 	       ^
 
 0 error(s), 7 warning(s)
-Done (compile time:35.003s)
+Done (compile time:38.14s)
 /Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
 /Users/kitsonk/github/dote/lib/dote-client/addTopic.js:4363: WARNING - unreachable code
 if( 0 ){
@@ -211,7 +211,7 @@ if( 0 ){
 	       ^
 
 0 error(s), 7 warning(s)
-Done (compile time:30.706s)
+Done (compile time:32.648s)
 /Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js:701: WARNING - unreachable code
 	if( 0 ){
@@ -230,7 +230,7 @@ Done (compile time:30.706s)
 	       ^
 
 0 error(s), 4 warning(s)
-Done (compile time:4.766s)
+Done (compile time:6.326s)
 /Users/kitsonk/github/dote/lib/dojo/dojo.js:
 /Users/kitsonk/github/dote/lib/dojo/dojo.js:148: WARNING - unreachable code
 	if( 0 ){
@@ -380,80 +380,80 @@ Done (compile time:4.766s)
 	if(! 1 ){
 	        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:2456: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2457: WARNING - unreachable code
 	if( 0 ){
 	       ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:2499: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2500: WARNING - unreachable code
 	if( 0 ){
 	       ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:2638: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2639: WARNING - unreachable code
 	if(! 1 ){
 	        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:2966: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2967: WARNING - unreachable code
 	}else{
 	     ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:4215: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:4216: WARNING - unreachable code
 		if( 0 ){
 		       ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:4609: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:4610: WARNING - unreachable code
 if( 0 ){
        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:6361: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6362: WARNING - unreachable code
 	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
 	                                                   ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:6372: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6373: WARNING - unreachable code
 	}else{
 	     ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:6497: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6498: WARNING - unreachable code
 if( 0 ){
        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:6909: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6910: WARNING - unreachable code
 if( 0 ){
        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:7273: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:7274: WARNING - unreachable code
 	if( 0 ){
 	       ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:7906: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:7907: WARNING - unreachable code
 		if( 0 ){
 		       ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:8763: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:8764: WARNING - unreachable code
 	if(! 1 ){
 	        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:10008: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:10009: WARNING - unreachable code
 if( 0 ){
        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:13068: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:13069: WARNING - unreachable code
 	return ret;
 	^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:15039: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:15040: WARNING - unreachable code
 	}else{
 	     ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:17121: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:17122: WARNING - unreachable code
 		if(! 1 ){ return; }
 		        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:20623: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:20624: WARNING - unreachable code
 	}else if( 0 ){
 	      ^
 
 0 error(s), 55 warning(s)
-Done (compile time:33.702s)
+Done (compile time:37.296s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:3779: WARNING - unreachable code
 if( 0 ){
@@ -476,7 +476,7 @@ if( 0 ){
 				       ^
 
 0 error(s), 5 warning(s)
-Done (compile time:3.05s)
+Done (compile time:3.557s)
 
 info(106) Optimizing CSS.
 	file: /Users/kitsonk/github/dote/src/dojo/_firebug/firebug.css
@@ -1065,9 +1065,9 @@ dote-client/viewWelcome:
 
 Optimizer Messages:
 /Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:12.358s)
+Done (compile time:13.82s)
 /Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:12.358s)
+Done (compile time:13.82s)
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:701: WARNING - unreachable code
 	if( 0 ){
@@ -1086,9 +1086,9 @@ Done (compile time:12.358s)
 	       ^
 
 0 error(s), 4 warning(s)
-Done (compile time:21.332s)
+Done (compile time:23.865s)
 /Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:12.358s)
+Done (compile time:13.82s)
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:701: WARNING - unreachable code
 	if( 0 ){
@@ -1107,7 +1107,7 @@ Done (compile time:12.358s)
 	       ^
 
 0 error(s), 4 warning(s)
-Done (compile time:21.332s)
+Done (compile time:23.865s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:4964: WARNING - unreachable code
 if( 0 ){
@@ -1138,9 +1138,9 @@ if( 0 ){
 	       ^
 
 0 error(s), 7 warning(s)
-Done (compile time:35.003s)
+Done (compile time:38.14s)
 /Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:12.358s)
+Done (compile time:13.82s)
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:701: WARNING - unreachable code
 	if( 0 ){
@@ -1159,7 +1159,7 @@ Done (compile time:12.358s)
 	       ^
 
 0 error(s), 4 warning(s)
-Done (compile time:21.332s)
+Done (compile time:23.865s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:4964: WARNING - unreachable code
 if( 0 ){
@@ -1190,7 +1190,7 @@ if( 0 ){
 	       ^
 
 0 error(s), 7 warning(s)
-Done (compile time:35.003s)
+Done (compile time:38.14s)
 /Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
 /Users/kitsonk/github/dote/lib/dote-client/addTopic.js:4363: WARNING - unreachable code
 if( 0 ){
@@ -1221,7 +1221,7 @@ if( 0 ){
 	       ^
 
 0 error(s), 7 warning(s)
-Done (compile time:30.706s)
+Done (compile time:32.648s)
 /Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js:701: WARNING - unreachable code
 	if( 0 ){
@@ -1240,9 +1240,9 @@ Done (compile time:30.706s)
 	       ^
 
 0 error(s), 4 warning(s)
-Done (compile time:4.766s)
+Done (compile time:6.326s)
 /Users/kitsonk/github/dote/lib/dote-client/login.js:
-Done (compile time:12.358s)
+Done (compile time:13.82s)
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewSettings.js:701: WARNING - unreachable code
 	if( 0 ){
@@ -1261,7 +1261,7 @@ Done (compile time:12.358s)
 	       ^
 
 0 error(s), 4 warning(s)
-Done (compile time:21.332s)
+Done (compile time:23.865s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewTopic.js:4964: WARNING - unreachable code
 if( 0 ){
@@ -1292,7 +1292,7 @@ if( 0 ){
 	       ^
 
 0 error(s), 7 warning(s)
-Done (compile time:35.003s)
+Done (compile time:38.14s)
 /Users/kitsonk/github/dote/lib/dote-client/addTopic.js:
 /Users/kitsonk/github/dote/lib/dote-client/addTopic.js:4363: WARNING - unreachable code
 if( 0 ){
@@ -1323,7 +1323,7 @@ if( 0 ){
 	       ^
 
 0 error(s), 7 warning(s)
-Done (compile time:30.706s)
+Done (compile time:32.648s)
 /Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewWelcome.js:701: WARNING - unreachable code
 	if( 0 ){
@@ -1342,7 +1342,7 @@ Done (compile time:30.706s)
 	       ^
 
 0 error(s), 4 warning(s)
-Done (compile time:4.766s)
+Done (compile time:6.326s)
 /Users/kitsonk/github/dote/lib/dojo/dojo.js:
 /Users/kitsonk/github/dote/lib/dojo/dojo.js:148: WARNING - unreachable code
 	if( 0 ){
@@ -1492,80 +1492,80 @@ Done (compile time:4.766s)
 	if(! 1 ){
 	        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:2456: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2457: WARNING - unreachable code
 	if( 0 ){
 	       ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:2499: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2500: WARNING - unreachable code
 	if( 0 ){
 	       ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:2638: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2639: WARNING - unreachable code
 	if(! 1 ){
 	        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:2966: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:2967: WARNING - unreachable code
 	}else{
 	     ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:4215: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:4216: WARNING - unreachable code
 		if( 0 ){
 		       ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:4609: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:4610: WARNING - unreachable code
 if( 0 ){
        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:6361: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6362: WARNING - unreachable code
 	if( 0  && dojo.config.parseOnLoad && !dojo.isAsync){
 	                                                   ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:6372: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6373: WARNING - unreachable code
 	}else{
 	     ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:6497: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6498: WARNING - unreachable code
 if( 0 ){
        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:6909: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:6910: WARNING - unreachable code
 if( 0 ){
        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:7273: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:7274: WARNING - unreachable code
 	if( 0 ){
 	       ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:7906: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:7907: WARNING - unreachable code
 		if( 0 ){
 		       ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:8763: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:8764: WARNING - unreachable code
 	if(! 1 ){
 	        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:10008: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:10009: WARNING - unreachable code
 if( 0 ){
        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:13068: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:13069: WARNING - unreachable code
 	return ret;
 	^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:15039: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:15040: WARNING - unreachable code
 	}else{
 	     ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:17121: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:17122: WARNING - unreachable code
 		if(! 1 ){ return; }
 		        ^
 
-/Users/kitsonk/github/dote/lib/dojo/dojo.js:20623: WARNING - unreachable code
+/Users/kitsonk/github/dote/lib/dojo/dojo.js:20624: WARNING - unreachable code
 	}else if( 0 ){
 	      ^
 
 0 error(s), 55 warning(s)
-Done (compile time:33.702s)
+Done (compile time:37.296s)
 /Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:
 /Users/kitsonk/github/dote/lib/dote-client/viewTopicList.js:3779: WARNING - unreachable code
 if( 0 ){
@@ -1588,10 +1588,10 @@ if( 0 ){
 				       ^
 
 0 error(s), 5 warning(s)
-Done (compile time:3.05s)
+Done (compile time:3.557s)
 
 
 Process finished normally
 	errors: 0
 	warnings: 16
-	build time: 41.49 seconds
+	build time: 46.148 seconds

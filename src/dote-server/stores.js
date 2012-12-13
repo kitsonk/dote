@@ -1,9 +1,10 @@
 define([
+	"./config",
 	"./Storage",
 	"dojo/promise/all",
 	"dojo/when",
 	"setten/dfs"
-], function(Storage, all, when, dfs){
+], function(config, Storage, all, when, dfs){
 
 	return {
 		topics: null,
@@ -164,7 +165,7 @@ define([
 			dfds.push(this.comments.empty().then(function(){
 				return initComments();
 			}));
-			dfds.push(this.comments.empty().then(function(){
+			dfds.push(this.users.empty().then(function(){
 				return initUsers();
 			}));
 
@@ -174,14 +175,26 @@ define([
 		open: function(init){
 			var dfds = [],
 				self = this;
-			this.topics = new Storage("topics");
+			this.topics = new Storage({
+				collection: "topics",
+				url: config.db.url
+			});
 			dfds.push(this.topics.ready());
-			this.comments = new Storage("comments");
+			this.comments = new Storage({
+				collection: "comments",
+				url: config.db.url
+			});
 			dfds.push(this.comments.ready());
-			this.users = new Storage("users");
+			this.users = new Storage({
+				collection: "users",
+				url: config.db.url
+			});
 			dfds.push(this.users.ready());
-			this.emails = new Storage("emails");
-			dfds.push(this.users.ready());
+			this.emails = new Storage({
+				collection: "emails",
+				url: config.db.url
+			});
+			dfds.push(this.emails.ready());
 			return init ? all(dfds).then(function(){
 				return self.init();
 			}) : all(dfds);

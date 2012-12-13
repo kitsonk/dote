@@ -14,6 +14,15 @@ define([
 	"dojo/text!hljs/default.css"
 ], function(juice, config, Mail, stores, lang, Deferred, all, when, array, marked, string, cssMessages, cssHljs){
 	
+	var toRe = new RegExp("^" + config.mail.address.split("@")[0] + "\\+?([^@]*)@", "i"),
+		subjectRe = new RegExp("(?:Re:)?\\s*(?:\\[" + config.mail.list.name +
+			"\\])?\\s*(?:\\[[01\\-\\+]+\\])?\\s*(.+)$", "i"),
+		textRe = /(?:Voting:\s+[01\-\+]+\s*\n*)?(?:\[Additional Comment:\]\s*\n*)?((?:.*\n*)*)/mi,
+		outlookRe = /\n+_+\n+(?:.*(\n+|$))+/m;
+		quoteRe = /\n*.+:\n+(?:\s*>\s*.*(?:\n+|$))+/m,
+		topicIdRe = /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i,
+		actionTypes = ["voteu", "voted", "voten", "post", "unsubscribe"];
+
 	function getReplyToTemplate(name, address){
 		address = address.split("@");
 		return name + " <" + address[0] + "+${id}@" + address[1] + ">";
@@ -315,7 +324,9 @@ define([
 					alternative: true
 				}
 			};
-			return mail.send(message);
+			if(config.mail.enabled){
+				return mail.send(message);
+			}
 		});
 	}
 
@@ -325,46 +336,79 @@ define([
 		var listener = mail.on("message", function(e){
 			messages.push(e.mail);
 		});
-		mail.connect().then(function(){
-			return mail.openBox("INBOX");
-		}).then(function(box){
-			return mail.search([ "UNSEEN", ["SINCE", "May 20, 2010"] ]);
-		}).then(function(results){
-			if(results.length){
-				var options = {
-						request: {
-							body: "full",
-							headers: false
-						}
-					};
-				if(markSeen) options.markSeen = true;
-				var request = mail.fetch(results, options);
-				request.on("end", function(){
-					dfd.resolve(messages);
-					listener.remove();
+		if(config.mail.enabled){
+			mail.connect().then(function(){
+				return mail.openBox("INBOX");
+			}).then(function(box){
+				return mail.search([ "UNSEEN", ["SINCE", "May 20, 2010"] ]);
+			}).then(function(results){
+				if(results.length){
+					var options = {
+							request: {
+								body: "full",
+								headers: false
+							}
+						};
+					if(markSeen) options.markSeen = true;
+					var request = mail.fetch(results, options);
+					request.on("end", function(){
+						dfd.resolve(messages);
+						listener.remove();
+						return mail.logout();
+					});
+				}else{
+					dfd.resolve([]);
 					return mail.logout();
-				});
-			}else{
-				dfd.resolve([]);
-				return mail.logout();
-			}
-		}).otherwise(dfd.reject);
+				}
+			}).otherwise(dfd.reject);
+		}else{
+			dfd.resolve([]);
+		}
 		return dfd.promise;
 	}
 
 	function findUser(address){
-
+		address = address.toLowerCase();
+		return when(stores.users.query("select(id,settings)", { allowBulkFetch: true }).then(function(users){
+			var match;
+			users.some(function(user){
+				return match = user.settings &&
+					(user.settings.fromaddress && user.settings.fromaddress.toLowerCase() === address ?
+						user : user.settings.email && user.settings.email.toLowerCase() === address ? user : false);
+			});
+			return match;
+		}));
 	}
 
 	function processEmail(email){
-		var processed = {},
-			rx = new RegExp("^" + config.mail.address.split("@")[0] + "\\+?([^@]*)@"),
-			actionParts = rx.exec(email && email.to && email.to.length && email.to[0].address || "");
+		var actionParts = toRe.exec(email && email.to && email.to.length && email.to[0].address || ""),
+			from = email && email.from && email.from.length && email.from[0].address || "",
+			subject = subjectRe.exec(email.subject),
+			textMatch = textRe.exec(email.text),
+			text = textMatch && textMatch.length ? textMatch[1] : "",
+			quoteMatch = quoteRe.exec(text);
+
+		if(!quoteMatch || !quoteMatch.length){
+			quoteMatch = outlookRe.exec(text);
+		}
+		var quote = quoteMatch && quoteMatch.length ? quoteMatch[0] : "";
+
+		var processed = {
+			text: quote ? text.replace(quote, "") : text,
+			quote: quote,
+			title: subject && subject.length ? subject[1] : "",
+			emailId: email.id,
+			from: from
+		};
+
 		if(actionParts && actionParts.length && actionParts[1]){
 			processed.actions = actionParts[1].split("+");
 		}
-		processed.text = email.text;
-		return processed;
+
+		return findUser(from).then(function(user){
+			processed.user = user;
+			return processed;
+		});
 	}
 
 	function process(){
@@ -373,7 +417,56 @@ define([
 			results.forEach(function(result){
 				gets.push(stores.emails.get(result.id).then(processEmail));
 			});
-			return all(gets);
+			return all(gets).then(function(mails){
+				var results = [];
+				mails.forEach(function(mail){
+					if(mail.user && mail.user.id){
+						// Identified User
+						var topicId,
+							action;
+						if(mail.actions && mail.actions.length){
+							mail.actions.some(function(a){
+								var result = topicIdRe.exec(a);
+								return topicId = result ? result[0] : null;
+							});
+							actionTypes.some(function(a){
+								return action = ~mail.actions.indexOf(a) ? a : null;
+							});
+						}
+						if(action){
+							switch(action){
+								case "voteu":
+									console.log("vote up");
+									break;
+								case "voted":
+									console.log("vote down");
+									break;
+								case "voten":
+									console.log("vote neutral");
+									break;
+								case "post":
+									console.log("post");
+									break;
+								case "unsubscribe":
+									console.log("unsubscribe");
+									break;
+							}
+						}else{
+							if(!topicId && mail.text){
+								console.log("assume post");
+							}
+						}
+						if(topicId && mail.text){
+							console.log("add comment");
+						}
+					}else{
+						// No User Identified
+					}
+					// results.push(stores.emails.remove(mail.emailId));
+					results.push(when(mail.emailId));
+				});
+				return all(results);
+			});
 		});
 	}
 
@@ -385,6 +478,7 @@ define([
 		calculateCommentRecipients: calculateCommentRecipients,
 		fetch: fetch,
 		process: process,
+		findUser: findUser,
 		settings: {
 			set: setSettings,
 			get: getSettings

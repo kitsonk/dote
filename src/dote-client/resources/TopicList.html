@@ -1,3 +1,6 @@
 <div class="${baseClass}" role="presentation" data-dojo-attach-point="wrapperNode">
 	<div class="${baseClass}Container" data-dojo-attach-point="containerNode"></div>
+	<div class="${baseClass}More ${baseClass}Hide" data-dojo-attach-point="moreNode">
+		<a href="#" class="${baseClass}MoreLink" data-dojo-attach-event="ondijitclick:_onMoreClick" data-dojo-attach-point="moreLinkNode">${moreLabel}</a>
+	</div>
 </div>

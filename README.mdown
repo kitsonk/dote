@@ -21,7 +21,7 @@ A topic based voting system for open collaboration.
 * [emailjs][emailjs] - NodeJS STMP Client
 * [node-imap][nodeimap] - NodeJS IMAP Client
 * [mailparser][mailparser] - Mail Parsing Library
-* [node-mongodb-native][nodemongdodb] - Node Native MongoDB Library
+* [node-mongodb-native][nodemongodb] - Node Native MongoDB Library
 * [juice][juice] - Inlining CSS into HTML
 * [colors][colors] - Node Console Colors
 * [MongoDB][mongodb] - Persistent Document Store
@@ -31,7 +31,7 @@ on NodeJS 0.8.4 - 0.8.15.
 
 ## Installation ##
 
-* Install [MongoDB][mondgodb] and have available.
+* Install [MongoDB][mongodb] and have available.
 * Clone the repository recursively with ``git``:
 
     ```bash

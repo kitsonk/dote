@@ -4,15 +4,19 @@ define([
 	"dojo/node!nib",
 	"dojo/node!url",
 	"dojo/node!colors",
+	"dojo/_base/lang",
 	"dojo/promise/all",
+	"dojo/when",
 	"marked/marked",
 	"dote/timer",
 	"./auth",
 	"./config",
 	"./messages",
 	"./stores",
+	"./topic",
 	"./util"
-], function(express, stylus, nib, url, colors, all, marked, timer, auth, config, messages, stores, util){
+], function(express, stylus, nib, url, colors, lang, all, when, marked, timer, auth, config, messages, stores, topic,
+		util){
 
 	function compile(str, path){
 		return stylus(str).
@@ -29,11 +33,30 @@ define([
 		}
 	}
 
+	function queryObject(obj, request, response){
+		var range = request.header("Range") ? util.parseRange(request.header("Range")) : null,
+			query = decodeURIComponent(url.parse(request.url).query || "");
+		if(range){
+			var q = query.split("&");
+			q.push(range.query);
+			query = q.join("&");
+		}
+		return obj.query(query, range || {}).then(function(items){
+			var totalCount;
+			return when(items.totalCount, function(count){
+				totalCount = count || items.length;
+				if(range){
+					response.header("Content-Range", util.getContentRange(range.start, items.length, totalCount));
+				}
+				return items;
+			});
+		});
+	}
+
 	function queryStore(store, request, response, forEach){
 		var range = request.header("Range") ? util.parseRange(request.header("Range")) : null,
 			query = decodeURIComponent(url.parse(request.url).query || ""),
 			options = range || {};
-		options.allowBulkFetch = true;
 		return store.query(query, options).then(function(results){
 			var gets = [],
 				totalCount = results.totalCount || results.length;
@@ -46,8 +69,7 @@ define([
 				}
 				response.status(200);
 				if(range){
-					response.header("Content-Range", util.getContentRange(range. start, results.length,
-						results.totalCount ? results.totalCount : results.length));
+					response.header("Content-Range", util.getContentRange(range.start, items.length, totalCount));
 				}
 				response.json(items);
 			});
@@ -67,7 +89,11 @@ define([
 
 	/* Express Application */
 	var app = express(),
-		appPort = process.env.PORT || config.port || 8022;
+		appPort = process.env.PORT || config.port || 8022,
+		appConfig = {
+			title: config.title,
+			subtitle: config.subtitle
+		};
 
 	/* Storage */
 	stores.open();
@@ -80,6 +106,7 @@ define([
 
 	/* Setup Mail Check Timer */
 	var checkMailTimer = timer(config.mail.checkInterval || 60000);
+	if(!config.mail.enabled) checkMailTimer.pause();
 	var checkMailSignal = checkMailTimer.on("tick", checkMail);
 
 	/* Markdown Parser */
@@ -133,7 +160,8 @@ define([
 			if(request.accepts("html")){
 				response.render("500", {
 					error: error,
-					bugs: config.bugs || ""
+					bugs: config.bugs || "",
+					app: appConfig
 				});
 			}else if(request.accepts("json")){
 				response.json({
@@ -150,14 +178,17 @@ define([
 	/* Login Page */
 	app.get("/login", function(request, response, next){
 		response.render("login", {
-			base: config.base
+			base: config.base,
+			app: appConfig
 		});
 	});
 
 	/* Logout Page */
 	app.get("/logout", function(request, response, next){
 		request.session.username = null;
-		response.render("logout", {});
+		response.render("logout", {
+			app: appConfig
+		});
 	});
 
 	/* Checked we are logged in */
@@ -177,7 +208,8 @@ define([
 	app.get("/", function(request, response, next){
 		response.render("index", {
 			username: request.session.username,
-			base: config.base
+			base: config.base,
+			app: appConfig
 		});
 	});
 
@@ -185,7 +217,8 @@ define([
 	app.get("/add", function(request, response, next){
 		response.render("add", {
 			username: request.session.username,
-			base: config.base
+			base: config.base,
+			app: appConfig
 		});
 	});
 
@@ -194,7 +227,8 @@ define([
 		response.render("topic", {
 			topicId: request.params.id,
 			username: request.session.username,
-			base: config.base
+			base: config.base,
+			app: appConfig
 		});
 	});
 
@@ -202,7 +236,8 @@ define([
 	app.get("/settings", function(request, response, next){
 		response.render("settings", {
 			username: request.session.username,
-			base: config.base
+			base: config.base,
+			app: appConfig
 		});
 	});
 
@@ -210,12 +245,14 @@ define([
 	app.get("/welcome", function(request, response, next){
 		response.render("welcome", {
 			username: request.session.username,
-			base: config.base
+			base: config.base,
+			app: appConfig
 		});
 	});
 
 	/* Initialise the Stores */
 	app.get("/initStores", function(request, response, next){
+		topic.clear();
 		stores.init().then(function(results){
 			response.json(results);
 		});
@@ -231,7 +268,8 @@ define([
 		response.render(request.params.view, {
 			topicId: "3af990e5-036a-4e01-80a4-0a46d158038c",
 			username: request.session.username,
-			base: "src"
+			base: "src",
+			app: appConfig
 		});
 	});
 
@@ -337,37 +375,34 @@ define([
 	 */
 
 	app.get("/topics", function(request, response, next){
-		queryStore(stores.topics, request, response);
+		queryObject(topic, request, response).then(function(topics){
+			response.status(200);
+			response.json(topics);
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
 	});
 
 	app.post("/topics", function(request, response, next){
-		var topic = request.body,
+		var data = request.body,
 			summary = "";
 
-		marked.lexer(topic.description).forEach(function(token){
+		marked.lexer(data.description).forEach(function(token){
 			if(token && token.text){
 				summary = summary.concat(token.text.replace(/\n/g, " ") + " ");
 			}
 		});
-		topic.summary = summary.substring(0, 120);
-		topic.author = request.session.username;
-		topic.created = Math.round((new Date()).getTime() / 1000);
-		topic.voters = [];
-		topic.action = "open";
-		topic.commentsCount = 0;
-		if(topic.owner === "__undefined") delete topic.owner;
-		stores.topics.add(topic).then(function(results){
+		data.summary = summary.substring(0, 120);
+		data.author = request.session.username;
+
+		topic().add(data).then(function(results){
 			if(results){
 				if(results.id){
 					response.header("Location", "/topics/" + results.id);
 				}
 				response.status(200);
 				response.json(results);
-				messages.mailTopic(request.session.username, results).then(function(){
-					console.log("message sent...");
-				}, function(e){
-					console.error("message error!", e);
-				});
 			}else{
 				response.status(500);
 				next(new Error("Unable to add topic"));
@@ -379,10 +414,10 @@ define([
 	});
 
 	app.get("/topics/:id", function(request, response, next){
-		stores.topics.get(request.params.id).then(function(topic){
-			if(topic){
+		topic(request.params.id).get().then(function(data){
+			if(data){
 				response.status(200);
-				response.json(topic);
+				response.json(data);
 			}else{
 				response.status(404);
 				next();
@@ -394,50 +429,45 @@ define([
 	});
 
 	app.put("/topics/:id", function(request, response, next){
-		var topic = request.body;
-		topic.id = topic.id || request.params.id;
-		var original = stores.topics.get(topic.id);
-		if(original && (original.action !== topic.action)){
-			topic.actioned = Math.round((new Date()).getTime() / 1000);
-		}
-		if(topic = stores.topics.put(topic)){
-			response.status(200);
-			response.json(topic);
-		}else{
-			response.status(404);
-			next();
-		}
+		var data = request.body;
+		data.id = request.params.id || data.id;
+		topic(data.id).put(data).then(function(data){
+			if(data){
+				response.status(200);
+				response.json(data);
+			}else{
+				response.status(404);
+				next();
+			}
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
 	});
 
 	/*
 	 * Comments
 	 */
 
-	app.get("/comments", function(request, response, next){
-		queryStore(stores.comments, request, response);
+	app.get("/topics/:topicId/comments", function(request, response, next){
+		queryObject(topic(request.params.topicId).comment, request, response).then(function(comments){
+			response.status(200);
+			response.json(comments);
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
 	});
 
-	app.post("/comments", function(request, response, next){
-		var comment = request.body;
-		stores.comments.add(comment).then(function(results){
-			if(results){
-				if(results.id){
-					response.header("Location", "/comments/" + results.id);
-				}
-				if(results.topicId){
-					stores.topics.get(results.topicId).then(function(topic){
-						if(topic){
-							if(topic.commentsCount){
-								topic.commentsCount++;
-							}else{
-								topic.commentsCount = 1;
-							}
-							stores.topics.put(topic);
-						}
-					});
+	app.post("/topics/:topicId/comments", function(request, response, next){
+		var data = request.body;
+		topic(request.params.topicId).comment().add(data).then(function(item){
+			if(item){
+				if(item.id){
+					response.header("Location", "/topics/" + request.params.topicId + "/comments/" + item.id);
 				}
 				response.status(200);
-				response.json(results);
+				response.json(item);
 			}else{
 				response.status(500);
 				next(new Error("Unable to add comment"));
@@ -448,14 +478,32 @@ define([
 		});
 	});
 
-	app.get("/comments/:id", function(request, response, next){
-		stores.comments.get(request.params.id).then(function(comment){
-			if(comment){
+	app.get("/topics/:topicId/comments/:id", function(request, response, next){
+		topic(request.params.topicId).comment(request.params.id).get().then(function(item){
+			if(item){
 				response.status(200);
-				response.send(comment);
+				response.json(item);
 			}else{
 				response.status(404);
 				next();
+			}
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
+	});
+
+	app.put("/topics/:topicId/comments/:id", function(request, resopnse, next){
+		var data = request.body;
+		data.id = request.body.id || data.id;
+		data.topicId = request.body.topicId || data.topicId;
+		topic(request.params.topicId).comment(request.params.id).put(data).then(function(item){
+			if(item){
+				response.status(200);
+				response.json(item);
+			}else{
+				response.status(500);
+				next(new Error("Unable to update comment"));
 			}
 		}, function(err){
 			response.status(500);
@@ -492,7 +540,7 @@ define([
 
 	app.get("/owners", function(request, response, next){
 		var query = "owner=true&select(id,owner)",
-			results = stores.users.query(query, { allowBulkFetch: true }),
+			results = stores.users.query(query),
 			owners = [{
 				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
 				value: "__undefined"

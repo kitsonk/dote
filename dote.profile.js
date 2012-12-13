@@ -68,6 +68,7 @@ var profile = (function(){
 				"host-browser": 1,
 				"config-selectorEngine": "lite"
 			},
+			locale: "en-us",
 			async: 1
 		},
 

@@ -1,7 +1,7 @@
 extends main
 
 prepend head
-  title = "dote User Settings"
+  title = app.title + " User Settings"
 
 block scripts
   script(type="text/javascript")
@@ -60,8 +60,8 @@ block content
             a(id="logout", href="/logout")
               i(class="icon-signout")
               | logout
-      .title dote
-      .subtitle Dojo Topic Discussion
+      .title #{app.title}
+      .subtitle #{app.subtitle}
       .clear
   .main
     h1 User Settings

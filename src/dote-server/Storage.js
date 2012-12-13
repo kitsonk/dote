@@ -3,17 +3,15 @@ define([
 	"dojo/promise/all",
 	"dojo/when",
 	"compose",
-	"dojo/node!perstore/store/redis"
+	"dojo/node!perstore/store/mongodb"
 ], function(util, all, when, compose, stores){
-	return compose(function(collection){
-		var options = {
-			collection: collection
-		};
-		if(process.env.REDISTOGO_URL){
-			console.log("Detected RedisToGo. URL: '" + process.env.REDISTOGO_URL + "'");
-			options.url = process.env.REDISTOGO_URL;
+	return compose(function(options){
+		options = options || {};
+		if(process.env.MONGOLAB_URI){
+			console.log("Detected MongoLab. URL: '" + process.env.MONGOLAB_URI + "'");
+			options.url = process.env.MONGOLAB_URI;
 		}
-		this.store = stores.Redis(options);
+		this.store = stores.MongoDB(options);
 	},{
 		store: null,
 
@@ -24,6 +22,7 @@ define([
 		put: function(object, directives){
 			directives = directives || {};
 			directives.overwrite = directives.overwrite || true;
+			object = object || {};
 			var self = this;
 			return when(this.store.put(object, directives)).then(function(id){
 				return self.store.get(id);
@@ -31,7 +30,10 @@ define([
 		},
 
 		add: function(object, directives){
-			if(object && !object.id){
+			directives = directives || {};
+			directives.overwrite = directives.overwrite || false;
+			object = object || {};
+			if(!("id" in object)){
 				object.id = util.getUUID();
 			}
 			var self = this;

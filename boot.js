@@ -32,7 +32,7 @@ dojoConfig = {
 		location: "dote"
 	},{
 		name: "hljs",
-		location: "hljs",
+		location: "hljs"
 	},{
 		name: "dote-server",
 		location: "dote-server"

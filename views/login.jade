@@ -1,7 +1,7 @@
 extends main
 
 prepend head
-  title = "dote Login"
+  title = app.title + " Login"
 
 block scripts
   script(type="text/javascript")
@@ -32,8 +32,8 @@ block scripts
 block content
   .loginbox
     form(id="loginForm")
-      h1 dote
-      h2 Dojo Topic Discussion
+      h1 #{app.title}
+      h2 #{app.subtitle}
       #warn.warning
         | Incorrect username or password
       table

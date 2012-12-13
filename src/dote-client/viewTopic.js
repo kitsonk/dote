@@ -13,7 +13,7 @@ define([
 	});
 
 	var commentStore = Cache(new JsonRest({
-		target: "/comments/"
+		target: "/topics/" + dote.topicId + "/comments/"
 	}), new Memory(), {});
 
 	ready(function(){
@@ -29,8 +29,7 @@ define([
 						attribute: "created",
 						descending: false
 					}
-				],
-				select: [ "id", "topicId" ]
+				]
 			},
 			topicStore: topicStore,
 			user: dote.username

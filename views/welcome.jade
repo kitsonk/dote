@@ -1,7 +1,7 @@
 extends main
 
 prepend head
-  title = "dote Welcome"
+  title = app.title + " Welcome"
 
 block scripts
   script(type="text/javascript")
@@ -54,22 +54,23 @@ block content
             a(id="logout", href="/logout")
               i(class="icon-signout")
               | logout
-      .title dote
-      .subtitle Dojo Topic Discussion
+      .title #{app.title}
+      .subtitle #{app.subtitle}
       .clear
   .main
     h1 Welcome
     .instructions
       p
-        | Welcome to <strong>dote</strong>, a topic discussion tool for open-collaberation.  This appears to be the
-        | first time you have logged into <strong>dote</strong>.  We will give you some information to guide you on the
-        | way.
+        | Welcome to <strong>#{app.title}</strong>, a topic discussion tool for open-collaberation.  This appears to be
+        | the first time you have logged into <strong>#{app.title}</strong>.  We will give you some information to guide
+        | you on the way.
       p
         | The main purpose of the forum is for people to post topics, have those topics voted upon and discussed, and 
         | a topic owner to choose what action will be taken on the particular topic.  This is designed to make the 
         | decesion process around Dojo transparent, but allow collaberation in a flexible fashion.  To that end, 
-        | <strong>dote</strong> supports fairly robust e-mail integration as well as an interactive website.  This means 
-        | in order to do most types of participations, you won't have to actually visit this site if you don't want to.
+        | <strong>#{app.title}</strong> supports fairly robust e-mail integration as well as an interactive website.  
+        | This means in order to do most types of participations, you won't have to actually visit this site if you
+        | don't want to.
       p
         | While most of the concepts and the user interface of the website should be straight forward, there are a few
         | things you may want to know.  The posting of topic text and comments utilise <code>markdown</code> syntax.  It

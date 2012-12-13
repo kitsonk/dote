@@ -1,1 +1,6 @@
-{}
+{
+	"database": {
+		"host": "localhost",
+		"name": "dote"
+	}
+}

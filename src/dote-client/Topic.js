@@ -132,10 +132,6 @@ define([
 			for(var attr in value){
 				if(attr !== "id"){
 					this.set(attr, value[attr]);
-				}else{
-					this.query = {
-						topicId: value["id"]
-					};
 				}
 			}
 			this._set("item", value);

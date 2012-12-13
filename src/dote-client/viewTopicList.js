@@ -22,7 +22,7 @@ define([
 				sort: [
 					{
 						attribute: "created",
-						descending: false
+						descending: true
 					}
 				]
 			},
