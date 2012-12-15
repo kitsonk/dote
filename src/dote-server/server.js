@@ -9,14 +9,15 @@ define([
 	"dojo/when",
 	"marked/marked",
 	"dote/timer",
+	"dote/wait",
 	"./auth",
 	"./config",
 	"./messages",
 	"./stores",
 	"./topic",
 	"./util"
-], function(express, stylus, nib, url, colors, lang, all, when, marked, timer, auth, config, messages, stores, topic,
-		util){
+], function(express, stylus, nib, url, colors, lang, all, when, marked, timer, wait, auth, config, messages, stores,
+		topic, util){
 
 	function compile(str, path){
 		return stylus(str).
@@ -93,7 +94,8 @@ define([
 		appConfig = {
 			title: config.title,
 			subtitle: config.subtitle
-		};
+		},
+		env = process.env.NODE_ENV || "development";
 
 	/* Storage */
 	stores.open();
@@ -121,7 +123,7 @@ define([
 		app.locals.pretty = true;
 		app.set("view engine", "jade");
 		app.set("views", "views");
-		app.use(express.logger("dev"));
+		app.use(express.logger(env && env == "production" ? null : "dev"));
 		app.use(express.compress());
 		app.use(express.cookieParser());
 		app.use(express.cookieSession({ secret: config.secret || "notset" }));
@@ -563,7 +565,9 @@ define([
 	return {
 		start: function(){
 			app.listen(appPort);
-			console.log("HTTP server started on port: ".grey + appPort.yellow);
+			console.log("Application Title: ".grey + config.title.cyan);
+			console.log("Environment: ".grey + env.cyan);
+			console.log("HTTP server started on port: ".grey + appPort.cyan);
 			return app;
 		}
 	};

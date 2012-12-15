@@ -17,8 +17,8 @@ define([
 		userControls.start();
 		var tl = new TopicList({
 			store: topicStore,
+			maxCount: 20,
 			queryOptions: {
-				count: 10,
 				sort: [
 					{
 						attribute: "created",
@@ -29,7 +29,7 @@ define([
 			user: (dote && dote.username) || ""
 		}, "topicList");
 		tl.startup();
-		tl.refresh();
+		tl.fetch();
 	});
 
 	return {};

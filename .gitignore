@@ -1,4 +1,7 @@
 .DS_Store
+/build.sh
+/lib/dote-client/resources/*.styl
+/lib/build-report.txt
 /_static/css/*.css
 /node_modules/
 /keys/

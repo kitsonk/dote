@@ -286,8 +286,57 @@
   background-color: #f4e0bc;
   border: 1px solid #dc9b28;
 }
+.doteTopicHide {
+  display: none;
+}
+.doteTopicPrevious {
+  margin: 1em 1em 0 1em;
+  border-top: 1px solid #c0c6cc;
+  border-left: 1px solid #c0c6cc;
+  border-right: 1px solid #c0c6cc;
+}
+.doteTopicPreviousButton {
+  background-color: #eee;
+  border: none;
+  margin: 0;
+  color: #000;
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  padding: 0.4em;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  width: 100%;
+}
+.doteTopicPreviousButtonHover {
+  background-color: #ccc;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.doteTopicPreviousButton:disabled {
+  cursor: progress;
+  color: #999;
+  background-color: #ccc;
+  background-image: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
 .doteTopicComments {
-  margin: 1em;
+  margin: 0 1em 1em 1em;
   border: 1px solid #c0c6cc;
 }
 .doteTopicHeightContainer {
@@ -300,6 +349,13 @@
 .doteTopicSubmit {
   font-size: 12px;
   padding: 0.25em;
+}
+.doteTopicLoadingIcon {
+  background: url("../../dijit/themes/claro/images/loadingAnimation.gif") no-repeat;
+  height: 20px;
+  width: 20px;
+  margin-top: -6px;
+  padding-right: 0.25em;
 }
 .doteTopic .dijitTabContainer {
   font-size: 12px;

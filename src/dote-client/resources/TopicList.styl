@@ -1,30 +1,48 @@
 @import url("_TopicListItem.css")
 @import "nib"
 
+topic-list-border-color = #c0c6cc
+
 .doteTopicList
   &Container
-    border-top 1px solid #c0c6cc
+    border-top 1px solid topic-list-border-color
     margin 0 auto
     width 926px
   &Hide
     display none
-  &More 
-    margin 0.25em
-    padding 0.5em
-    &Link
-      display block
-      background-color #ddd
-      background-image linear-gradient(white 0px, rgba(white, 0) 3px, rgba(white, 0.5) 100%)
-      box-shadow 0 1px 2px rgba(black,0.5), inset 0 0 1px rgba(white,0.5)
-      border-radius 2px
-      font-size 175%
-      border 1px solid #999
-      text-align center
-      padding 0.5em
+  &More
+    width 924px
+    margin 0 auto
+    border-left 1px solid topic-list-border-color
+    border-right 1px solid topic-list-border-color
+    border-bottom 1px solid topic-list-border-color
+    &Button
+      background-color #eee
+      border none
       color black
-      text-shadow 0 1px 1px rgba(white,0.75)
+      cursor pointer
+      display block
+      font-size 20px
+      margin 0
+      padding 0.5em
+      text-align center
       text-decoration none
+      text-shadow 0 1px 1px rgba(white,0.75)
       transition-duration 0.2s
+      width 100%
       &Hover
         background-color #ccc
         transition-duration 0.3s
+      &:disabled
+        cursor progress
+        color #999
+        background-color #ddd
+        background-image none
+        box-shadow none
+        transition-duration 0.2s
+  &LoadingIcon
+    background url("../../dijit/themes/claro/images/loadingAnimation.gif") no-repeat
+    height 20px
+    width 20px
+    margin-top -6px
+    padding-right 0.25em

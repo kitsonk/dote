@@ -175,8 +175,39 @@ preview-bg-color = #eee
       background linear-gradient(top,white 0px,neutral-color 3px,lighten(neutral-color, 20%) 100%)
       background-color neutral-color
       border 1px solid darken(neutral-color, 40%)
+  &Hide
+    display none
+  &Previous
+    margin 1em 1em 0 1em
+    border-top 1px solid topic-border-color
+    border-left 1px solid topic-border-color
+    border-right 1px solid topic-border-color
+    &Button
+      background-color #eee
+      border none
+      margin 0
+      color black
+      cursor pointer
+      display block
+      font-size 16px
+      padding 0.4em
+      text-align center
+      text-decoration none
+      text-shadow 0 1px 1px rgba(white,0.75)
+      transition-duration 0.2s
+      width 100%
+      &Hover
+        background-color #ccc
+        transition-duration 0.3s
+      &:disabled
+        cursor progress
+        color #999
+        background-color #ccc
+        background-image none
+        box-shadow none
+        transition-duration 0.2s
   &Comments
-    margin 1em
+    margin 0 1em 1em 1em
     border 1px solid topic-border-color
   &HeightContainer
     clear both
@@ -186,6 +217,12 @@ preview-bg-color = #eee
   &Submit
     font-size 12px
     padding 0.25em
+  &LoadingIcon
+    background url("../../dijit/themes/claro/images/loadingAnimation.gif") no-repeat
+    height 20px
+    width 20px
+    margin-top -6px
+    padding-right 0.25em
   .dijitTabContainer
     font-size 12px
   .dijitTextArea

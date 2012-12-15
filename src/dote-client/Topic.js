@@ -4,6 +4,8 @@ define([
 	"dojo/_base/array", // array.forEach
 	"dojo/_base/declare", // declare
 	"dojo/_base/lang", // lang.mixin
+	"dojo/dom-attr", // attr.set, attr.remove
+	"dojo/dom-class", // domClass.add, domClass.remove
 	"dojo/when", // when
 	"dijit/_Contained",
 	"dijit/_TemplatedMixin",
@@ -16,8 +18,9 @@ define([
 	"moment/moment",
 	"dojo/text!./resources/_TopicComment.html",
 	"dojo/text!./resources/Topic.html"
-], function(_StoreMixin, _TopicMixin, array, declare, lang, when, _Contained, _TemplatedMixin, _WidgetBase, Button,
-		Textarea, _LayoutWidget, ContentPane, TabContainer, moment, commentTemplate, topicTemplate){
+], function(_StoreMixin, _TopicMixin, array, declare, lang, attr, domClass, when, _Contained, _TemplatedMixin,
+		_WidgetBase, Button, Textarea, _LayoutWidget, ContentPane, TabContainer, moment, commentTemplate,
+		topicTemplate){
 
 	var _TopicComment = declare([_WidgetBase, _TemplatedMixin, _Contained], {
 		baseClass: "doteTopicComment",
@@ -74,6 +77,16 @@ define([
 	return declare([_LayoutWidget, _TemplatedMixin, _StoreMixin, _TopicMixin], {
 		baseClass: "doteTopic",
 		templateString: topicTemplate,
+
+		cssStateNodes: {
+			"voteUpNode": "doteTopicVoteUp",
+			"voteNeutralNode": "doteTopicVoteNeutral",
+			"voteDownNode": "doteTopicVoteDown",
+			"previousButtonNode": "doteTopicPreviousButton"
+		},
+
+		previousLabel: '<i class="icon-chevron-up"></i> Previous <i class="icon-chevron-up"></i>',
+		loadingLabel: '<span class="dijitInline doteTopicLoadingIcon"></span>Loading...',
 
 		_widgets: [],
 
@@ -145,6 +158,22 @@ define([
 			this._set("description", value);
 		},
 
+		previous: false,
+		_setPreviousAttr: function(value){
+			if(value !== this.previous){
+				if(value){
+					var previousCount = this.total - this.getChildren().length;
+					this.previousLabel = '<i class="icon-chevron-up"></i> Previous (' + previousCount +
+						') <i class="icon-chevron-up"></i>';
+					this.previousButtonNode.innerHTML = this.previousLabel;
+					domClass.remove(this.previousNode, this.baseClass + "Hide");
+				}else{
+					domClass.add(this.previousNode, this.baseClass + "Hide");
+				}
+				this._set("previous", value);
+			}
+		},
+
 		_setSummaryAttr: null,
 
 		tagsEditable: true,
@@ -200,7 +229,7 @@ define([
 		},
 
 		startup: function(){
-			this.own(this.on("item", lang.hitch(this, this._onItem)));
+			this.own(this.on("results", lang.hitch(this, this._onResults)));
 			array.forEach(this._widgets, function(widget){
 				if(widget && !widget._started && widget.startup){
 					widget.startup();
@@ -220,17 +249,26 @@ define([
 			this.previewPane.set("content", text);
 		},
 
-		_onItem: function(e){
-			var item = e.item;
-			if(item.id in this.itemWidgets){
-				this.itemWidgets[item.id].set("item", item);
-			}else{
-				this.addChild(this.itemWidgets[item.id] = new _TopicComment({
-					id: this.id + "_comment" + this.getChildren().length,
-					item: item,
-					topic: this
-				}));
-				this.own(this.itemWidgets[item.id].on("quote", lang.hitch(this, this._onQuote)));
+		_onResults: function(e){
+			if(e && e.items){
+				var self = this;
+				e.items.forEach(function(item){
+					if(item.id in self.itemWidgets){
+						self.itemWidgets[item.id].set("item", item);
+					}else{
+						self.addChild(self.itemWidgets[item.id] = new _TopicComment({
+							id: self.id + "_comment" + self.getChildren().length,
+							item: item,
+							topic: self
+						}), 0);
+						self.own(self.itemWidgets[item.id].on("quote", lang.hitch(self, self._onQuote)));
+					}
+				});
+				if(this.total && this.total > this.getChildren().length){
+					this.set("previous", true);
+				}else{
+					this.set("previous", false);
+				}
 			}
 		},
 
@@ -268,6 +306,22 @@ define([
 			this.postText.set("value",
 				this.postText.get("value") + "\n**" + e.item.author + "** said:\n > " +
 				e.item.text.replace(/\n/g, "\n > ") + "\n");
+		},
+
+		_setLoading: function(loading){
+			if(loading){
+				attr.set(this.previousButtonNode, "disabled", "disabled");
+				this.previousButtonNode.innerHTML = this.loadingLabel;
+			}else{
+				attr.remove(this.previousButtonNode, "disabled");
+				this.previousButtonNode.innerHTML = this.previousLabel;
+			}
+		},
+
+		_onPreviousClick: function(e){
+			e && e.preventDefault();
+			this._setLoading(true);
+			this.fetch().then(lang.hitch(this, this._setLoading));
 		},
 
 		addComment: function(commentInfo){

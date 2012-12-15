@@ -55,6 +55,9 @@
 	</div>
 	<div class="${baseClass}HeightContainer"></div>
 	<div class="${baseClass}Description" data-dojo-attach-point="descriptionNode"></div>
+	<div class="${baseClass}Hide ${baseClass}Previous" data-dojo-attach-point="previousNode">
+		<button type="button" class="${baseClass}PreviousButton" data-dojo-attach-point="previousButtonNode" data-dojo-attach-event="ondijitclick:_onPreviousClick">${!previousLabel}</button>
+	</div>
 	<div class="${baseClass}Comments" data-dojo-attach-point="containerNode"></div>
 	<form class="${baseClass}Post" id="${id}_post" action="" method="post" data-dojo-attach-point="postNode">
 		<div class="${baseClass}PreviewContainer" data-dojo-attach-point="previewContainerNode"></div>

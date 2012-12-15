@@ -8,40 +8,56 @@
   display: none;
 }
 .doteTopicListMore {
-  margin: 0.25em;
-  padding: 0.5em;
+  width: 924px;
+  margin: 0 auto;
+  border-left: 1px solid #c0c6cc;
+  border-right: 1px solid #c0c6cc;
+  border-bottom: 1px solid #c0c6cc;
 }
-.doteTopicListMoreLink {
-  display: block;
-  background-color: #ddd;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, rgba(255,255,255,0)), color-stop(1, rgba(255,255,255,0.5)));
-  background-image: -webkit-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
-  background-image: -moz-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
-  background-image: -o-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
-  background-image: -ms-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
-  background-image: linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  font-size: 175%;
-  border: 1px solid #999;
-  text-align: center;
-  padding: 0.5em;
+.doteTopicListMoreButton {
+  background-color: #eee;
+  border: none;
   color: #000;
-  text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+  cursor: pointer;
+  display: block;
+  font-size: 20px;
+  margin: 0;
+  padding: 0.5em;
+  text-align: center;
   text-decoration: none;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.75);
   -webkit-transition-duration: 0.2s;
   -moz-transition-duration: 0.2s;
   -o-transition-duration: 0.2s;
   -ms-transition-duration: 0.2s;
   transition-duration: 0.2s;
+  width: 100%;
 }
-.doteTopicListMoreLinkHover {
+.doteTopicListMoreButtonHover {
   background-color: #ccc;
   -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
   -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
+}
+.doteTopicListMoreButton:disabled {
+  cursor: progress;
+  color: #999;
+  background-color: #ddd;
+  background-image: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+.doteTopicListLoadingIcon {
+  background: url("../../dijit/themes/claro/images/loadingAnimation.gif") no-repeat;
+  height: 20px;
+  width: 20px;
+  margin-top: -6px;
+  padding-right: 0.25em;
 }

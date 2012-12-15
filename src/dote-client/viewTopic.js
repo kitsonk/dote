@@ -27,7 +27,7 @@ define([
 				sort: [
 					{
 						attribute: "created",
-						descending: false
+						descending: true
 					}
 				]
 			},
@@ -38,7 +38,7 @@ define([
 
 		topicStore.get(dote.topicId).then(function(topicItem){
 			topic.set("item", topicItem);
-			topic.refresh();
+			topic.fetch();
 		});
 	});
 	
