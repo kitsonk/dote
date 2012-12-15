@@ -1,1 +1,80 @@
-.doteTopicAdd {background-color: #e4ebf2; background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fafbfc), color-stop(3, #e4ebf2)); background-image: -webkit-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px); background-image: -moz-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px); background-image: -o-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px); background-image: -ms-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px); background-image: linear-gradient(top, #fafbfc 0%, #e4ebf2 300px); border: 1px solid #c0c6cc; margin: 0 auto; padding: 1em; width: 924px;}.doteTopicAddTitle {font-size: 26px; width: 99.5%; margin: 0 0 0.5em 0;}.doteTopicAddStatus {background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e0f0ff), color-stop(1, #f7fbff)); background: -webkit-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%); background: -moz-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%); background: -o-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%); background: -ms-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%); background: linear-gradient(top, #e0f0ff 0%, #f7fbff 100%); background-color: #e0f0ff; border: 1px solid #007cf0; -webkit-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5); box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5); float: right; padding: 0.5em; text-align: center; width: 200px;}.doteTopicAddPoster {padding-bottom: 6px;}.doteTopicAddTags {width: 675px;}.doteTopicAddTagsContainer {font-size: 14px;}.doteTopicAddDescriptionLabel {font-size: 18px; margin-bottom: 0.25em;}.doteTopicAddHeightContainer {clear: both;}.doteTopicAddButtonPanel {font-size: 12px; padding: 0.5em 0.5em 0;}.doteTopicAdd .dijitTabContainer {font-size: 12px;}.doteTopicAdd .dijitTextArea,.doteTopicAdd code,.doteTopicAdd pre {font-size: 12px; font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;}.doteTopicAdd pre code {border: none; background-color: none;}.doteTopicAdd pre {padding: 0.25em;}.doteTopicAdd blockquote {font-size: 12px; margin: 0; padding: 0 1em; border-top: none; border-bottom: none; border-left: 2px solid #c0c6cc;}
+.doteTopicAdd {
+  background-color: #e4ebf2;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fafbfc), color-stop(3, #e4ebf2));
+  background-image: -webkit-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
+  background-image: -moz-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
+  background-image: -o-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
+  background-image: -ms-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
+  background-image: linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
+  border: 1px solid #c0c6cc;
+  margin: 0 auto;
+  padding: 1em;
+  width: 924px;
+}
+.doteTopicAddTitle {
+  font-size: 26px;
+  width: 99.5%;
+  margin: 0 0 0.5em 0;
+}
+.doteTopicAddStatus {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e0f0ff), color-stop(1, #f7fbff));
+  background: -webkit-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%);
+  background: -moz-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%);
+  background: -o-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%);
+  background: -ms-linear-gradient(top, #e0f0ff 0%, #f7fbff 100%);
+  background: linear-gradient(top, #e0f0ff 0%, #f7fbff 100%);
+  background-color: #e0f0ff;
+  border: 1px solid #007cf0;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 0 1px rgba(255,255,255,0.5);
+  float: right;
+  padding: 0.5em;
+  text-align: center;
+  width: 200px;
+}
+.doteTopicAddPoster {
+  padding-bottom: 6px;
+}
+.doteTopicAddTags {
+  width: 675px;
+}
+.doteTopicAddTagsContainer {
+  font-size: 14px;
+}
+.doteTopicAddDescriptionLabel {
+  font-size: 18px;
+  margin-bottom: 0.25em;
+}
+.doteTopicAddHeightContainer {
+  clear: both;
+}
+.doteTopicAddButtonPanel {
+  font-size: 12px;
+  padding: 0.5em 0.5em 0;
+}
+.doteTopicAdd .dijitTabContainer {
+  font-size: 12px;
+}
+.doteTopicAdd .dijitTextArea,
+.doteTopicAdd code,
+.doteTopicAdd pre {
+  font-size: 12px;
+  font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+}
+.doteTopicAdd pre code {
+  border: none;
+  background-color: none;
+}
+.doteTopicAdd pre {
+  padding: 0.25em;
+}
+.doteTopicAdd blockquote {
+  font-size: 12px;
+  margin: 0;
+  padding: 0 1em;
+  border-top: none;
+  border-bottom: none;
+  border-left: 2px solid #c0c6cc;
+}
