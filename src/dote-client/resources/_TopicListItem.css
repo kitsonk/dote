@@ -9,6 +9,7 @@
   background-image: -o-linear-gradient(top, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 80%);
   background-image: -ms-linear-gradient(top, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 80%);
   background-image: linear-gradient(top, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 80%);
+  display: none;
   padding: 0.5em 0 0 0;
   width: 924px;
 }

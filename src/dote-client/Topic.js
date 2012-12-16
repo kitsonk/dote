@@ -1,6 +1,7 @@
 define([
 	"./_StoreMixin",
 	"./_TopicMixin",
+	"./fade",
 	"dojo/_base/array", // array.forEach
 	"dojo/_base/declare", // declare
 	"dojo/_base/lang", // lang.mixin
@@ -18,7 +19,7 @@ define([
 	"moment/moment",
 	"dojo/text!./resources/_TopicComment.html",
 	"dojo/text!./resources/Topic.html"
-], function(_StoreMixin, _TopicMixin, array, declare, lang, attr, domClass, when, _Contained, _TemplatedMixin,
+], function(_StoreMixin, _TopicMixin, fade, array, declare, lang, attr, domClass, when, _Contained, _TemplatedMixin,
 		_WidgetBase, Button, Textarea, _LayoutWidget, ContentPane, TabContainer, moment, commentTemplate,
 		topicTemplate){
 
@@ -66,6 +67,11 @@ define([
 			}
 			this.textNode.innerHTML = value;
 			this._set("text", value);
+		},
+
+		startup: function(){
+			this.inherited(arguments);
+			fade.show(this.domNode);
 		},
 
 		_onQuote: function(e){
@@ -235,6 +241,7 @@ define([
 					widget.startup();
 				}
 			});
+			fade.show(this.domNode);
 			this.previewContainer.resize();
 			this.inherited(arguments);
 		},
@@ -265,6 +272,7 @@ define([
 					}
 				});
 				if(this.total && this.total > this.getChildren().length){
+					this.set("previous", false);
 					this.set("previous", true);
 				}else{
 					this.set("previous", false);
@@ -292,11 +300,16 @@ define([
 				text: this.postText.get("value"),
 				created: moment().unix(),
 				topicId: this.item.id
-			}), function(){
+			}), function(item){
 				self.submitButton.set("disabled", false);
 				self.postText.set("value", "");
 				self.set("commentsCount", self.get("commentsCount") + 1);
-				self.refresh();
+				self.addChild(self.itemWidgets[item.id] = new _TopicComment({
+					id: self.id + "_comment" + self.getChildren().length,
+					item: item,
+					topic: self
+				}));
+				self.own(self.itemWidgets[item.id].on("quote", lang.hitch(self, self._onQuote)));
 			}, function(){
 				self.submitButton.set("disabled", false);
 			});
@@ -322,13 +335,6 @@ define([
 			e && e.preventDefault();
 			this._setLoading(true);
 			this.fetch().then(lang.hitch(this, this._setLoading));
-		},
-
-		addComment: function(commentInfo){
-			this.addChild(new _TopicComment(lang.mixin(commentInfo, {
-				id: this.id + "_comment" + this.getChildren().length,
-				topic: this
-			})), 0);
 		}
 	});
 });

@@ -1,5 +1,6 @@
 .doteTopicComment {
   background-color: #fff;
+  display: none;
   padding: 1em;
 }
 .doteTopicCommentHeader {

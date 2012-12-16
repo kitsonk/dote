@@ -1,10 +1,11 @@
 define([
 	"./util",
+	"dojo/Deferred",
 	"dojo/promise/all",
 	"dojo/when",
 	"compose",
 	"dojo/node!perstore/store/mongodb"
-], function(util, all, when, compose, stores){
+], function(util, Deferred, all, when, compose, stores){
 	return compose(function(options){
 		options = options || {};
 		if(process.env.MONGOLAB_URI){
@@ -25,7 +26,8 @@ define([
 			object = object || {};
 			var self = this;
 			return when(this.store.put(object, directives)).then(function(id){
-				return self.store.get(id);
+				object.id = id;
+				return object;
 			});
 		},
 
@@ -38,7 +40,11 @@ define([
 			}
 			var self = this;
 			return when(this.store.put(object, directives)).then(function(id){
-				return self.store.get(id);
+				// sometimes node is too fast, I used to do a "get" after the "put" but
+				// sometimes MongoDB fails to find the item because the record has yet
+				// to be written
+				object.id = id;
+				return object;
 			});
 		},
 
@@ -48,6 +54,16 @@ define([
 
 		query: function(query, options){
 			return this.store.query(query, options);
+		},
+
+		aggregate: function(){
+			var dfd = new Deferred(),
+				pipeline = Array.prototype.slice.call(arguments);
+			this.store.collection().aggregate(pipeline, function(err, results){
+				if(err) dfd.reject(err);
+				dfd.resolve(results);
+			});
+			return dfd.promise;
 		},
 
 		empty: function(){

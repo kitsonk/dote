@@ -1,6 +1,7 @@
 define([
 	"./_StoreMixin",
 	"./_TopicMixin",
+	"./fade",
 	"dojo/_base/array", // array.forEach
 	"dojo/_base/declare", // declare
 	"dojo/_base/lang", // lang.mixin, lang.hitch
@@ -19,9 +20,9 @@ define([
 	"dijit/layout/_LayoutWidget",
 	"dojo/text!./resources/_TopicListItem.html",
 	"dojo/text!./resources/TopicList.html"
-], function(_StoreMixin, _TopicMixin, array, declare, lang, win, attr, domClass, domGeom, JSON, on, winUtil, _Contained,
-		_CssStateMixin, _OnDijitClickMixin, _TemplatedMixin, _WidgetBase, _LayoutWidget, templateTopicListItem,
-		templateTopicList){
+], function(_StoreMixin, _TopicMixin, fade, array, declare, lang, win, attr, domClass, domGeom, JSON, on, winUtil,
+		_Contained, _CssStateMixin, _OnDijitClickMixin, _TemplatedMixin, _WidgetBase, _LayoutWidget,
+		templateTopicListItem, templateTopicList){
 
 	var _TopicItem = declare([_WidgetBase, _Contained, _TemplatedMixin, _TopicMixin], {
 		baseClass: "doteTopicItem",
@@ -94,6 +95,11 @@ define([
 
 		topicList: null,
 
+		startup: function(){
+			this.inherited(arguments);
+			fade.show(this.domNode);
+		},
+
 		_onActionChange: function(value){
 			this.inherited(arguments);
 			if(this.item.action !== value){
@@ -160,11 +166,17 @@ define([
 			this.addChild(new _TopicItem(topicSettings));
 		},
 
+		empty: function(){
+			this.set("more", false);
+			this.set("start", 0);
+			this.destroyDescendants();
+		},
+
 		_onResults: function(e){
 			if(e && e.items){
 				var self = this;
+				this._morePos = null;
 				e.items.forEach(function(item){
-					this._morePos = null;
 					self.addChild(new _TopicItem({
 						id: self.id + "_topic" + self.getChildren().length,
 						voter: self.user,

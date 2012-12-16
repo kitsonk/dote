@@ -541,16 +541,31 @@ define([
 	 */
 
 	app.get("/owners", function(request, response, next){
-		var query = "owner=true&select(id,owner)",
-			results = stores.users.query(query),
-			owners = [{
-				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-				value: "__undefined"
-			}];
-		results.then(function(items){
+
+		function flattenCounts(arr){
+			var counts = {};
+			arr.forEach(function(count){
+				if(count._id){
+					counts[count._id] = count.count;
+				}else{
+					counts["__undefined"] = count.count;
+				}
+			});
+			return counts;
+		}
+
+		var results = stores.users.query("owner=true&sort(+id)"),
+			topicCounts = stores.topics.aggregate({ $group : { _id : "$owner", count : { $sum : 1 } } });
+		all({ query: results, aggregate: topicCounts }).then(function(results){
+			var items = results.query,
+				counts = flattenCounts(results.aggregate),
+				owners = [{
+					label: "[Unassigned]" + (counts.__undefined ? " (" + counts.__undefined + ")" : ""),
+					value: "__undefined"
+				}];
 			items.forEach(function(owner){
 				owners.push({
-					label: owner.id,
+					label: owner.id + (counts[owner.id] ? " (" + counts[owner.id] + ")" : ""),
 					value: owner.id
 				});
 			});

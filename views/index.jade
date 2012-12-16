@@ -55,6 +55,20 @@ block content
       .clear
   .main
     h1 Topics
+    #filterPane.hide
+      form#filterForm
+        span.filterItem
+          label(for="filterTagTextBox") Tags:
+          input#filterTagTextBox(name="filterTagTextBox")
+        span.filterItem
+          input#filterInactive(name="filterInactive", type="checkbox")
+          label(for="filterInactive") Only Active
+        span.filterItem
+          label(for="filterOwnerSelect") Owned by:
+          select#filterOwnerSelect(name="filterOwnerSelect")
+        span.filterItem
+          button#filterButton(name="filterButton", type="button") Filter
+          button#clearButton(name="clearButton", type="button", disabled="disabled") Clear
     #topicList
 
   .footer

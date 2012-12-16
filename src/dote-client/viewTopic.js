@@ -18,6 +18,7 @@ define([
 
 	ready(function(){
 		userControls.start();
+
 		var topic = new Topic({
 			id: "topic",
 			parser: marked,
@@ -40,6 +41,7 @@ define([
 			topic.set("item", topicItem);
 			topic.fetch();
 		});
+
 	});
 	
 	return {};

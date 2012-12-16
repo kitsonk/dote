@@ -112,17 +112,14 @@ define([
 				item = lang.mixin(lang.clone(commentDefaults), data || {});
 			item.created = Math.round((new Date()).getTime() / 1000);
 			item.topicId = this.topicId;
+			console.log("before:", item);
 			return when(stores.comments.add(item)).then(function(item){
-				console.log("add");
+				console.log("after:", item);
 				if(item && item.topicId && item.id && topicHash[item.topicId]){
-					console.log(item.topicId);
-					console.log(topicHash[item.topicId].item);
 					topicHash[item.topicId].item.commentsCount++;
 					topicHash[item.topicId].put();
 					topicHash[item.topicId]._commentHash[item.id] = self;
 					self.id = item.id;
-				}else{
-					console.log("misisng topicId");
 				}
 				self.emit("add", { item: item });
 				return self.item = item;

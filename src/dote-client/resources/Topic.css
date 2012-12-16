@@ -8,6 +8,7 @@
   background-image: -ms-linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
   background-image: linear-gradient(top, #fafbfc 0%, #e4ebf2 300px);
   border: 1px solid #c0c6cc;
+  display: none;
   margin: 0 auto;
   padding: 0.5em;
   width: 924px;
