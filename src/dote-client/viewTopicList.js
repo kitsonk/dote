@@ -7,7 +7,7 @@ define([
 	"dojo/store/Memory",
 	"dojo/when",
 	"dijit/form/Button",
-	"dijit/form/Checkbox",
+	"dijit/form/CheckBox",
 	"dijit/form/Select",
 	"dijit/form/TextBox",
 	"dijit/TitlePane",

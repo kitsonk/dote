@@ -4,6 +4,7 @@ var profile = (function(){
 		"dijit/_base/manager",
 		"dijit/form/Button",
 		"dijit/form/TextBox",
+		"dijit/layout/ContentPane",
 		"dojo/_base/array",
 		"dojo/_base/Color",
 		"dojo/_base/config",

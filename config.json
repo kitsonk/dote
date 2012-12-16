@@ -5,7 +5,7 @@
 	"subtitle": "Dojo Topic Discussion",
 	"secret": "replaceme",
 	"bugs": "https://github.com/kitsonk/dote/issues",
-	"base": "src",
+	"base": "lib",
 	"db": {
 		"url": "mongodb://localhost:27017/dote"
 	},
