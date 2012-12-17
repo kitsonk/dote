@@ -112,9 +112,7 @@ define([
 				item = lang.mixin(lang.clone(commentDefaults), data || {});
 			item.created = Math.round((new Date()).getTime() / 1000);
 			item.topicId = this.topicId;
-			console.log("before:", item);
 			return when(stores.comments.add(item)).then(function(item){
-				console.log("after:", item);
 				if(item && item.topicId && item.id && topicHash[item.topicId]){
 					topicHash[item.topicId].item.commentsCount++;
 					topicHash[item.topicId].put();
@@ -213,7 +211,6 @@ define([
 				if(original.action !== data.action){
 					data.actioned = Math.round((new Date()).getTime() / 1000);
 				}
-				console.log("put data.id: ", data.id);
 				return stores.topics.put(data);
 			}).then(function(item){
 				self.emit("put", { item: item, original: original });
@@ -258,8 +255,8 @@ define([
 		var self = this;
 		return when(stores.topics.query(query, options)).then(function(results){
 			results.forEach(function(item){
-				var topic = self(item.id);
-				topic.item = item;
+				var t = self(item.id);
+				t.item = item;
 			});
 			return results;
 		});

@@ -12,12 +12,13 @@ define([
 	"dote/wait",
 	"./auth",
 	"./config",
+	"./email",
 	"./messages",
 	"./stores",
 	"./topic",
 	"./util"
-], function(express, stylus, nib, url, colors, lang, all, when, marked, timer, wait, auth, config, messages, stores,
-		topic, util){
+], function(express, stylus, nib, url, colors, lang, all, when, marked, timer, wait, auth, config, email, messages,
+		stores, topic, util){
 
 	function compile(str, path){
 		return stylus(str).
@@ -518,14 +519,20 @@ define([
 	 */
 
 	app.get("/emails", function(request, response, next){
-		queryStore(stores.emails, request, response);
+		queryObject(email, request, response).then(function(emails){
+			response.status(200);
+			response.json(emails);
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
 	});
 
 	app.get("/emails/:id", function(request, response, next){
-		stores.emails.get(request.params.id).then(function(email){
-			if(email){
+		email(request.params.id).get().then(function(item){
+			if(item){
 				response.status(200);
-				response.send(email);
+				response.json(item);
 			}else{
 				response.status(404);
 				next();
