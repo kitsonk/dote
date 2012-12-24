@@ -58,7 +58,7 @@ define([
 
 		remove: function(){
 			var self = this;
-			return this._store.remove(this.id).then(function(){
+			return this._store.remove(this.id).then(function(id){
 				self._hash[self.id] = undefined;
 				self.emit("remove", { id: id });
 				self.id = null;

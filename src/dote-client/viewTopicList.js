@@ -1,6 +1,7 @@
 define([
 	"dojo/_base/array", // array.forEach
 	"dojo/dom", // dom.byId
+	"dojo/promise/all", // all
 	"dojo/ready",
 	"dojo/store/Cache",
 	"dojo/store/JsonRest",
@@ -14,8 +15,8 @@ define([
 	"./TopicList",
 	"./userControls",
 	"moment/moment"
-], function(array, dom, ready, Cache, JsonRest, Memory, when, Button, Checkbox, Select, TextBox, TitlePane, TopicList,
-		userControls, moment){
+], function(array, dom, all, ready, Cache, JsonRest, Memory, when, Button, Checkbox, Select, TextBox, TitlePane,
+		TopicList, userControls, moment){
 
 	var topicStore = Cache(new JsonRest({
 			target: "/topics/"
@@ -23,7 +24,11 @@ define([
 		ownersStore = new JsonRest({
 			target: "/owners/"
 		}),
-		ownerResults = ownersStore.query();
+		ownerResults = ownersStore.query(),
+		authorsStore = new JsonRest({
+			target: "/authors/"
+		}),
+		authorResults = authorsStore.query();
 
 	function generateQuery(filter){
 		var queryTerms = [],
@@ -39,6 +44,11 @@ define([
 				case "filterInactive":
 					if(value){
 						queryTerms.push("in(action,(open,reopened))");
+					}
+					break;
+				case "filterAuthorSelect":
+					if(value){
+						queryTerms.push("author=" + value);
 					}
 					break;
 				case "filterOwnerSelect":
@@ -67,6 +77,11 @@ define([
 			id: "filterInactive",
 			name: "filterInactive"
 		}, "filterInactive");
+
+		var filterAuthorSelect = new Select({
+			id: "filterAuthorSelect",
+			name: "filterAuthorSelect"
+		}, "filterAuthorSelect");
 
 		var filterOwnerSelect = new Select({
 			id: "filterOwnerSelect",
@@ -135,13 +150,21 @@ define([
 		}, "topicList");
 		widgets.push(tl);
 
-		when(ownerResults).then(function(owners){
+		all({ owners: ownerResults, authors: authorResults }).then(function(results){
+			var owners = results.owners,
+				authors = results.authors;
+
 			owners.unshift({
 				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
 				value: null
 			});
-
 			filterOwnerSelect.set("options", owners);
+
+			authors.unshift({
+				label: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+				value: null
+			});
+			filterAuthorSelect.set("options", authors);
 
 			array.forEach(widgets, function(widget){
 				widget.startup();

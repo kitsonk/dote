@@ -1,0 +1,98 @@
+.dote_h,
+.dote_f {
+  padding: 1em;
+  background-color: #efefef;
+  font-size: 95%;
+}
+.dote_h {
+  border-bottom: 2px solid #ccc;
+  line-height: 1.4em;
+}
+.dote_h table {
+  margin: 0 auto 0;
+  border-collapse: collapse;
+  text-align: center;
+}
+.dote_h table tr:first-child td {
+  border: 2px solid #ccc;
+  font-size: 250%;
+  padding: 0.25em;
+  line-height: 0.8em;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+.dote_h table tr:first-child td.plus {
+  background-color: #bcf4c3;
+}
+.dote_h table tr:first-child td.neutral {
+  background-color: #f4e0bc;
+}
+.dote_h table tr:first-child td.minus {
+  background-color: #f4bcbc;
+}
+.dote_h table tr:last-child td:first-child {
+  font-weight: bold;
+}
+.dote_f {
+  border-top: 2px solid #ccc;
+}
+.dote_f hr {
+  display: none;
+}
+.dote_l {
+  font-weight: bold;
+}
+.dote_t,
+.dote_u,
+.dote_d,
+.dote_n {
+  border: 1px solid #ccc;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, rgba(255,255,255,0)), color-stop(1, rgba(255,255,255,0.5)));
+  background-image: -webkit-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -moz-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -o-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: -ms-linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  background-image: linear-gradient(top, #fff 0px, rgba(255,255,255,0) 3px, rgba(255,255,255,0.5) 100%);
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  padding: 0 3px 0;
+}
+.dote_t {
+  background-color: #ddd;
+}
+.dote_u {
+  background-color: #bcf4c3;
+}
+.dote_d {
+  background-color: #f4bcbc;
+}
+.dote_n {
+  background-color: #f4e0bc;
+}
+.dote_c {
+  border-top: 1px solid #ccc;
+}
+.dote_a {
+  background-color: #efefef;
+  padding: 0.3em;
+}
+.dote_b {
+  border-left: 2px solid #ccc;
+  margin-left: 1em;
+  padding-left: 1em;
+}
+.dote_vu,
+.dote_vn,
+.dote_vd {
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  text-decoration: none;
+  color: #000;
+  padding: 3px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  background-color: #f9f9f9;
+}

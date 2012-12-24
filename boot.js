@@ -22,6 +22,9 @@ dojoConfig = {
 		name: "setten",
 		location: "setten"
 	},{
+		name: "doqueue",
+		location: "doqueue"
+	},{
 		name: "compose",
 		location: "compose"
 	},{

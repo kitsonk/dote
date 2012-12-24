@@ -83,8 +83,6 @@ define([
 
 		send: function(mail){
 			if(!this.smtp){
-				console.log(email);
-				console.log(this._smtpConfig);
 				this.smtp = email.server.connect(this._smtpConfig);
 			}
 			var dfd = new Deferred();

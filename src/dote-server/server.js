@@ -8,7 +8,7 @@ define([
 	"dojo/promise/all",
 	"dojo/when",
 	"marked/marked",
-	"dote/timer",
+	"doqueue/Queue",
 	"dote/wait",
 	"./auth",
 	"./config",
@@ -17,7 +17,7 @@ define([
 	"./stores",
 	"./topic",
 	"./util"
-], function(express, stylus, nib, url, colors, lang, all, when, marked, timer, wait, auth, config, email, messages,
+], function(express, stylus, nib, url, colors, lang, all, when, marked, Queue, wait, auth, config, email, messages,
 		stores, topic, util){
 
 	function compile(str, path){
@@ -78,17 +78,6 @@ define([
 		});
 	}
 
-	function checkMail(){
-		console.log("Checking inbound mail...".grey);
-		return messages.fetch(true).then(function(results){
-			results.forEach(function(email){
-				stores.emails.add(email);
-			});
-			console.log("Fetched ".grey + results.length.toString().cyan + " emails.".grey);
-			return results;
-		});
-	}
-
 	/* Express Application */
 	var app = express(),
 		appPort = process.env.PORT || config.port || 8022,
@@ -107,10 +96,30 @@ define([
 	/* Init Messages */
 	messages.init("Drag00n$%!");
 
-	/* Setup Mail Check Timer */
-	var checkMailTimer = timer(config.mail.checkInterval || 60000);
-	if(!config.mail.enabled) checkMailTimer.pause();
-	var checkMailSignal = checkMailTimer.on("tick", checkMail);
+	/* Setup Queue */
+	var queue = new Queue({
+		storeOptions: {
+			url: process.env.MONGOLAB_URI || config.db.url,
+			collection: "queue"
+		}
+	});
+
+	/* Setup Topic Handlers */
+	queue.ready().then(function(){
+		topic.on("add", function(e){
+			queue.create("topic", {
+				topic: e.item,
+				isNew: true
+			});
+			// messages.calculateTopicRecipients(e.item, true).then(function(results){
+			// 	results.forEach(function(address){
+			// 		messages.mailTopic(address, e.item).then(function(){
+			// 			console.log("Mailed topic ".grey + e.item.id.cyan + " to ".grey + address.yellow);
+			// 		});
+			// 	});
+			// });
+		});
+	});
 
 	/* Markdown Parser */
 	marked.setOptions({
@@ -578,6 +587,27 @@ define([
 			});
 			response.status(200);
 			response.json(owners);
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
+	});
+
+	/*
+	 * Authors
+	 */
+
+	app.get("/authors", function(request, response, next){
+		stores.topics.aggregate({ $group : { _id: "$author", count : { $sum: 1 } } }).then(function(results){
+			var authors = [];
+			results.forEach(function(count){
+				authors.push({
+					label: count._id + " (" + count.count + ")",
+					value: count._id
+				});
+			});
+			response.status(200);
+			response.json(authors);
 		}, function(err){
 			response.status(500);
 			next(err);

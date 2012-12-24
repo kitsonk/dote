@@ -1,8 +1,10 @@
 define([
 	"dojo/node!juice",
 	"./config",
+	"./email",
 	"./Mail",
 	"./stores",
+	"./topic",
 	"dojo/_base/lang", // lang.mixin
 	"dojo/Deferred",
 	"dojo/promise/all", // all
@@ -12,7 +14,8 @@ define([
 	"dote/string", // string.substitute, string.capitaliseFirst
 	"./stylus!./resources/messages.styl",
 	"dojo/text!hljs/default.css"
-], function(juice, config, Mail, stores, lang, Deferred, all, when, array, marked, string, cssMessages, cssHljs){
+], function(juice, config, email, Mail, stores, topic, lang, Deferred, all, when, array, marked, string, cssMessages,
+		cssHljs){
 	
 	var toRe = new RegExp("^" + config.mail.address.split("@")[0] + "\\+?([^@]*)@", "i"),
 		subjectRe = new RegExp("(?:Re:)?\\s*(?:\\[" + config.mail.list.name +
@@ -48,15 +51,33 @@ define([
 		replyToTemplate = getReplyToTemplate(config.mail.username, config.mail.address),
 		unsubscribeAddress = getActionAddress(config.mail.address, "unsubscribe"),
 		postAddress = getActionAddress(config.mail.address, "post"),
-		textFooter = string.substitute("\n\n-----\nWebsite: ${website}\nPost: ${post}\nSettings: ${website}settings\n" +
-			"View: ${view}", {
+		textFooterBase = "\n\n-----\nWebsite: ${website}\nNew Topic: ${post}\nSettings: ${website}settings\n" +
+			"View: ${view}",
+		textFooter = string.substitute(textFooterBase, {
 				post: postAddress,
 				website: config.address,
-				view: config.address + "${id}"
+				view: config.address + "topic/${id}"
 			}),
-		htmlFooter = string.substitute('<div class="dote_f"><a href="${website}">Website</a> | ' +
-			'<a href="mailto:${post}">Add Topic</a> | ' +
-			'<a href="${website}settings">Settings</a> | ' +
+		textFooterComment = string.substitute(textFooterBase, {
+				post: postAddress,
+				website: config.address,
+				view: config.address + "topic/${topicId}#${id}"
+			}),
+		htmlFooterBase = '<a href="${website}">Website</a> | <a href="mailto:${post}">New Topic</a> | ' +
+			'<a href="${website}settings">Settings</a> | ';
+		htmlFooter = '<div class="dote_f">' + string.substitute(htmlFooterBase +
+			'<a href="${view}">View Topic</a></div>', {
+				post: getActionAddress(config.mail.address, "post", true),
+				website: config.address,
+				view: config.address + "topic/${id}"
+			}),
+		htmlFooterComment = '<div class="dote_f">' + string.substitute(htmlFooterBase +
+			'<a href="${view}">View Comment</a></div>', {
+				post: getActionAddress(config.mail.address, "post", true),
+				website: config.address,
+				view: config.addess + "topic/${topicId}#${id}"
+			}),
+		htmlFooterVote = string.substitute(htmlFooterBase +
 			'<a href="${view}">View Topic</a></div>', {
 				post: getActionAddress(config.mail.address, "post", true),
 				website: config.address,
@@ -90,11 +111,10 @@ define([
 		});
 	}
 
-	function calculateTopicRecipients(topic, isNew){
+	function calculateTopicRecipients(t, isNew){
 		var queries = {};
-		queries.users = stores.users.query("select(id,settings)", { allowBulkFetch: true });
-		queries.comments = stores.comments.query("select(id,topicId,author)&topicId=" + topic.id,
-			{ allowBulkFetch: true });
+		queries.users = stores.users.query();
+		queries.comments = topic(t.id).comment.all();
 		return all(queries).then(function(results){
 			var addresses = [],
 				participants = [],
@@ -102,16 +122,16 @@ define([
 			results.comments.forEach(function(comment){
 				participants.push(comment.author);
 			});
-			topic.voters.forEach(function(voter){
+			t.voters.forEach(function(voter){
 				participants.push(voter.name);
 			});
-			participants.push(topic.author);
-			if(topic.owner) participants.push(topic.owner);
+			participants.push(t.author);
+			if(t.owner) participants.push(t.owner);
 			participants = array.unique(participants);
 			results.users.forEach(function(user){
 				if(user.settings && user.settings.email && !user.settings.optout){
 					var address = user.id + "<" + user.settings.email + ">";
-					if(user.settings.excreated && user.id == topic.author){
+					if(user.settings.excreated && user.id == t.author){
 						removeAuthor = address;
 					}
 					if(user.settings.onnew && isNew){
@@ -123,11 +143,58 @@ define([
 						addresses.push(address);
 						return;
 					}
-					if(user.settings.onown && topic.owner == user.id){
+					if(user.settings.onown && t.owner == user.id){
 						addresses.push(address);
 						return;
 					}
-					if(array.intersection(user.settings.ontags.sort(), topic.tags.sort()).length){
+					if(array.intersection(user.settings.ontags.sort(), t.tags.sort()).length){
+						addresses.push(address);
+					}
+				}
+			});
+			return removeAuthor ? array.filter(array.unique(addresses), function(address){
+					return address !== removeAuthor;
+				}) : array.unique(addresses);
+		});
+	}
+
+	function calculateTopicRecipients(t, isNew){
+		var queries = {};
+		queries.users = stores.users.query();
+		queries.comments = topic(t.id).comment.all();
+		return all(queries).then(function(results){
+			var addresses = [],
+				participants = [],
+				removeAuthor;
+			results.comments.forEach(function(comment){
+				participants.push(comment.author);
+			});
+			t.voters.forEach(function(voter){
+				participants.push(voter.name);
+			});
+			participants.push(t.author);
+			if(t.owner) participants.push(t.owner);
+			participants = array.unique(participants);
+			results.users.forEach(function(user){
+				if(user.settings && user.settings.email && !user.settings.optout){
+					var address = user.id + "<" + user.settings.email + ">";
+					if(user.settings.excreated && user.id == t.author){
+						removeAuthor = address;
+					}
+					if(user.settings.onnew && isNew){
+						addresses.push(address);
+						return;
+					}
+					// Need to add watching
+					if(user.settings.onparticipate && participants.indexOf(user.id) > -1){
+						addresses.push(address);
+						return;
+					}
+					if(user.settings.onown && t.owner == user.id){
+						addresses.push(address);
+						return;
+					}
+					if(array.intersection(user.settings.ontags.sort(), t.tags.sort()).length){
 						addresses.push(address);
 					}
 				}
@@ -140,10 +207,10 @@ define([
 
 	function calculateCommentRecipients(comment){
 		var queries = {};
-		queries.users = stores.users.query("select(id,settings)", { allowBulkFetch: true });
-		queries.comments = stores.comments.query("select(id,topicId,author)&topicId=" + comment.topicId,
-			{ allowBulkFetch: true });
-		queries.topic = stores.topics.get(comment.topicId);
+		queries.users = stores.users.query();
+		queries.comments = topic(comment.topicId).comment.all();
+		queries.topic = topic(comment.topicId).get();
+		// I can likely do this with an aggregate
 		return all(queries).then(function(results){
 			var addresses = [],
 				participants = [],
@@ -224,26 +291,30 @@ define([
 	function mailTopic(address, topic, options){
 		options = options || {};
 		var comments = {},
-			textHeader = "Created by: ${author}\n";
-		if(topic.owner) textHeader += "Owned by: ${owner}\n";
+			voteString, voteCount = 0,
+			textHeader = "Topic: ${title}\nAuthor: ${author}\n";
+		if(topic.owner) textHeader += "Owner: ${owner}\n";
 		textHeader += "Status: ${action}\n";
 		if(topic.tags && topic.tags.length) textHeader += "Tags: " + topic.tags.join(", ") + "\n";
 		if(topic.voters && topic.voters.length){
-			textHeader += "Votes: ";
+			voteString = "";
 			topic.voters.forEach(function(vote){
-				textHeader += vote.name + "[" + (vote.vote == 1 ? "+1" : vote.vote == -1 ? "-1" : "0") + "] ";
+				voteCount += vote.vote;
+				voteString += vote.name + "[" + (vote.vote == 1 ? "+1" : vote.vote == -1 ? "-1" : "0") + "] ";
 			});
-			textHeader += "\n";
+			textHeader += "Voting: " + voteCount + "\n";
+			textHeader += "Votes: " + voteString + "\n";
 		}
 		textHeader += "\n";
 		textHeader = string.substitute(textHeader, {
 			author: topic.author,
+			title: topic.title,
 			owner: topic.owner || "",
 			action: string.capitaliseFirst(topic.action || "")
 		});
-		var htmlHeader = '<div class="dote_h"><span class="dote_l">Created By:</span> ' +
-			'<span class="dote_p">${author}</span>';
-		if(topic.owner) htmlHeader += '<br><span class="dote_l">Owned by:</span> <span class="dote_p">' +
+		var htmlHeader = '<div class="dote_h"><span class="dote_l">Topic:</span> <span class="dote_p">${title}</span>' +
+			'<br><span class="dote_l">Author:</span> <span class="dote_p">${author}</span>';
+		if(topic.owner) htmlHeader += '<br><span class="dote_l">Owner:</span> <span class="dote_p">' +
 			'${owner}</span>';
 		htmlHeader += '<br><span class="dote_l">Status:</span> <span class="dote_p">${action}</span>';
 		if(topic.tags && topic.tags.length){
@@ -253,46 +324,48 @@ define([
 			});
 		}
 		if(topic.voters && topic.voters.length){
-			htmlHeader += '<br><span class="dote_l">Votes:</span> ';
+			voteString = "";
 			topic.voters.forEach(function(vote){
-				htmlHeader += string.substitute('<span class="dote_${type}">${tag} [${vote}]</span> ', {
+				voteString += string.substitute('<span class="dote_${type}">${tag} [${vote}]</span> ', {
 					type: vote.vote == 1 ? "u" : vote.vote == -1 ? "d" : "n",
 					tag: vote.name,
 					vote: vote.vote == 1 ? "+1" : vote.vote == -1 ? "-1" : "0"
 				});
 			});
+			htmlHeader += '<br><span class="dote_l">Voting:</span> ' + voteCount;
+			htmlHeader += '<br><span class="dote_l">Votes:</span> ' + voteString;
 		}
 		htmlHeader += string.substitute('<br><br><a href="${mu}" class="dote_vu">Vote +1</a> ' +
 			'<a href="${mn}" class="dote_vn">Vote 0</a> <a href="${md}" class="dote_vd">Vote -1</a>', {
 				mu: mailTo(config.mail.address, {
 					id: topic.id,
 					action: "voteu",
-					subject: "Re: [" + config.mail.list.name + "] [+1] " + topic.title,
+					subject: "Re: [" + config.mail.list.name + "] " + topic.title,
 					body: "Voting: +1\n\n[Additional Comment:]\n\n"
 				}),
 				mn: mailTo(config.mail.address, {
 					id: topic.id,
 					action: "voten",
-					subject: "Re: [" + config.mail.list.name + "] [0] " + topic.title,
+					subject: "Re: [" + config.mail.list.name + "] " + topic.title,
 					body: "Voting: 0\n\n[Additional Comment:]\n\n"
 				}),
 				md: mailTo(config.mail.address, {
 					id: topic.id,
 					action: "voted",
-					subject: "Re: [" + config.mail.list.name + "] [-1] " + topic.title,
+					subject: "Re: [" + config.mail.list.name + "] " + topic.title,
 					body: "Voting: -1\n\n[Additional Comment:]\n\n"
 				})
 			});
 		htmlHeader += '</div>';
 		htmlHeader = string.substitute(htmlHeader, {
 			author: topic.author,
+			title: topic.title,
 			owner: topic.owner || "",
 			action: string.capitaliseFirst(topic.action || "")
 		});
 		if(options.includeComments){
 			comments = stores.comments.query("select(id,topicId,author,created,text)&sort(+created)&topicId=" + topic.id).
 				then(function(items){
-					console.log(items);
 					var commentText = "", commentHtml = "";
 					items.forEach(function(comment){
 						commentText += "\n**" + comment.author + "** said:\n > " +
@@ -328,6 +401,101 @@ define([
 				return mail.send(message);
 			}
 		});
+	}
+
+	function mailVote(address, vote, topic, comment){
+		var text = "${vote.name} is voting ${voteString}\nOverall: ${count}\nTopic: ${topic.title}\n",
+			html = '<div class="dote_h"><table><tbody><tr><td class="${voteClass}">${voteString}</td>' +
+				'<td class="${voteTotalClass}">${count}</td></tr><tr><td>${vote.name}</td><td>Total</td></tr>' +
+				'</tbody></table><br><span class="dote_l">Topic:</span> <span class="dote_p">${topic.title}</span>';
+		if(topic.owner){
+			text += "Owner: ${topic.owner}\n";
+			html += '<br><span class="dote_l">Owner:</span> <span class="dote_p">${topic.owner}</span>';
+		}
+		text += "Status: ${action}\n";
+		html += '<br><span class="dote_l">Status:</span> <span class="dote_p">${action}</span>';
+		if(topic.tags && topic.tags.length){
+			text += "Tags: " + topic.tags.join(", ") + "\n";
+			html += '<br><span class="dote_l">Tags:</span> <span class="dote_t">' +
+				topic.tags.join('</span> <span class="dote_t">') + "</span>";
+		}
+		var count = 0;
+		if(topic.voters && topic.voters.length){
+			text += "Voters: ";
+			html += '<br><span class="dote_l">Voters:</span> ';
+			topic.voters.forEach(function(v){
+				count += v.vote;
+				text += v.name + "[" + (v.vote == 1 ? "+1" : v.vote == -1 ? "-1" : "0") + "] ";
+				html += string.substitute('<span class="dote_${type}">${tag} [${vote}]</span> ', {
+					type: v.vote == 1 ? "u" : v.vote == -1 ? "d" : "n",
+					tag: v.name,
+					vote: v.vote == 1 ? "+1" : v.vote == -1 ? "-1" : "0"
+				});
+			});
+			text += "\n";
+		}
+		html += string.substitute('<br><br><a href="${mu}" class="dote_vu">Vote +1</a> ' +
+			'<a href="${mn}" class="dote_vn">Vote 0</a> <a href="${md}" class="dote_vd">Vote -1</a>', {
+				mu: mailTo(config.mail.address, {
+					id: topic.id,
+					action: "voteu",
+					subject: "Re: [" + config.mail.list.name + "] " + topic.title,
+					body: "Voting: +1\n\n[Additional Comment:]\n\n"
+				}),
+				mn: mailTo(config.mail.address, {
+					id: topic.id,
+					action: "voten",
+					subject: "Re: [" + config.mail.list.name + "] " + topic.title,
+					body: "Voting: 0\n\n[Additional Comment:]\n\n"
+				}),
+				md: mailTo(config.mail.address, {
+					id: topic.id,
+					action: "voted",
+					subject: "Re: [" + config.mail.list.name + "] " + topic.title,
+					body: "Voting: -1\n\n[Additional Comment:]\n\n"
+				})
+			});
+		if(comment && comment.text){
+			text += "\n----\n" + comment.text + "\n" + string.substitute(textFooter, topic);
+			html += "</div>" + marked(comment.text) + '<div class="dote_f">';
+		}else{
+			html += "<br><br>";
+		}
+		html += string.substitute(htmlFooterVote, topic);
+		var voteString = vote.vote > 0 ? "+" + vote.vote : vote.vote;
+		var subs = {
+			vote: vote,
+			voteString: voteString,
+			voteClass: vote.vote > 0 ? "plus" : vote.vote < 0 ? "minus" : "neutral",
+			voteTotalClass: count > 0 ? "plus" : count < 0 ? "minus" : "neutral",
+			topic: topic,
+			action: string.capitaliseFirst(topic.action || ""),
+			count: count > 0 ? "+" + count : count
+		};
+		text = string.substitute(text, subs);
+		html = string.substitute(html, subs);
+		var message = {
+			from: config.mail.username + " <" + config.mail.address + ">",
+			to: address,
+			subject: "[" + config.mail.list.name + "] " + topic.title,
+			"Reply-To": string.substitute(replyToTemplate, topic),
+			"List-ID": config.mail.list.name + " <" + config.mail.list.id + ">",
+			"List-Unsubscribe": unsubscribeAddress,
+			"List-Post": postAddress,
+			"List-Archive": config.address,
+			"Message-ID": topic.id + "+" + vote.name + "@" + config.mail.list.id,
+			"In-Reply-To": topic.id + "@" + config.mail.list.id,
+			text: text,
+			attachment: {
+				data: juice(html, cssMessages + cssHljs),
+				alternative: true
+			}
+		};
+		return config.mail.enabled ? mail.send(message) : when(false);
+	}
+
+	function mailComment(address, comment, topic){
+
 	}
 
 	function fetch(markSeen){
@@ -412,18 +580,19 @@ define([
 	}
 
 	function process(){
-		return when(stores.emails.query(), function(results){
-			var gets = [];
-			results.forEach(function(result){
-				gets.push(stores.emails.get(result.id).then(processEmail));
+		return email.all().then(function(results){
+			var e = [];
+			results.forEach(function(item){
+				e.push(processEmail(item));
 			});
-			return all(gets).then(function(mails){
+			return all(e).then(function(mails){
 				var results = [];
 				mails.forEach(function(mail){
+					var result = when(mail.emailId);
 					if(mail.user && mail.user.id){
-						// Identified User
 						var topicId,
-							action;
+							action,
+							voter;
 						if(mail.actions && mail.actions.length){
 							mail.actions.some(function(a){
 								var result = topicIdRe.exec(a);
@@ -436,16 +605,45 @@ define([
 						if(action){
 							switch(action){
 								case "voteu":
-									console.log("vote up");
+									voter = {
+										vote: 1,
+										name: mail.user.id
+									};
 									break;
 								case "voted":
-									console.log("vote down");
+									voter = {
+										vote: -1,
+										name: mail.user.id
+									};
 									break;
 								case "voten":
-									console.log("vote neutral");
+									voter = {
+										vote: 0,
+										name: mail.user.id
+									};
 									break;
 								case "post":
-									console.log("post");
+									var summary = "";
+									marked.lexer(mail.text).forEach(function(token){
+										if(token && token.text){
+											summary = summary.concat(token.text.replace(/\n/g, " ") + " ");
+										}
+									});
+									var data = {
+										title: mail.title,
+										description: mail.text,
+										summary: summary.substring(0, 120),
+										author: mail.user.id
+									};
+									result = topic().add(data).then(function(topic){
+										return email(mail.emailId).remove().then(function(){
+											return {
+												action: "post",
+												emailId: mail.emailId,
+												topicId: topic.id
+											};
+										});
+									});
 									break;
 								case "unsubscribe":
 									console.log("unsubscribe");
@@ -453,17 +651,46 @@ define([
 							}
 						}else{
 							if(!topicId && mail.text){
+								console.log(mail);
 								console.log("assume post");
 							}
 						}
-						if(topicId && mail.text){
-							console.log("add comment");
+						if(topicId && (voter || mail.text)){
+							var t = topic(topicId);
+							if(voter){
+								var comment;
+								if(mail.text){
+									comment = {
+										author: mail.user.id,
+										text: mail.text
+									};
+								}
+								result = t.vote(voter, comment).then(function(results){
+									return calculateTopicRecipients(results.topic).then(function(recipients){
+										var mails = [];
+										recipients.forEach(function(address){
+											mails.push(mailVote(address, voter, results.topic, results.comment));
+										});
+										return all(mails).then(function(){
+											email(mail.emailId).remove().then(function(){
+												return {
+													action: "vote",
+													emailId: mail.emailId,
+													topicId: topicId
+												};
+											});
+										});
+									});
+								});
+							}else{
+								// just comment
+
+							}
 						}
 					}else{
-						// No User Identified
+						// No user Identified
 					}
-					// results.push(stores.emails.remove(mail.emailId));
-					results.push(when(mail.emailId));
+					results.push(result);
 				});
 				return all(results);
 			});
@@ -474,6 +701,8 @@ define([
 		init: init,
 		mail: mail,
 		mailTopic: mailTopic,
+		mailVote: mailVote,
+		mailComment: mailComment,
 		calculateTopicRecipients: calculateTopicRecipients,
 		calculateCommentRecipients: calculateCommentRecipients,
 		fetch: fetch,

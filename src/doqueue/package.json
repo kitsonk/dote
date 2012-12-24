@@ -1,0 +1,6 @@
+{
+	"name": "doqueue",
+	"version": "0.0.1",
+	"main": "main",
+	"dojoBuild": "doqueue.profile.js"
+}

@@ -9,7 +9,8 @@ define([
 	"./stores"
 ], function(parser, lang, all, when, compose, array, Evented, stores){
 
-	var topicHash = {};
+	var topicHash = {},
+		topicOns = [];
 
 	var topicDefaults = {
 			title: "",
@@ -186,10 +187,16 @@ define([
 		this.comment = lang.mixin(function(id){
 			return id ? this._commentHash[id] || (this._commentHash[id] = new Comment(this.id, id)) : new Comment(this.id);
 		}, new CommentObj(this));
+		this._listeners = [];
+		var self = this;
+		topicOns.forEach(function(item){
+			self._listeners.push(self.on(item.type, item.listener));
+		});
 	}, Evented, {
 		id: null,
 		item: null,
 		_commentHash: null,
+		_listeners: null,
 
 		comment: null,
 
@@ -244,6 +251,29 @@ define([
 					return true;
 				});
 			});
+		},
+
+		vote: function(voter, comment){
+			var self = this;
+			return this.get().then(function(item){
+				if(item.voters && item.voters.length){
+					if(!item.voters.some(function(vote, idx){
+						if(vote.name === voter.name){
+							item.voters[idx].vote = voter.vote;
+							return true;
+						}
+					})){
+						item.voters.push(voter);
+					}
+				}else{
+					item.voters = [ voter ];
+				}
+				return self.put(item).then(function(item){
+					var results = { topic: item };
+					if(comment) results.comment = self.comment().add(comment);
+					return all(results);
+				});
+			});
 		}
 	});
 
@@ -268,6 +298,13 @@ define([
 
 	topic.clear = function(){
 		topicHash = {};
+	};
+
+	topic.on = function(type, listener){
+		topicOns.push({
+			type: type,
+			listener: listener
+		});
 	};
 
 	return topic;

@@ -29,6 +29,9 @@ dojoConfig = {
 		name: "hljs",
 		location: "hljs"
 	},{
+		name: "doqueue",
+		location: "doqueue"
+	},{
 		name: "dote",
 		location: "dote"
 	},{
