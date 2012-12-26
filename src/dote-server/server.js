@@ -8,16 +8,16 @@ define([
 	"dojo/promise/all",
 	"dojo/when",
 	"marked/marked",
-	"doqueue/Queue",
 	"dote/wait",
 	"./auth",
 	"./config",
 	"./email",
 	"./messages",
+	"./queue",
 	"./stores",
 	"./topic",
 	"./util"
-], function(express, stylus, nib, url, colors, lang, all, when, marked, Queue, wait, auth, config, email, messages,
+], function(express, stylus, nib, url, colors, lang, all, when, marked, wait, auth, config, email, messages, queue,
 		stores, topic, util){
 
 	function compile(str, path){
@@ -96,28 +96,13 @@ define([
 	/* Init Messages */
 	messages.init("Drag00n$%!");
 
-	/* Setup Queue */
-	var queue = new Queue({
-		storeOptions: {
-			url: process.env.MONGOLAB_URI || config.db.url,
-			collection: "queue"
-		}
-	});
-
 	/* Setup Topic Handlers */
 	queue.ready().then(function(){
 		topic.on("add", function(e){
-			queue.create("topic", {
+			queue.create("topic.new", {
 				topic: e.item,
 				isNew: true
 			});
-			// messages.calculateTopicRecipients(e.item, true).then(function(results){
-			// 	results.forEach(function(address){
-			// 		messages.mailTopic(address, e.item).then(function(){
-			// 			console.log("Mailed topic ".grey + e.item.id.cyan + " to ".grey + address.yellow);
-			// 		});
-			// 	});
-			// });
 		});
 	});
 
@@ -147,9 +132,9 @@ define([
 			compress: true
 		}));
 
-		app.use("/_static", express["static"]("./_static"));
+		app.use("/_static", express["static"]("./_static", { maxAge: 86400000 }));
 		app.use("/src", express["static"]("src"));
-		app.use("/lib", express["static"]("lib"));
+		app.use("/lib", express["static"]("lib"), { maxAge: 86400000 });
 
 		app.use("/500", function(request, response, next){
 			next(new Error("All your base are belong to us!"));
@@ -327,14 +312,14 @@ define([
 	 * Manual mail process
 	 */
 
-	app.get("/processMail", function(request, response, next){
-		messages.process().then(function(results){
-			response.json(results);
-		}).otherwise(function(err){
-			response.status(500);
-			next(err);
-		});
-	});
+	// app.get("/processMail", function(request, response, next){
+	// 	messages.process().then(function(results){
+	// 		response.json(results);
+	// 	}).otherwise(function(err){
+	// 		response.status(500);
+	// 		next(err);
+	// 	});
+	// });
 
 	/*
 	 * Restful Services

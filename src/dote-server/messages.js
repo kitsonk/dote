@@ -5,6 +5,7 @@ define([
 	"./Mail",
 	"./stores",
 	"./topic",
+	"./queue",
 	"dojo/_base/lang", // lang.mixin
 	"dojo/Deferred",
 	"dojo/promise/all", // all
@@ -14,8 +15,8 @@ define([
 	"dote/string", // string.substitute, string.capitaliseFirst
 	"./stylus!./resources/messages.styl",
 	"dojo/text!hljs/default.css"
-], function(juice, config, email, Mail, stores, topic, lang, Deferred, all, when, array, marked, string, cssMessages,
-		cssHljs){
+], function(juice, config, email, Mail, stores, topic, queue, lang, Deferred, all, when, array, marked, string,
+		cssMessages, cssHljs){
 	
 	var toRe = new RegExp("^" + config.mail.address.split("@")[0] + "\\+?([^@]*)@", "i"),
 		subjectRe = new RegExp("(?:Re:)?\\s*(?:\\[" + config.mail.list.name +
@@ -158,52 +159,52 @@ define([
 		});
 	}
 
-	function calculateTopicRecipients(t, isNew){
-		var queries = {};
-		queries.users = stores.users.query();
-		queries.comments = topic(t.id).comment.all();
-		return all(queries).then(function(results){
-			var addresses = [],
-				participants = [],
-				removeAuthor;
-			results.comments.forEach(function(comment){
-				participants.push(comment.author);
-			});
-			t.voters.forEach(function(voter){
-				participants.push(voter.name);
-			});
-			participants.push(t.author);
-			if(t.owner) participants.push(t.owner);
-			participants = array.unique(participants);
-			results.users.forEach(function(user){
-				if(user.settings && user.settings.email && !user.settings.optout){
-					var address = user.id + "<" + user.settings.email + ">";
-					if(user.settings.excreated && user.id == t.author){
-						removeAuthor = address;
-					}
-					if(user.settings.onnew && isNew){
-						addresses.push(address);
-						return;
-					}
-					// Need to add watching
-					if(user.settings.onparticipate && participants.indexOf(user.id) > -1){
-						addresses.push(address);
-						return;
-					}
-					if(user.settings.onown && t.owner == user.id){
-						addresses.push(address);
-						return;
-					}
-					if(array.intersection(user.settings.ontags.sort(), t.tags.sort()).length){
-						addresses.push(address);
-					}
-				}
-			});
-			return removeAuthor ? array.filter(array.unique(addresses), function(address){
-					return address !== removeAuthor;
-				}) : array.unique(addresses);
-		});
-	}
+	// function calculateTopicRecipients(t, isNew){
+	// 	var queries = {};
+	// 	queries.users = stores.users.query();
+	// 	queries.comments = topic(t.id).comment.all();
+	// 	return all(queries).then(function(results){
+	// 		var addresses = [],
+	// 			participants = [],
+	// 			removeAuthor;
+	// 		results.comments.forEach(function(comment){
+	// 			participants.push(comment.author);
+	// 		});
+	// 		t.voters.forEach(function(voter){
+	// 			participants.push(voter.name);
+	// 		});
+	// 		participants.push(t.author);
+	// 		if(t.owner) participants.push(t.owner);
+	// 		participants = array.unique(participants);
+	// 		results.users.forEach(function(user){
+	// 			if(user.settings && user.settings.email && !user.settings.optout){
+	// 				var address = user.id + "<" + user.settings.email + ">";
+	// 				if(user.settings.excreated && user.id == t.author){
+	// 					removeAuthor = address;
+	// 				}
+	// 				if(user.settings.onnew && isNew){
+	// 					addresses.push(address);
+	// 					return;
+	// 				}
+	// 				// Need to add watching
+	// 				if(user.settings.onparticipate && participants.indexOf(user.id) > -1){
+	// 					addresses.push(address);
+	// 					return;
+	// 				}
+	// 				if(user.settings.onown && t.owner == user.id){
+	// 					addresses.push(address);
+	// 					return;
+	// 				}
+	// 				if(array.intersection(user.settings.ontags.sort(), t.tags.sort()).length){
+	// 					addresses.push(address);
+	// 				}
+	// 			}
+	// 		});
+	// 		return removeAuthor ? array.filter(array.unique(addresses), function(address){
+	// 				return address !== removeAuthor;
+	// 			}) : array.unique(addresses);
+	// 	});
+	// }
 
 	function calculateCommentRecipients(comment){
 		var queries = {};
@@ -579,121 +580,99 @@ define([
 		});
 	}
 
-	function process(){
-		return email.all().then(function(results){
-			var e = [];
-			results.forEach(function(item){
-				e.push(processEmail(item));
-			});
-			return all(e).then(function(mails){
-				var results = [];
-				mails.forEach(function(mail){
-					var result = when(mail.emailId);
-					if(mail.user && mail.user.id){
-						var topicId,
-							action,
-							voter;
-						if(mail.actions && mail.actions.length){
-							mail.actions.some(function(a){
-								var result = topicIdRe.exec(a);
-								return topicId = result ? result[0] : null;
-							});
-							actionTypes.some(function(a){
-								return action = ~mail.actions.indexOf(a) ? a : null;
-							});
-						}
-						if(action){
-							switch(action){
-								case "voteu":
-									voter = {
-										vote: 1,
-										name: mail.user.id
-									};
-									break;
-								case "voted":
-									voter = {
-										vote: -1,
-										name: mail.user.id
-									};
-									break;
-								case "voten":
-									voter = {
-										vote: 0,
-										name: mail.user.id
-									};
-									break;
-								case "post":
-									var summary = "";
-									marked.lexer(mail.text).forEach(function(token){
-										if(token && token.text){
-											summary = summary.concat(token.text.replace(/\n/g, " ") + " ");
-										}
-									});
-									var data = {
-										title: mail.title,
-										description: mail.text,
-										summary: summary.substring(0, 120),
-										author: mail.user.id
-									};
-									result = topic().add(data).then(function(topic){
-										return email(mail.emailId).remove().then(function(){
-											return {
-												action: "post",
-												emailId: mail.emailId,
-												topicId: topic.id
-											};
-										});
-									});
-									break;
-								case "unsubscribe":
-									console.log("unsubscribe");
-									break;
-							}
-						}else{
-							if(!topicId && mail.text){
-								console.log(mail);
-								console.log("assume post");
-							}
-						}
-						if(topicId && (voter || mail.text)){
-							var t = topic(topicId);
-							if(voter){
-								var comment;
-								if(mail.text){
-									comment = {
-										author: mail.user.id,
-										text: mail.text
-									};
+	function process(email){
+		return processEmail(email).then(function(mail){
+			var result = when(mail.emailId);
+			if(mail.user && mail.user.id){
+				var topicId,
+					action,
+					voter;
+				if(mail.actions && mail.actions.length){
+					mail.actions.some(function(a){
+						var result = topicIdRe.exec(a);
+						return topicId = result ? result[0] : null;
+					});
+					actionTypes.some(function(a){
+						return action = ~mail.actions.indexOf(a) ? a : null;
+					});
+				}
+				if(action){
+					switch(action){
+						case "voteu":
+							voter = {
+								vote: 1,
+								name: mail.user.id
+							};
+							break;
+						case "voted":
+							voter = {
+								vote: -1,
+								name: mail.user.id
+							};
+							break;
+						case "voten":
+							voter = {
+								vote: 0,
+								name: mail.user.id
+							};
+							break;
+						case "post":
+							var summary = "";
+							marked.lexer(mail.text).forEach(function(token){
+								if(token && token.text){
+									summary = summary.concat(token.text.replace(/\n/g, " ") + " ");
 								}
-								result = t.vote(voter, comment).then(function(results){
-									return calculateTopicRecipients(results.topic).then(function(recipients){
-										var mails = [];
-										recipients.forEach(function(address){
-											mails.push(mailVote(address, voter, results.topic, results.comment));
-										});
-										return all(mails).then(function(){
-											email(mail.emailId).remove().then(function(){
-												return {
-													action: "vote",
-													emailId: mail.emailId,
-													topicId: topicId
-												};
-											});
-										});
-									});
-								});
-							}else{
-								// just comment
-
-							}
-						}
-					}else{
-						// No user Identified
+							});
+							var data = {
+								title: mail.title,
+								description: mail.text,
+								summary: summary.substring(0, 120),
+								author: mail.user.id
+							};
+							result = topic().add(data).then(function(topic){
+								return {
+									action: "post",
+									emailId: mail.emailId,
+									topicId: topic.id
+								};
+							});
+							break;
+						case "unsubscribe":
+							console.log("unsubscribe");
+							break;
 					}
-					results.push(result);
-				});
-				return all(results);
-			});
+				}else{
+					if(!topicId && mail.text){
+						console.log(mail);
+						console.log("assume post");
+					}
+				}
+				if(topicId && (voter || mail.text)){
+					var t = topic(topicId);
+					if(voter){
+						var comment;
+						if(mail.text){
+							comment = {
+								author: mail.user.id,
+								text: mail.text
+							};
+						}
+						result = t.vote(voter, comment).then(function(results){
+							return {
+								action: "vote",
+								emailId: mail.emailId,
+								topicId: topicId
+							};
+						});
+					}else{
+						// just comment
+
+					}
+				}
+			}else{
+				// No user Identified
+			}
+			return result;
 		});
 	}
 
