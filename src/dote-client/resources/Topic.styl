@@ -15,7 +15,7 @@ tag-color = #ddd
 plus-color = #bcf4c3
 minus-color = #f4bcbc
 neutral-color = #f4e0bc
-preview-bg-color = #eee
+tr-bg-color = #eee
 
 .doteTopic
   background-color topic-bg-color
@@ -243,3 +243,16 @@ preview-bg-color = #eee
     border-top none
     border-bottom none
     border-left 2px solid topic-border-color
+  &Comment
+  &Post
+    table
+      border-collapse collapse
+      th
+        background-color tr-bg-color
+        border-bottom 1px solid topic-border-color
+        font-weight bold
+        padding 3px
+      td
+        padding 3px
+      tr:nth-child(even) td
+        background-color tr-bg-color

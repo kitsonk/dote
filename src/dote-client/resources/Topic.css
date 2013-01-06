@@ -382,3 +382,22 @@
   border-bottom: none;
   border-left: 2px solid #c0c6cc;
 }
+.doteTopicComment table,
+.doteTopicPost table {
+  border-collapse: collapse;
+}
+.doteTopicComment table th,
+.doteTopicPost table th {
+  background-color: #eee;
+  border-bottom: 1px solid #c0c6cc;
+  font-weight: bold;
+  padding: 3px;
+}
+.doteTopicComment table td,
+.doteTopicPost table td {
+  padding: 3px;
+}
+.doteTopicComment table tr:nth-child(even) td,
+.doteTopicPost table tr:nth-child(even) td {
+  background-color: #eee;
+}

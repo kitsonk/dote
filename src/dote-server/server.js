@@ -8,6 +8,7 @@ define([
 	"dojo/promise/all",
 	"dojo/when",
 	"marked/marked",
+	"dote/timer",
 	"dote/wait",
 	"./auth",
 	"./config",
@@ -17,8 +18,8 @@ define([
 	"./stores",
 	"./topic",
 	"./util"
-], function(express, stylus, nib, url, colors, lang, all, when, marked, wait, auth, config, email, messages, queue,
-		stores, topic, util){
+], function(express, stylus, nib, url, colors, lang, all, when, marked, timer, wait, auth, config, email, messages,
+		queue, stores, topic, util){
 
 	function compile(str, path){
 		return stylus(str).
@@ -102,6 +103,19 @@ define([
 			queue.create("topic.new", {
 				topic: e.item,
 				isNew: true
+			});
+		});
+
+		topic.on("put", function(e){
+			queue.create("topic.change", {
+				original: e.original,
+				changed: e.item
+			});
+		});
+
+		topic.on("comment.add", function(e){
+			queue.create("comment.add", {
+				comment: e.item
 			});
 		});
 	});
@@ -598,6 +612,16 @@ define([
 			next(err);
 		});
 	});
+
+	if(env === "development"){
+		var memoryInfoTimer = timer(60000),
+			memoryInfoSignal = memoryInfoTimer.on("tick", function(){
+				var info = process.memoryUsage();
+				console.log("Memory Usage: [".grey + "rss=".cyan + info.rss.toString().cyan +
+					" - ".grey + "heapTotal=".cyan + info.heapTotal.toString().cyan +
+					" - ".grey + "heapUsed=".cyan + info.heapUsed.toString().cyan + "]".grey);
+			});
+	}
 
 	return {
 		start: function(){

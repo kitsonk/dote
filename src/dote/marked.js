@@ -5,6 +5,7 @@ define([
 
 	marked.setOptions({
 		gfm: true,
+		tables: true,
 		pedantic: false,
 		sanitize: false,
 		highlight: function(code, lang){

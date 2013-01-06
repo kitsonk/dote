@@ -131,7 +131,7 @@ define([
 			participants = array.unique(participants);
 			results.users.forEach(function(user){
 				if(user.settings && user.settings.email && !user.settings.optout){
-					var address = user.id + "<" + user.settings.email + ">";
+					var address = user.id + " <" + user.settings.email + ">";
 					if(user.settings.excreated && user.id == t.author){
 						removeAuthor = address;
 					}
@@ -159,52 +159,48 @@ define([
 		});
 	}
 
-	// function calculateTopicRecipients(t, isNew){
-	// 	var queries = {};
-	// 	queries.users = stores.users.query();
-	// 	queries.comments = topic(t.id).comment.all();
-	// 	return all(queries).then(function(results){
-	// 		var addresses = [],
-	// 			participants = [],
-	// 			removeAuthor;
-	// 		results.comments.forEach(function(comment){
-	// 			participants.push(comment.author);
-	// 		});
-	// 		t.voters.forEach(function(voter){
-	// 			participants.push(voter.name);
-	// 		});
-	// 		participants.push(t.author);
-	// 		if(t.owner) participants.push(t.owner);
-	// 		participants = array.unique(participants);
-	// 		results.users.forEach(function(user){
-	// 			if(user.settings && user.settings.email && !user.settings.optout){
-	// 				var address = user.id + "<" + user.settings.email + ">";
-	// 				if(user.settings.excreated && user.id == t.author){
-	// 					removeAuthor = address;
-	// 				}
-	// 				if(user.settings.onnew && isNew){
-	// 					addresses.push(address);
-	// 					return;
-	// 				}
-	// 				// Need to add watching
-	// 				if(user.settings.onparticipate && participants.indexOf(user.id) > -1){
-	// 					addresses.push(address);
-	// 					return;
-	// 				}
-	// 				if(user.settings.onown && t.owner == user.id){
-	// 					addresses.push(address);
-	// 					return;
-	// 				}
-	// 				if(array.intersection(user.settings.ontags.sort(), t.tags.sort()).length){
-	// 					addresses.push(address);
-	// 				}
-	// 			}
-	// 		});
-	// 		return removeAuthor ? array.filter(array.unique(addresses), function(address){
-	// 				return address !== removeAuthor;
-	// 			}) : array.unique(addresses);
-	// 	});
-	// }
+	function calculateVoteRecipients(t, voter){
+		var queries = {};
+		queries.users = stores.users.query();
+		queries.comments = topic(t.id).comment.all();
+		return all(queries).then(function(results){
+			var addresses = [],
+				participants = [],
+				removeAuthor;
+			results.comments.forEach(function(comment){
+				participants.push(comment.author);
+			});
+			t.voters.forEach(function(voter){
+				participants.push(voter.name);
+			});
+			participants.push(t.author);
+			if(t.owner) participants.push(t.owner);
+			participants = array.unique(participants);
+			results.users.forEach(function(user){
+				if(user.settings && user.settings.email && !user.settings.optout){
+					var address = user.id + " <" + user.settings.email + ">";
+					if(user.settings.excreated && user.id == voter){
+						removeAuthor = address;
+					}
+					// Need to add watching
+					if(user.settings.onparticipate && participants.indexOf(user.id) > -1){
+						addresses.push(address);
+						return;
+					}
+					if(user.settings.onown && t.owner == user.id){
+						addresses.push(address);
+						return;
+					}
+					if(array.intersection(user.settings.ontags.sort(), t.tags.sort()).length){
+						addresses.push(address);
+					}
+				}
+			});
+			return removeAuthor ? array.filter(array.unique(addresses), function(address){
+					return address !== removeAuthor;
+				}) : array.unique(addresses);
+		});
+	}
 
 	function calculateCommentRecipients(comment){
 		var queries = {};
@@ -232,7 +228,7 @@ define([
 			console.log(participants);
 			results.users.forEach(function(user){
 				if(user.settings && user.settings.email && !user.settings.optout){
-					var address = user.id + "<" + user.settings.email + ">";
+					var address = user.id + " <" + user.settings.email + ">";
 					if(user.settings.excreated && user.id == comment.author){
 						removeAuthor = address;
 					}
@@ -382,7 +378,8 @@ define([
 		}
 		return when(comments, function(comment){
 			var message = {
-				from: config.mail.username + " <" + config.mail.address + ">",
+				from: topic.author + " <" + config.mail.address + ">",
+				"Sender": config.mail.username + " <" + config.mail.address + ">",
 				to: address,
 				subject: "[" + config.mail.list.name + "] " + topic.title,
 				"Reply-To": string.substitute(replyToTemplate, topic),
@@ -476,7 +473,8 @@ define([
 		text = string.substitute(text, subs);
 		html = string.substitute(html, subs);
 		var message = {
-			from: config.mail.username + " <" + config.mail.address + ">",
+			from: vote.name + " <" + config.mail.address + ">",
+			"Sender": config.mail.username + " <" + config.mail.address + ">",
 			to: address,
 			subject: "[" + config.mail.list.name + "] " + topic.title,
 			"Reply-To": string.substitute(replyToTemplate, topic),
@@ -496,7 +494,27 @@ define([
 	}
 
 	function mailComment(address, comment, topic){
-
+		var text = comment.text + string.substitute(textFooter, topic),
+			html = marked(comment.text) + string.substitute(htmlFooter, topic);
+		var message = {
+			from: comment.author + " <" + config.mail.address + ">",
+			"Sender": config.mail.username + " <" + config.mail.address + ">",
+			to: address,
+			subject: "Re: [" + config.mail.list.name + "] " + topic.title,
+			"Reply-To": string.substitute(replyToTemplate, topic),
+			"List-ID": config.mail.list.name + " <" + config.mail.list.id + ">",
+			"List-Unsubscribe": unsubscribeAddress,
+			"List-Post": postAddress,
+			"List-Archive": config.address,
+			"Message-ID": comment.id + "@" + config.mail.list.id,
+			"In-Reply-To": topic.id + "@" + config.mail.list.id,
+			text: text,
+			attachment: {
+				data: juice(html, cssMessages + cssHljs),
+				alternative: true
+			}
+		};
+		return config.mail.enabled ? mail.send(message) : when(false);
 	}
 
 	function fetch(markSeen){
@@ -648,9 +666,9 @@ define([
 					}
 				}
 				if(topicId && (voter || mail.text)){
-					var t = topic(topicId);
+					var t = topic(topicId),
+						comment;
 					if(voter){
-						var comment;
 						if(mail.text){
 							comment = {
 								author: mail.user.id,
@@ -665,8 +683,18 @@ define([
 							};
 						});
 					}else{
-						// just comment
-
+						comment = {
+							author: mail.user.id,
+							text: mail.text
+						};
+						result = t.comment().add(comment).then(function(results){
+							return {
+								action: "comment",
+								emailId: mail.emailId,
+								topicId: topicId,
+								commentId: results.id
+							};
+						});
 					}
 				}
 			}else{
@@ -683,6 +711,7 @@ define([
 		mailVote: mailVote,
 		mailComment: mailComment,
 		calculateTopicRecipients: calculateTopicRecipients,
+		calculateVoteRecipients: calculateVoteRecipients,
 		calculateCommentRecipients: calculateCommentRecipients,
 		fetch: fetch,
 		process: process,

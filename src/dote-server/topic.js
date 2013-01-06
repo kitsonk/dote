@@ -1,6 +1,6 @@
 define([
 	"dojo/node!rql/parser", //parser
-	"dojo/_base/lang", // lang.mixin
+	"dojo/_base/lang", // lang.mixin, lang.clone
 	"dojo/promise/all",
 	"dojo/when",
 	"compose",
@@ -10,7 +10,9 @@ define([
 ], function(parser, lang, all, when, compose, array, Evented, stores){
 
 	var topicHash = {},
-		topicOns = [];
+		topicOns = [],
+		commentOns = [],
+		typeRegEx = /^comment\.(.+)$/;
 
 	var topicDefaults = {
 			title: "",
@@ -80,10 +82,16 @@ define([
 	var Comment = compose(function(topicId, id){
 		this.id = id;
 		this.topicId = topicId;
+		this._listeners = [];
+		var self = this;
+		commentOns.forEach(function(item){
+			self._listeners.push(self.on(item.type, item.listener));
+		});
 	}, Evented, {
 		id: null,
 		topicId: null,
 		item: null,
+		_listeners: null,
 
 		get: function(){
 			var self = this;
@@ -115,13 +123,19 @@ define([
 			item.topicId = this.topicId;
 			return when(stores.comments.add(item)).then(function(item){
 				if(item && item.topicId && item.id && topicHash[item.topicId]){
-					topicHash[item.topicId].item.commentsCount++;
-					topicHash[item.topicId].put();
-					topicHash[item.topicId]._commentHash[item.id] = self;
-					self.id = item.id;
+					return topicHash[item.topicId].get().then(function(topicItem){
+						topicItem = lang.clone(topicItem);
+						topicItem.commentsCount++;
+						topicHash[item.topicId].put(topicItem);
+						topicHash[item.topicId]._commentHash[item.id] = self;
+						self.id = item.id;
+						self.emit("add", { item: item });
+						return self.item = item;
+					});
+				}else{
+					self.emit("add", { item: item });
+					return self.item = item;
 				}
-				self.emit("add", { item: item });
-				return self.item = item;
 			});
 		},
 
@@ -256,6 +270,7 @@ define([
 		vote: function(voter, comment){
 			var self = this;
 			return this.get().then(function(item){
+				item = lang.clone(item);
 				if(item.voters && item.voters.length){
 					if(!item.voters.some(function(vote, idx){
 						if(vote.name === voter.name){
@@ -301,10 +316,18 @@ define([
 	};
 
 	topic.on = function(type, listener){
-		topicOns.push({
-			type: type,
-			listener: listener
-		});
+		var t = type.match(typeRegEx);
+		if(t){
+			commentOns.push({
+				type: t[1],
+				listener: listener
+			});
+		}else{
+			topicOns.push({
+				type: type,
+				listener: listener
+			});
+		}
 	};
 
 	return topic;

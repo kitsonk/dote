@@ -45,5 +45,13 @@ define([
 		return r;
 	};
 
+	array.difference = function(a, b){
+		return a.filter(function(i){
+			return !~b.indexOf(i);
+		}).concat(b.filter(function(i){
+			return !~a.indexOf(i);
+		}));
+	};
+
 	return array;
 });
