@@ -34,8 +34,8 @@
   "volo": {
     "baseDir": "src",
     "dependencies": {
-      "dojo": "github:dojo/dojo/1.8.2",
-      "dijit": "github:dojo/dijit/1.8.0",
+      "dojo": "github:dojo/dojo/1.8.3",
+      "dijit": "github:dojo/dijit/1.8.3",
       "setten": "github:kitsonk/setten/0.1.3",
       "compose": "github:kriszyp/compose/v0.2.2"
     }
