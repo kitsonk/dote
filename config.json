@@ -1,11 +1,11 @@
 {
 	"port": "8011",
-	"address": "http://livi.kitsonkelly.com:8011/",
+	"address": "http://glacial-forest-7231.herokuapp.com/",
 	"title": "dote",
 	"subtitle": "Dojo Topic Discussion",
 	"secret": "replaceme",
 	"bugs": "https://github.com/kitsonk/dote/issues",
-	"base": "src",
+	"base": "lib",
 	"db": {
 		"url": "mongodb://localhost:27017/dote"
 	},
