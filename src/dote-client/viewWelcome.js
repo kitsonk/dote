@@ -113,6 +113,8 @@ define([
 						widget.set("checked", value);
 					}else if(value instanceof Array){
 						widget.set("value", value.join(", "));
+					}else if(id == "email"){
+						widget.set("value", value || dote.email);
 					}else{
 						widget.set("value", value);
 					}

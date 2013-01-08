@@ -23,6 +23,7 @@ A topic based voting system for open collaboration.
 * [mailparser][mailparser] - Mail Parsing Library
 * [node-mongodb-native][nodemongodb] - Node Native MongoDB Library
 * [juice][juice] - Inlining CSS into HTML
+* [ldapauth][ldapauth] - LDAP Authorisation
 * [colors][colors] - Node Console Colors
 * [MongoDB][mongodb] - Persistent Document Store
 
@@ -46,6 +47,13 @@ on NodeJS 0.8.4 - 0.8.15.
     ```
 
 * Edit the ``config.json`` in the root directory.
+* Set the passwords in the environment:
+
+    ```bash
+    $ export DOTE_LDAP_PWD="password"
+    $ export DOTE_MAIL_PWD="password"
+    ```
+
 * Start the server:
 
     ```bash
@@ -74,6 +82,12 @@ And changing the ``_static/css/dote.styl`` to point at the optimised CSS:
 @import url("../../lib/dote-client/resources/client.css")
 ```
 
+### Notes ###
+
+* dote respects the NODE_ENV.
+* While the LDAP and mail password can be set in the ``config.json`` but they will be overridden by any environment
+  variable.  You generally shouldn't store clear text passwords in static files.
+
 [volo]: http://volojs.org/
 [cpm]: https://github.com/kriszyp/cpm/
 [nodejs]: http://nodejs.org/download/
@@ -98,3 +112,4 @@ And changing the ``_static/css/dote.styl`` to point at the optimised CSS:
 [nodemongodb]: https://github.com/mongodb/node-mongodb-native
 [colors]: https://github.com/Marak/colors.js
 [dojobuilder]: http://dojotoolkit.org/download/
+[ldapauth]: https://github.com/trentm/node-ldapauth

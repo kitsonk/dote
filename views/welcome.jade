@@ -24,7 +24,8 @@ block scripts
       deps: ["dote-client/viewWelcome"]
     };
     dote = {
-      username: "#{username}"
+      username: "#{username}",
+      email: "#{info.mail}"
     };
   script(type="text/javascript", src="/#{base}/dojo/dojo.js")
 

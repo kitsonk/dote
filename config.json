@@ -5,12 +5,13 @@
 	"subtitle": "Dojo Topic Discussion",
 	"secret": "replaceme",
 	"bugs": "https://github.com/kitsonk/dote/issues",
-	"base": "lib",
+	"base": "src",
 	"db": {
 		"url": "mongodb://localhost:27017/dote"
 	},
 	"mail": {
 		"username": "dote",
+		"password": "password",
 		"address": "dote@kitsonkelly.com",
 		"list": {
 			"name": "dote",
@@ -27,9 +28,11 @@
 		}
 	},
 	"ldap": {
-		"url": "ldaps://ldap.example.com:636",
-		"adminDn": "uid=myadminusername,ou=users,o=example.com",
-		"searchBase": "ou=users,o=example.com",
+		"enabled": true,
+		"url": "ldap://localhost",
+		"adminDn": "cn=admin,dc=kitsonkelly,dc=com",
+		"adminPassword": "password",
+		"searchBase": "ou=people,dc=kitsonkelly,dc=com",
 		"searchFilter": "(uid={{username}})"
 	}
 }

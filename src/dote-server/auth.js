@@ -1,10 +1,28 @@
 define([
+	"dojo/node!ldapauth",
+	"dojo/node!colors",
 	"dojo/_base/lang",
 	"dojo/promise/all",
+	"dojo/when",
 	"dojox/encoding/crypto/RSAKey-ext",
 	"dote/util",
-	"setten/dfs"
-], function(lang, all, RSAKey, util, dfs){
+	"setten/dfs",
+	"setten/util",
+	"./config"
+], function(LdapAuth, colors, lang, all, when, RSAKey, util, dfs, settenUtil, config){
+
+	if(config.ldap.enabled){
+		console.log("password", process.env.DOTE_LDAP_PWD || config.ldap.adminPassword);
+		var ldap = new LdapAuth({
+			url: config.ldap.url,
+			adminDn: config.ldap.adminDn,
+			adminPassword: process.env.DOTE_LDAP_PWD || config.ldap.adminPassword,
+			searchBase: config.ldap.searchBase,
+			searchFilter: config.ldap.searchFilter
+		});
+
+		var ldapAuthenticate = settenUtil.asDeferred(ldap.authenticate, ldap);
+	}
 
 	function generate(){
 		console.log("Generating Public/Private Key...");
@@ -32,14 +50,14 @@ define([
 		var dfds = [];
 
 		dfds.push(dfs.writeFile("keys/pubKey.json", JSON.stringify(puk), "utf8").then(function(){
-			console.log("Public Key written to 'keys/pubKey.json'");
+			console.log("Public Key written to ".grey + "'keys/pubKey.json'".yellow);
 		}, function(){
-			console.error("Error writing Public Key!");
+			console.error("Error writing Public Key!".red.bold);
 		}));
 		dfds.push(dfs.writeFile("keys/privKey.json", JSON.stringify(prk), "utf8").then(function(){
-			console.log("Private Key written to 'keys/privKey.json'");
+			console.log("Private Key written to ".grey + "'keys/privKey.json'".yellow);
 		}, function(){
-			console.error("Error writing Private Key!");
+			console.error("Error writing Private Key!".red.bold);
 		}));
 		return all(dfds);
 	}
@@ -65,7 +83,7 @@ define([
 
 	function authorize(username, password){
 		password = rsakey.decrypt(util.b64tohex(password));
-		return password == "password";
+		return config.ldap.enabled ? ldapAuthenticate(username, password) : when(password === "password");
 	}
 
 	return {

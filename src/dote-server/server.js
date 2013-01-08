@@ -95,7 +95,7 @@ define([
 	auth.init();
 
 	/* Init Messages */
-	messages.init("Drag00n$%!");
+	messages.init(process.env.DOTE_MAIL_PWD || config.mail.password || "password");
 
 	/* Setup Topic Handlers */
 	queue.ready().then(function(){
@@ -256,6 +256,10 @@ define([
 	app.get("/welcome", function(request, response, next){
 		response.render("welcome", {
 			username: request.session.username,
+			info: {
+				cn: (request.session.ldapInfo && request.session.ldapInfo.cn) || "",
+				mail: (request.session.ldapInfo && request.session.ldapInfo.mail) || ""
+			},
 			base: config.base,
 			app: appConfig
 		});
@@ -323,19 +327,6 @@ define([
 	});
 
 	/*
-	 * Manual mail process
-	 */
-
-	// app.get("/processMail", function(request, response, next){
-	// 	messages.process().then(function(results){
-	// 		response.json(results);
-	// 	}).otherwise(function(err){
-	// 		response.status(500);
-	// 		next(err);
-	// 	});
-	// });
-
-	/*
 	 * Restful Services
 	 */
 
@@ -343,23 +334,35 @@ define([
 	app.all("/users/:id/auth", function(request, response, next){
 		var username = request.params.id,
 			password = request.body && request.body.password ? request.body.password : "";
-		if(auth.authorize(username, password)){
-			response.status(200);
-			stores.users.get(username).then(function(user){
-				request.session.username = username;
-				if(user) request.session.user = user;
-				var href = user ? (request.session.loginRedirect ? request.session.loginRedirect : "/") : "/welcome";
-				request.session.loginRedirect = null;
-				response.json({
-					authorized: true,
-					href: href
+		auth.authorize(username, password).then(function(ldapInfo){
+			if(ldapInfo){
+				response.status(200);
+				stores.users.get(username).then(function(user){
+					request.session.username = username;
+					request.session.ldapInfo = ldapInfo;
+					if(user) request.session.user = user;
+					var href = (user && user.settings) ? (request.session.loginRedirect ? request.session.loginRedirect
+						: "/") : "/welcome";
+					request.session.loginRedirect = null;
+					response.json({
+						authorized: true,
+						href: href
+					});
 				});
-			});
-		}else{
+			}else{
+				response.status(401);
+				request.session.username = null;
+				request.session.user = null;
+				request.session.ldapInfo = null;
+				response.json({ authorized: false });
+			}
+		}, function(err){
 			response.status(401);
 			request.session.username = null;
-			response.json({ authorized: false });
-		}
+			request.session.user = null;
+			request.session.ldapInfo = null;
+			response.json({ authorized: false, error: err });
+		});
 	});
 
 	app.all("/users", function(request, response, next){
