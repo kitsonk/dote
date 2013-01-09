@@ -36,6 +36,25 @@ define([
 		}
 	}
 
+	function checkAdmin(request, response, next){
+		if(request.session.username){
+			stores.users.get(request.session.username).then(function(user){
+				if(user.admin){
+					next();
+				}else{
+					response.status(401);
+					if(request.accepts("html")){
+						response.render("401", { url: request.url });
+					}else if(request.accepts("json")){
+						response.send({ error: "Unauthorized", url: request.url });
+					}
+				}
+			});
+		}else{
+			checkLogin(request, response, next);
+		}
+	}
+
 	function queryObject(obj, request, response){
 		var range = request.header("Range") ? util.parseRange(request.header("Range")) : null,
 			query = decodeURIComponent(url.parse(request.url).query || "");
@@ -205,15 +224,19 @@ define([
 	/* Checked we are logged in */
 	app.all("/views/*", checkLogin);
 	app.all("/", checkLogin);
-	app.all("/initStores", checkLogin);
 	app.all("/add", checkLogin);
 	app.all("/topic/*", checkLogin);
 	app.all("/topics/*", checkLogin);
 	app.all("/comments/*", checkLogin);
 	app.all("/users", checkLogin);
-	app.all("/users/:id", checkLogin);
+	app.get("/users/:id", checkLogin);
 	app.all("/owners", checkLogin);
 	app.all("/settings", checkLogin);
+
+	/* Setup Admin Checks on Certain Pages */
+	app.all("/admin", checkAdmin);
+	app.put("/users/:id", checkAdmin);
+	app.all("/initStores", checkAdmin);
 
 	/* Index Page */
 	app.get("/", function(request, response, next){
@@ -265,6 +288,15 @@ define([
 		});
 	});
 
+	/* Admin Page */
+	app.get("/admin", function(request, response, next){
+		response.render("admin", {
+			username: request.session.username,
+			base: config.base,
+			app: appConfig
+		});
+	});
+
 	/* Initialise the Stores */
 	app.get("/initStores", function(request, response, next){
 		topic.clear();
@@ -283,7 +315,7 @@ define([
 		response.render(request.params.view, {
 			topicId: "3af990e5-036a-4e01-80a4-0a46d158038c",
 			username: request.session.username,
-			base: "src",
+			base: config.base,
 			app: appConfig
 		});
 	});
@@ -340,7 +372,11 @@ define([
 				stores.users.get(username).then(function(user){
 					request.session.username = username;
 					request.session.ldapInfo = ldapInfo;
-					if(user) request.session.user = user;
+					if(user){
+						request.session.user = user;
+						user.lastLogin = Math.round((new Date()).getTime() / 1000);
+						stores.users.put(user);
+					}
 					var href = (user && user.settings) ? (request.session.loginRedirect ? request.session.loginRedirect
 						: "/") : "/welcome";
 					request.session.loginRedirect = null;
@@ -369,11 +405,28 @@ define([
 		queryStore(stores.users, request, response);
 	});
 
-	app.all("/users/:id", function(request, response, next){
+	app.get("/users/:id", function(request, response, next){
 		stores.users.get(request.params.id).then(function(user){
 			if(user){
 				response.status(200);
 				response.json(user);
+			}else{
+				response.status(404);
+				next();
+			}
+		}, function(err){
+			response.status(500);
+			next(err);
+		});
+	});
+
+	app.put("/users/:id", function(request, response, next){
+		var data = request.body;
+		data.id = request.params.id || data.id;
+		stores.users.put(data).then(function(data){
+			if(data){
+				response.status(200);
+				response.json(data);
 			}else{
 				response.status(404);
 				next();

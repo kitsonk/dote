@@ -1,0 +1,86 @@
+extends main
+
+prepend head
+  title = app.title + " Admin"
+
+block scripts
+  script(type="text/javascript")
+    dojoConfig = {
+      async: 1,
+      isDebug: 0,
+      baseUrl: "/#{base}",
+      packages: [{
+        name: "dojo",
+        location: "dojo"
+      },{
+        name: "dijit",
+        location: "dijit"
+      },{
+        name: "dgrid",
+        location: "dgrid"
+      },{
+        name: "put-selector",
+        location: "put-selector"
+      },{
+        name: "xstyle",
+        location: "xstyle"
+      },{
+        name: "moment",
+        location: "moment"
+      },{
+        name: "marked",
+        location: "marked/lib"
+      },{
+        name: "hljs",
+        location: "hljs"
+      },{
+        name: "dote",
+        location: "dote"
+      },{
+        name: "dote-client",
+        location: "dote-client"
+      }],
+      deps: ["dote-client/viewAdmin"]
+    };
+  script(type="text/javascript", src="/#{base}/dojo/dojo.js")
+
+append css
+  link(rel="stylesheet", type="text/css", href="/_static/css/admin.css", media="all")
+
+block content
+  .header
+    .content
+      .controls
+        ul
+          li #{username}
+          li
+            a(id="topicList", href="/")
+              i(class="icon-reorder")
+              | list
+          li
+            a(id="settings", href="/settings")
+              i(class="icon-cog")
+              | settings
+          li 
+            a(id="newTopic", href="/add")
+              i(class="icon-comment-alt")
+              | new
+          li
+            a(id="help", href="/help")
+              i(class="icon-question-sign")
+              | help
+          li
+            a(id="logout", href="/logout")
+              i(class="icon-signout")
+              | logout
+      .title #{app.title}
+      .subtitle #{app.subtitle}
+      .clear
+  .main
+    h1 Users
+    #userGrid
+    h1 Topics
+    #topicGrid
+
+  .footer
+    .content Copyright &copy; 2012-2013 Dojo Foundation &mdash; All Rights Reserved

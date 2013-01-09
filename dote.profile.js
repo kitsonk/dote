@@ -45,6 +45,15 @@ var profile = (function(){
 			name: "dojox",
 			location: "dojox"
 		},{
+			name: "dgrid",
+			location: "dgrid"
+		},{
+			name: "put-selector",
+			location: "put-selector"
+		},{
+			name: "xstyle",
+			location: "xstyle"
+		},{
 			name: "hljs",
 			location: "hljs"
 		},{
@@ -107,6 +116,9 @@ var profile = (function(){
 				exclude: generalModules
 			},
 			"dote-client/viewWelcome": {
+				exclude: generalModules
+			},
+			"dote-client/viewAdmin": {
 				exclude: generalModules
 			},
 			"dote-client/login": {

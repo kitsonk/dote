@@ -28,7 +28,7 @@
 		}
 	},
 	"ldap": {
-		"enabled": true,
+		"enabled": false,
 		"url": "ldap://localhost",
 		"adminDn": "cn=admin,dc=kitsonkelly,dc=com",
 		"adminPassword": "password",

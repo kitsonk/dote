@@ -105,53 +105,27 @@ define([
 				users.add({
 					id: "wildbill",
 					admin: false,
-					owner: true,
-					settings: {
-						email: "wildbill@kitsonkelly.com",
-						fromaddress: "",
-						onnew:false,
-						onwatched:false,
-						onparticipate:true,
-						onown:false,
-						onassigned:false,
-						ontags:[],
-						excreated: true,
-						optout:false
-					}
+					owner: true
 				});
 				users.add({
 					id: "ttrenka",
 					admin: false,
-					owner: false,
-					settings: {
-						email: "ttrenka@kitsonkelly.com",
-						fromaddress: "",
-						onnew:false,
-						onwatched:false,
-						onparticipate:true,
-						onown:false,
-						onassigned:false,
-						ontags:[],
-						excreated: true,
-						optout:false
-					}
+					owner: true
+				});
+				users.add({
+					id: "csnover",
+					admin: false,
+					owner: true
 				});
 				users.add({
 					id: "kitsonk",
 					admin: true,
-					owner: true,
-					settings: {
-						email: "dojo@kitsonkelly.com",
-						fromaddress: "me@kitsonkelly.com",
-						onnew:false,
-						onwatched:false,
-						onparticipate:true,
-						onown:false,
-						onassigned:false,
-						ontags:[],
-						excreated: false,
-						optout:false
-					}
+					owner: true
+				});
+				users.add({
+					id: "neonstalwart",
+					admin: false,
+					owner: true
 				});
 				return users.query();
 			}

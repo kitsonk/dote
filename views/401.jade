@@ -1,0 +1,17 @@
+extends error
+
+prepend head
+  title = "401 - Unauthorized"
+
+block content
+  h1 Unauthorized
+  #resource You are unauthorized to access the resource 
+    code= url
+    | .
+    p
+      | It might be easier to go back to the 
+      a(href="/") homepage
+      |  and try again.
+
+block footer
+  include serversig
