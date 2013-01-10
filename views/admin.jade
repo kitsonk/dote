@@ -40,9 +40,12 @@ block scripts
         name: "dote-client",
         location: "dote-client"
       }],
-      deps: ["dote-client/viewAdmin"]
+      deps: [
+        "dote-client/viewAdmin"
+      ]
     };
   script(type="text/javascript", src="/#{base}/dojo/dojo.js")
+  script(type="text/javascript", src="/#{base}/dote-client/widgetModules.js")
 
 append css
   link(rel="stylesheet", type="text/css", href="/_static/css/admin.css", media="all")

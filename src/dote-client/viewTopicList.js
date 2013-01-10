@@ -14,7 +14,8 @@ define([
 	"dijit/TitlePane",
 	"./TopicList",
 	"./userControls",
-	"moment/moment"
+	"moment/moment",
+	"./widgetModules"
 ], function(array, dom, all, ready, Cache, JsonRest, Memory, when, Button, Checkbox, Select, TextBox, TitlePane,
 		TopicList, userControls, moment){
 

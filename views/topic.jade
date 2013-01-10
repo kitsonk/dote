@@ -31,13 +31,16 @@ block scripts
         name: "dote-client",
         location: "dote-client"
       }],
-      deps: ["dote-client/viewTopic"]
+      deps: [
+        "dote-client/viewTopic"
+      ]
     };
     dote = {
       username: "#{username}",
       topicId: "#{topicId}"
     };
   script(type="text/javascript", src="/#{base}/dojo/dojo.js")
+  script(type="text/javascript", src="/#{base}/dote-client/widgetModules.js")
 
 append css
   link(rel="stylesheet", type="text/css", href="/#{base}/hljs/default.css", media="all")
@@ -75,4 +78,4 @@ block content
     #topic
 
   .footer
-    .content Copyright &copy; 2012 Dojo Foundation &mdash; All Rights Reserved
+    .content Copyright &copy; 2012-2013 Dojo Foundation &mdash; All Rights Reserved

@@ -8,7 +8,8 @@ define([
 	"dojo/when",
 	"dote/marked",
 	"./TopicAdd",
-	"./userControls"
+	"./userControls",
+	"./widgetModules"
 ], function(win, JSON, ready, Cache, JsonRest, Memory, when, marked, TopicAdd, userControls){
 
 	var topicStore = new JsonRest({

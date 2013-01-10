@@ -5,7 +5,8 @@ define([
 	"dote/marked",
 	"./store/JsonRest",
 	"./Topic",
-	"./userControls"
+	"./userControls",
+	"./widgetModules"
 ], function(ready, Cache, Memory, marked, JsonRest, Topic, userControls){
 
 	var topicStore = new JsonRest({

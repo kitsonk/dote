@@ -103,7 +103,9 @@ define([
 		appPort = process.env.PORT || config.port || 8022,
 		appConfig = {
 			title: config.title,
-			subtitle: config.subtitle
+			subtitle: config.subtitle,
+			bugs: config.bugs,
+			mail: config.mail.address
 		},
 		env = process.env.NODE_ENV || "development";
 
@@ -372,11 +374,16 @@ define([
 				stores.users.get(username).then(function(user){
 					request.session.username = username;
 					request.session.ldapInfo = ldapInfo;
-					if(user){
-						request.session.user = user;
-						user.lastLogin = Math.round((new Date()).getTime() / 1000);
-						stores.users.put(user);
+					if(!user){
+						user = {
+							id: username,
+							admin: false,
+							owner: false
+						};
 					}
+					request.session.user = user;
+					user.lastLogin = Math.round((new Date()).getTime() / 1000);
+					stores.users.put(user);
 					var href = (user && user.settings) ? (request.session.loginRedirect ? request.session.loginRedirect
 						: "/") : "/welcome";
 					request.session.loginRedirect = null;

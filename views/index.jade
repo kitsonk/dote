@@ -21,12 +21,15 @@ block scripts
         name: "moment",
         location: "moment"
       }],
-      deps: ["dote-client/viewTopicList"]
+      deps: [
+        "dote-client/viewTopicList"
+      ]
     };
     dote = {
       username: "#{username}"
     };
   script(type="text/javascript", src="/#{base}/dojo/dojo.js")
+  script(type="text/javascript", src="/#{base}/dote-client/widgetModules.js")
 
 block content
   .header
@@ -75,4 +78,4 @@ block content
     #topicList
 
   .footer
-    .content Copyright &copy; 2012 Dojo Foundation &mdash; All Rights Reserved
+    .content Copyright &copy; 2012-2013 Dojo Foundation &mdash; All Rights Reserved

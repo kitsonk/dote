@@ -97,7 +97,7 @@ define([
 		queue.on("comment.add", function(item){
 			var dfd = new Deferred();
 			topic(item.comment.topicId).get().then(function(topicItem){
-				messages.calculateCommentRecipients(item).then(function(results){
+				messages.calculateCommentRecipients(item.comment).then(function(results){
 					var mails = [];
 					results.forEach(function(address){
 						mails.push(messages.mailComment(address, item.comment, topicItem));

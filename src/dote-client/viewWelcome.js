@@ -13,7 +13,8 @@ define([
 	"dijit/form/CheckBox",
 	"dijit/form/TextBox",
 	"dijit/form/ValidationTextBox",
-	"dijit/registry"
+	"dijit/registry",
+	"./widgetModules"
 ], function(fade, userControls, array, win, dom, JSON, on, ready, request, JsonRest, Button, CheckBox, TextBox,
 		ValidationTextBox, registry){
 

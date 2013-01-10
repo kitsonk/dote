@@ -1,9 +1,21 @@
 define([
 	"dijit/Dialog"
-], function(dialog){
+], function(Dialog){
+
+	var helpDialog;
+
 	return {
 		display: function(){
-			console.log("Hello!");
+			if(!helpDialog){
+				helpDialog = new Dialog({
+					title: "Help",
+					href: "/views/help",
+					style: {
+						width: "700px"
+					}
+				});
+			}
+			helpDialog.show();
 		}
 	};
 });

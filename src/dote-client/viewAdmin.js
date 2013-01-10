@@ -10,7 +10,8 @@ define([
 	"dgrid/editor",
 	"moment/moment",
 	"./store/JsonRest",
-	"./userControls"
+	"./userControls",
+	"./widgetModules"
 ], function(array, declare, ready, Cache, Memory, OnDemandGrid, Keyboard, Selection, editor, moment, JsonRest,
 		userControls){
 

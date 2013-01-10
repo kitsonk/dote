@@ -95,7 +95,7 @@ define([
 
 		get: function(){
 			var self = this;
-			return when(this.item || stores.comments.get(this.id)).then(function(item){
+			return when(stores.comments.get(this.id)).then(function(item){
 				self.emit("get", { item: item });
 				return self.item = item;
 			});
@@ -123,6 +123,7 @@ define([
 			item.topicId = this.topicId;
 			return when(stores.comments.add(item)).then(function(item){
 				if(item && item.topicId && item.id && topicHash[item.topicId]){
+					topicHash[item.topicId].item = null;
 					return topicHash[item.topicId].get().then(function(topicItem){
 						topicItem = lang.clone(topicItem);
 						topicItem.commentsCount++;
@@ -269,6 +270,7 @@ define([
 
 		vote: function(voter, comment){
 			var self = this;
+			this.item = null;
 			return this.get().then(function(item){
 				item = lang.clone(item);
 				if(item.voters && item.voters.length){

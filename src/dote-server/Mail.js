@@ -5,8 +5,9 @@ define([
 	"dojo/Evented",
 	"dojo/node!mailparser",
 	"dojo/node!imap",
-	"dojo/node!emailjs/email"
-], function(declare, lang, Deferred, Evented, mailparser, imap, email){
+	"dojo/node!emailjs/email",
+	"./stores"
+], function(declare, lang, Deferred, Evented, mailparser, imap, email, stores){
 
 	return declare([Evented], {
 
@@ -88,6 +89,7 @@ define([
 			var dfd = new Deferred();
 			this.smtp.send(mail, function(err, message){
 				if(err) dfd.reject(err);
+				stores.emails.add(message);
 				dfd.resolve(message);
 			});
 			return dfd.promise;

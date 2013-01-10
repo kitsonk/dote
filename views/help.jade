@@ -1,0 +1,23 @@
+h1 #{app.title}
+h2 #{app.subtitle}
+p
+  | This is <strong>#{app.title}</strong>, a topic discussion tool for open-collaboration.  The main purpose of the
+  | forum is for people to post topics, have those topics voted upon and discussed, and a topic owner to choose what
+  | action will be taken on the particular topic.  This is designed to make the decision process around Dojo
+  | transparent, but allow collaboration in a flexible fashion.  To that end, <strong>#{app.title}</strong> supports
+  | fairly robust e-mail integration as well as an interactive website.  This means in order to do most types of
+  | participations, you won't have to actually visit this site if you don't want to.
+P
+  | To post a new topic to the forum, send an e-mail to <a href="mailto:#{app.mail}">#{app.mail}</a> from the address
+  | listed in your settings.  E-mails that are sent to you will contain links that will allow you to vote on a topic
+  | and replying to a topic (or comment) will allow you to add your comment to the topic.
+p
+  | While most of the concepts and the user interface of the website should be straight forward, there are a few
+  | things you may want to know.  The posting of topic text and comments utilise <code>markdown</code> syntax.  It
+  | supports all of the documented <a href="http://github.github.com/github-flavored-markdown/" 
+  | target="_blank">GFM</a> and some of the undocumented features (like tables).
+p
+  | Voting allows for "+1", "-1" and "0" voting.  Obviously not voting at all is an option as well.  All votes are
+  | displayed in the order received, and you can change your vote once you have voted.  Anyone can vote on any
+  | topic.  The tags allow for categorization of topics and future enhancements will allow filtering of the topics
+  | in the user interface (but can already be filtered in e-mail).

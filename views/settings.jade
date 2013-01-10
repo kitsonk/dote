@@ -31,12 +31,15 @@ block scripts
         name: "dote-client",
         location: "dote-client"
       }],
-      deps: ["dote-client/viewSettings"]
+      deps: [
+        "dote-client/viewSettings"
+      ]
     };
     dote = {
       username: "#{username}"
     };
   script(type="text/javascript", src="/#{base}/dojo/dojo.js")
+  script(type="text/javascript", src="/#{base}/dote-client/widgetModules.js")
 
 block content
   .header
@@ -115,4 +118,4 @@ block content
       button(type="submit", id="save") Save
 
   .footer
-    .content Copyright &copy; 2012 Dojo Foundation &mdash; All Rights Reserved
+    .content Copyright &copy; 2012-2013 Dojo Foundation &mdash; All Rights Reserved

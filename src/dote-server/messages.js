@@ -209,6 +209,7 @@ define([
 		queries.topic = topic(comment.topicId).get();
 		// I can likely do this with an aggregate
 		return all(queries).then(function(results){
+			console.log(results);
 			var addresses = [],
 				participants = [],
 				removeAuthor,
