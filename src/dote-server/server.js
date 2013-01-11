@@ -169,7 +169,7 @@ define([
 
 		app.use("/_static", express["static"]("./_static", { maxAge: 86400000 }));
 		app.use("/src", express["static"]("src"));
-		app.use("/lib", express["static"]("lib"), { maxAge: 86400000 });
+		app.use("/lib", express["static"]("lib", { maxAge: 86400000 }));
 
 		app.use("/500", function(request, response, next){
 			next(new Error("All your base are belong to us!"));
