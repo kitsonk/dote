@@ -43,6 +43,7 @@ define([
 						{ name: "wildbill", vote: -1 },
 						{ name: "ttrenka", vote: -1 }
 					],
+					watchers: [ ],
 					commentsCount: 2
 				}));
 				dfds.push(topics.add({
@@ -60,6 +61,7 @@ define([
 						{ name: "dylanks", vote: -1 },
 						{ name: "csnover", vote: 0 }
 					],
+					watchers: [ ],
 					commentsCount: 1
 				}));
 				return all(dfds).then(function(){

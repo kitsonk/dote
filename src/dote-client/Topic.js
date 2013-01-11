@@ -134,7 +134,7 @@ define([
 		tags: [],
 		_setTagsAttr: function(value){
 			if(typeof value === "string"){
-				value = value.split(/\s*,\s*/);
+				value = value.replace(/\s{2,}/," ").toLowerCase().split(/\s*,\s*/);
 			}
 			if(this.item && this.tags && value && this._started && (value.join() !== this.tags.join())){
 				this.item.tags = value;
@@ -143,6 +143,14 @@ define([
 			this._set("tags", value);
 			if(this._started){
 				this._displayTags();
+			}
+		},
+
+		_setWatchersAttr: function(value){
+			this.inherited(arguments);
+			if(this._started && this.item && value && value instanceof Array){
+				this.item.watchers = value.slice(0);
+				this.topicStore.put(this.item);
 			}
 		},
 

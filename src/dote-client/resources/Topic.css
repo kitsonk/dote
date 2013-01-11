@@ -117,29 +117,24 @@
 .doteTopicSpark table tr {
   height: 12px;
 }
+.doteTopicSparkPlus,
+.doteTopicSparkNeutral,
+.doteTopicSparkMinus {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(255,255,255,0.93)), color-stop(0.01, rgba(255,255,255,0.41)), color-stop(0.02, rgba(255,255,255,0.7)), color-stop(1, rgba(255,255,255,0)));
+  background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.93) 0px, rgba(255,255,255,0.41) 1px, rgba(255,255,255,0.7) 2px, rgba(255,255,255,0) 100%);
+  background-image: -moz-linear-gradient(top, rgba(255,255,255,0.93) 0px, rgba(255,255,255,0.41) 1px, rgba(255,255,255,0.7) 2px, rgba(255,255,255,0) 100%);
+  background-image: -o-linear-gradient(top, rgba(255,255,255,0.93) 0px, rgba(255,255,255,0.41) 1px, rgba(255,255,255,0.7) 2px, rgba(255,255,255,0) 100%);
+  background-image: -ms-linear-gradient(top, rgba(255,255,255,0.93) 0px, rgba(255,255,255,0.41) 1px, rgba(255,255,255,0.7) 2px, rgba(255,255,255,0) 100%);
+  background-image: linear-gradient(top, rgba(255,255,255,0.93) 0px, rgba(255,255,255,0.41) 1px, rgba(255,255,255,0.7) 2px, rgba(255,255,255,0) 100%);
+}
 .doteTopicSparkPlus {
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #237f0d), color-stop(0.6, #32b512));
-  background: -webkit-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
-  background: -moz-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
-  background: -o-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
-  background: -ms-linear-gradient(bottom, #237f0d 0%, #32b512 60%);
-  background: linear-gradient(bottom, #237f0d 0%, #32b512 60%);
+  background-color: #4be639;
 }
 .doteTopicSparkNeutral {
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #dcb000), color-stop(0.6, #ffd83b));
-  background: -webkit-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
-  background: -moz-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
-  background: -o-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
-  background: -ms-linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
-  background: linear-gradient(bottom, #dcb000 0%, #ffd83b 60%);
+  background-color: #e6cf39;
 }
 .doteTopicSparkMinus {
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #b6000c), color-stop(0.6, #ff0516));
-  background: -webkit-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
-  background: -moz-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
-  background: -o-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
-  background: -ms-linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
-  background: linear-gradient(bottom, #b6000c 0%, #ff0516 60%);
+  background-color: #e63939;
 }
 .doteTopicVoteButtons ul,
 .doteTopicTagsContainer ul,
@@ -164,6 +159,7 @@
 .doteTopicTitle {
   font-size: 26px;
   padding: 0.25em;
+  margin-right: 32px;
   text-shadow: 0 1px 2px rgba(0,0,0,0.15);
 }
 .doteTopicStatus {
@@ -286,6 +282,33 @@
   background: linear-gradient(top, #fff 0px, #f4e0bc 3px, #f6e6c9 100%);
   background-color: #f4e0bc;
   border: 1px solid #dc9b28;
+}
+.doteTopicWatch {
+  float: right;
+  padding: 0 8px 0;
+}
+.doteTopicWatch a {
+  font-size: 20px;
+  text-decoration: none;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.doteTopicWatch a:hover {
+  text-shadow: 0 2px 2px rgba(0,0,0,0.5);
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+.doteTopicWatch a .icon-star-empty {
+  color: #ccc;
+}
+.doteTopicWatch a .icon-star {
+  color: #7e90a3;
 }
 .doteTopicHide {
   display: none;

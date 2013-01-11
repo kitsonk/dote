@@ -139,7 +139,10 @@ define([
 						addresses.push(address);
 						return;
 					}
-					// Need to add watching
+					if(user.settings.onwatched && t.watchers && t.watchers.indexOf(user.id) > -1){
+						addresses.push(address);
+						return;
+					}
 					if(user.settings.onparticipate && participants.indexOf(user.id) > -1){
 						addresses.push(address);
 						return;
@@ -182,7 +185,10 @@ define([
 					if(user.settings.excreated && user.id == voter){
 						removeAuthor = address;
 					}
-					// Need to add watching
+					if(user.settings.onwatched && t.watchers && t.watchers.indexOf(user.id) > -1){
+						addresses.push(address);
+						return;
+					}
 					if(user.settings.onparticipate && participants.indexOf(user.id) > -1){
 						addresses.push(address);
 						return;
@@ -209,7 +215,6 @@ define([
 		queries.topic = topic(comment.topicId).get();
 		// I can likely do this with an aggregate
 		return all(queries).then(function(results){
-			console.log(results);
 			var addresses = [],
 				participants = [],
 				removeAuthor,
@@ -226,14 +231,16 @@ define([
 			if(topic.owner) participants.push(topic.owner);
 			participants.push(comment.author);
 			participants = array.unique(participants);
-			console.log(participants);
 			results.users.forEach(function(user){
 				if(user.settings && user.settings.email && !user.settings.optout){
 					var address = user.id + " <" + user.settings.email + ">";
 					if(user.settings.excreated && user.id == comment.author){
 						removeAuthor = address;
 					}
-					// Need to add watching
+					if(user.settings.onwatched && topic.watchers && topic.watchers.indexOf(user.id) > -1){
+						addresses.push(address);
+						return;
+					}
 					if(user.settings.onparticipate && participants.indexOf(user.id) > -1){
 						addresses.push(address);
 						return;

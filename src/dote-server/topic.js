@@ -24,6 +24,7 @@ define([
 			actioned: null,
 			tags: [ ],
 			voters: [ ],
+			watchers: [ ],
 			commentsCount: 0
 		},
 		commentDefaults = {

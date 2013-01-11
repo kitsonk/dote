@@ -47,6 +47,11 @@ define([
 						queryTerms.push("in(action,(open,reopened))");
 					}
 					break;
+				case "filterWatched":
+					if(value){
+						queryTerms.push("in(watchers,(" + (dote && dote.username) + "))");
+					}
+					break;
 				case "filterAuthorSelect":
 					if(value){
 						queryTerms.push("author=" + value);
@@ -78,6 +83,11 @@ define([
 			id: "filterInactive",
 			name: "filterInactive"
 		}, "filterInactive");
+
+		var filterWatched = new Checkbox({
+			id: "filterWatched",
+			name: "filterWatched"
+		}, "filterWatched");
 
 		var filterAuthorSelect = new Select({
 			id: "filterAuthorSelect",

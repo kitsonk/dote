@@ -138,7 +138,7 @@ define([
 					item[element.name] = element.value;
 				}
 			});
-			item.tags = item.tags ? item.tags.split(/\s*,\s*/) : [];
+			item.tags = item.tags ? item.tags.replace(/\s{2,}/, " ").toLowerCase().split(/\s*,\s*/) : [];
 			item.owner = item.owner == "__unassigned" ? "" : item.owner;
 			var self = this;
 			when(this.store.add(item), function(results){

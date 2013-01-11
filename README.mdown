@@ -79,7 +79,9 @@ This will output an optimised build to ``./lib/``.  Then you need to point the i
 parameter in the ``config.json`` file:
 
 ```json
-"base": "lib"
+{
+    "base": "lib"
+}
 ```
 
 And changing the ``_static/css/dote.styl`` to point at the optimised CSS:

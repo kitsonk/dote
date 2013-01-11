@@ -157,6 +157,28 @@ define([
 			this._set("created", value);
 		},
 
+		watchers: [],
+		_setWatchersAttr: function(value){
+			if(value instanceof Array){
+				this._set("watchers", value);
+			}else{
+				this._set("watchers", JSON.parse(value));
+			}
+			this.set("watched", ~array.indexOf(this.watchers, this.voter));
+		},
+
+		watched: false,
+		_setWatchedAttr: function(value){
+			if(value){
+				domClass.add(this.watchNode, "icon-star");
+				domClass.remove(this.watchNode, "icon-star-empty");
+			}else{
+				domClass.remove(this.watchNode, "icon-star");
+				domClass.add(this.watchNode, "icon-star-empty");
+			}
+			this._set("watched", value);
+		},
+
 		commentsCount: 0,
 		_setCommentsCountAttr: {
 			node: "commentsCountNode",
@@ -328,6 +350,18 @@ define([
 		_onDownClick: function(e){
 			e && e.preventDefault();
 			this.set("vote", -1);
+		},
+
+		_onWatchClick: function(e){
+			e && e.preventDefault();
+			var watchers = this.watchers.slice(0),
+				idx = array.indexOf(watchers, this.voter);
+			if(idx >= 0){
+				watchers.splice(idx, 1);
+			}else{
+				watchers.push(this.voter);
+			}
+			this.set("watchers", watchers);
 		}
 	});
 });

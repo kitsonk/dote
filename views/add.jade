@@ -49,27 +49,23 @@ block content
     .content
       .controls
         ul
-          li kitsonk
+          li #{username}
           li
             a(id="topicList", href="/")
               i(class="icon-reorder")
-              | list
+              |  list
           li
             a(id="settings", href="/settings")
               i(class="icon-cog")
-              | settings
-          li 
-            a(id="newTopic", href="/add")
-              i(class="icon-comment-alt")
-              | new
+              |  settings
           li
             a(id="help", href="/help")
               i(class="icon-question-sign")
-              | help
+              |  help
           li
             a(id="logout", href="/logout")
               i(class="icon-signout")
-              | logout
+              |  logout
       .title #{app.title}
       .subtitle #{app.title}
       .clear

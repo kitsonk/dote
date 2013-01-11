@@ -4,9 +4,9 @@
 topic-border-color = #c0c6cc
 topic-bg-color = #e4ebf2
 empty-bar-color = #eee
-plus-bar-color = #32b512
-neutral-bar-color = #ffd83b
-minus-bar-color = #ff0516
+plus-bar-color = #4be639
+neutral-bar-color = #e6cf39
+minus-bar-color = #e63939
 button-color = #bcd8f4
 button-hover-color = #86bdf2
 status-active-color = #e0f0ff
@@ -15,6 +15,8 @@ tag-color = #ddd
 plus-color = #bcf4c3
 minus-color = #f4bcbc
 neutral-color = #f4e0bc
+star-inactive-color = #ccc
+star-active-color = #7e90a3
 tr-bg-color = #eee
 
 .doteTopic
@@ -80,11 +82,15 @@ tr-bg-color = #eee
       tr
         height 12px
     &Plus
-      background linear-gradient(bottom, darken(plus-bar-color, 30%), plus-bar-color 60%)
     &Neutral
-      background linear-gradient(bottom, darken(neutral-bar-color, 30%), neutral-bar-color 60%)
     &Minus
-      background linear-gradient(bottom, darken(minus-bar-color, 30%), minus-bar-color 60%)
+      background-image linear-gradient(rgba(white, 0.93) 0px, rgba(white, 0.41) 1px, rgba(white, 0.7) 2px, rgba(white, 0) 100%)
+    &Plus
+      background-color plus-bar-color
+    &Neutral
+      background-color neutral-bar-color
+    &Minus
+      background-color minus-bar-color
   &VoteButtons
   &TagsContainer
   &VotersContainer
@@ -104,6 +110,7 @@ tr-bg-color = #eee
   &Title
     font-size 26px
     padding 0.25em
+    margin-right 32px
     text-shadow 0 1px 2px rgba(black, 0.15)
   &Status
     width 130px
@@ -176,6 +183,20 @@ tr-bg-color = #eee
       background linear-gradient(top,white 0px,neutral-color 3px,lighten(neutral-color, 20%) 100%)
       background-color neutral-color
       border 1px solid darken(neutral-color, 40%)
+  &Watch
+    float right
+    padding 0 8px 0
+    a
+      font-size 20px
+      text-decoration none
+      transition-duration 0.3s
+      &:hover
+        text-shadow 0 2px 2px rgba(black, 0.5)
+        transition-duration 0.2s
+      .icon-star-empty
+        color star-inactive-color
+      .icon-star
+        color star-active-color
   &Hide
     display none
   &Previous
