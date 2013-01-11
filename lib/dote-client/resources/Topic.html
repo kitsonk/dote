@@ -1,4 +1,9 @@
 <div class="${baseClass}">
+	<div class="${baseClass}Watch">
+		<a href="#" data-dojo-attach-event="ondijitclick:_onWatchClick">
+			<i data-dojo-attach-point="watchNode" class="icon-star-empty"></i>
+		</a>
+	</div>
 	<div class="${baseClass}Title" data-dojo-attach-point="titleNode"></div>
 	<div class="${baseClass}VoteContainer">
 		<div class="${baseClass}VoteInner">
@@ -21,7 +26,7 @@
 						<a href="#" class="${baseClass}VoteUp" data-dojo-attach-point="voteUpNode" data-dojo-attach-event="ondijitclick:_onUpClick"><i class="icon-plus"></i><span>Up</span></a>
 					</li>
 					<li role="button">
-						<a href="#" class="${baseClass}VoteNeutral" data-dojo-attach-point="voteNeutralNode" data-dojo-attach-event="ondijitclick:_onNeutralClick"><i class="icon-check-empty"></i><span>Neutral</span></a>
+						<a href="#" class="${baseClass}VoteNeutral" data-dojo-attach-point="voteNeutralNode" data-dojo-attach-event="ondijitclick:_onNeutralClick"><i class="icon-circle-blank"></i><span>Neutral</span></a>
 					</li>
 					<li role="button">
 						<a href="#" class="${baseClass}VoteDown" data-dojo-attach-point="voteDownNode" data-dojo-attach-event="ondijitclick:_onDownClick"><i class="icon-minus"></i><span>Minus</span></a>
