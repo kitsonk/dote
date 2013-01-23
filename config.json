@@ -1,38 +1,116 @@
 {
-	"port": "8011",
-	"address": "http://dote.kitsonkelly.com/",
-	"title": "dote",
-	"subtitle": "Dojo Topic Discussion",
-	"secret": "replaceme",
-	"bugs": "https://github.com/kitsonk/dote/issues",
-	"base": "lib",
-	"db": {
-		"url": "mongodb://localhost:27017/dote"
-	},
-	"mail": {
-		"username": "dote",
-		"password": "password",
-		"address": "dote@kitsonkelly.com",
-		"list": {
-			"name": "dote",
-			"id": "dote.kitsonkelly.com"
+	"development": {
+		"port": "8011",
+		"address": "http://livi.kitsonkelly.com/",
+		"title": "dote",
+		"subtitle": "Dojo Topic Discussion",
+		"secret": "replaceme",
+		"bugs": "https://github.com/kitsonk/dote/issues",
+		"base": "src",
+		"db": {
+			"url": "mongodb://localhost:27017/dote"
 		},
-		"checkInterval": 60000,
-		"enabled": true,
-		"severconfig": {
-			"user": "dote@kitsonkelly.com",
-			"imapHost": "imap.gmail.com",
-			"imapPort": 993,
-			"smtpHost": "smtp.gmail.com",
-			"secure": true
+		"mail": {
+			"username": "test",
+			"password": "password",
+			"address": "test@kitsonkelly.com",
+			"list": {
+				"name": "dotetest",
+				"id": "dotetest.kitsonkelly.com"
+			},
+			"checkInterval": 60000,
+			"enabled": true,
+			"severconfig": {
+				"user": "test@kitsonkelly.com",
+				"imapHost": "imap.gmail.com",
+				"imapPort": 993,
+				"smtpHost": "smtp.gmail.com",
+				"secure": true
+			}
+		},
+		"ldap": {
+			"enabled": true,
+			"url": "ldap://localhost",
+			"adminDn": "cn=admin,dc=kitsonkelly,dc=com",
+			"adminPassword": "password",
+			"searchBase": "ou=people,dc=kitsonkelly,dc=com",
+			"searchFilter": "(uid={{username}})"
 		}
 	},
-	"ldap": {
-		"enabled": false,
-		"url": "ldap://localhost",
-		"adminDn": "cn=admin,dc=kitsonkelly,dc=com",
-		"adminPassword": "password",
-		"searchBase": "ou=people,dc=kitsonkelly,dc=com",
-		"searchFilter": "(uid={{username}})"
+	"heroku": {
+		"port": "80",
+		"address": "http://dote.kitsonkelly.com/",
+		"title": "dote",
+		"subtitle": "Dojo Topic Discussion",
+		"secret": "replaceme",
+		"bugs": "https://github.com/kitsonk/dote/issues",
+		"base": "lib",
+		"db": {
+			"url": "mongodb://localhost:27017/dote"
+		},
+		"mail": {
+			"username": "heroku",
+			"password": "password",
+			"address": "heroku@kitsonkelly.com",
+			"list": {
+				"name": "doteheroku",
+				"id": "doteheroku.kitsonkelly.com"
+			},
+			"checkInterval": 60000,
+			"enabled": true,
+			"severconfig": {
+				"user": "heroku@kitsonkelly.com",
+				"imapHost": "imap.gmail.com",
+				"imapPort": 993,
+				"smtpHost": "smtp.gmail.com",
+				"secure": true
+			}
+		},
+		"ldap": {
+			"enabled": false,
+			"url": "ldap://localhost",
+			"adminDn": "cn=admin,dc=kitsonkelly,dc=com",
+			"adminPassword": "password",
+			"searchBase": "ou=people,dc=kitsonkelly,dc=com",
+			"searchFilter": "(uid={{username}})"
+		}
+	},
+	"production": {
+		"port": "80",
+		"address": "http://dote.dojofoundation.org/",
+		"title": "dote",
+		"subtitle": "Dojo Topic Discussion",
+		"secret": "0YSj1xeZOGLkXvTiVyS3bxvAzFB2Y2TnsAqPczS0",
+		"bugs": "https://github.com/kitsonk/dote/issues",
+		"base": "lib",
+		"db": {
+			"url": "mongodb://localhost:27017/dote"
+		},
+		"mail": {
+			"username": "dote",
+			"password": "password",
+			"address": "dote@kitsonkelly.com",
+			"list": {
+				"name": "dote",
+				"id": "dote.dojofoundation.org"
+			},
+			"checkInterval": 60000,
+			"enabled": true,
+			"severconfig": {
+				"user": "dote@kitsonkelly.com",
+				"imapHost": "imap.gmail.com",
+				"imapPort": 993,
+				"smtpHost": "smtp.gmail.com",
+				"secure": true
+			}
+		},
+		"ldap": {
+			"enabled": true,
+			"url": "ldap://ldap.dojofoundation.org:389",
+			"adminDn": "uid=kitsonk,ou=people,dc=dojotoolkit,dc=org",
+			"adminPassword": "password",
+			"searchBase": "ou=people,dc=dojotoolkit,dc=org",
+			"searchFilter": "(uid={{username}})"
+		}
 	}
 }
