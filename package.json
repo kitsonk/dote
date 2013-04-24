@@ -2,20 +2,20 @@
   "name": "dote",
   "version": "0.0.2",
   "dependencies": {
-    "express": "~3.0.2",
+    "express": "~3.0.6",
     "jade": "~0.27.7",
     "stylus": "~0.29.0",
     "nib": "~0.8.2",
-    "imap": "~0.6.1",
-    "emailjs": "~0.3.3",
-    "mailparser": "~0.2.31",
+    "imap": "~0.6.2",
+    "emailjs": "~0.3.4",
+    "mailparser": "~0.2.33",
     "perstore": "https://github.com/kitsonk/perstore/archive/mongodb.tar.gz",
     "juice": "0.0.6",
     "colors": "~0.6.0-1",
-    "ldapauth": "~2.2.0",
+    "ldapauth": "~2.2.2",
     "rql": "~0.3.1",
-    "mongodb": "~1.2.3",
-    "bson": "~0.1.5"
+    "mongodb": "~1.2.14",
+    "bson": "~0.1.8"
   },
   "engines": {
     "node": "0.8.x",

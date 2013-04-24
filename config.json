@@ -6,7 +6,7 @@
 		"subtitle": "Dojo Topic Discussion",
 		"secret": "replaceme",
 		"bugs": "https://github.com/kitsonk/dote/issues",
-		"base": "src",
+		"base": "lib",
 		"db": {
 			"url": "mongodb://localhost:27017/dote"
 		},
@@ -29,7 +29,7 @@
 			}
 		},
 		"ldap": {
-			"enabled": true,
+			"enabled": false,
 			"url": "ldap://localhost",
 			"adminDn": "cn=admin,dc=kitsonkelly,dc=com",
 			"adminPassword": "password",
