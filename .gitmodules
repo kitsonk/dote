@@ -4,3 +4,6 @@
 [submodule "src/moment"]
 	path = src/moment
 	url = https://github.com/kitsonk/moment.git
+[submodule "src/marked"]
+	path = src/marked
+	url = https://github.com/kitsonk/marked.git
