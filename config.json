@@ -105,7 +105,7 @@
 			}
 		},
 		"ldap": {
-			"enabled": true,
+			"enabled": false,
 			"url": "ldap://ldap.dojofoundation.org:389",
 			"adminDn": "uid=kitsonk,ou=people,dc=dojotoolkit,dc=org",
 			"adminPassword": "password",
