@@ -1,5 +1,6 @@
 define([
 	"dojo/node!juice",
+	"./auth",
 	"./config",
 	"./email",
 	"./Mail",
@@ -15,9 +16,9 @@ define([
 	"dote/string", // string.substitute, string.capitaliseFirst
 	"./stylus!./resources/messages.styl",
 	"dojo/text!hljs/default.css"
-], function(juice, config, email, Mail, stores, topic, queue, lang, Deferred, all, when, array, marked, string,
+], function(juice, auth, config, email, Mail, stores, topic, queue, lang, Deferred, all, when, array, marked, string,
 		cssMessages, cssHljs){
-	
+
 	var toRe = new RegExp("^" + config.mail.address.split("@")[0] + "\\+?([^@]*)@", "i"),
 		subjectRe = new RegExp("(?:Re:)?\\s*(?:\\[" + config.mail.list.name +
 			"\\])?\\s*(?:\\[[01\\-\\+]+\\])?\\s*(.+)$", "i"),
@@ -95,6 +96,12 @@ define([
 			if(!user){
 				user = stores.defaultUser(username);
 			}
+			if ('password' in settings) {
+				if (settings.password !== 'password') {
+					user.password = auth.hashEncrypted(settings.password);
+				}
+				delete settings.password;
+			}
 			user.settings = lang.clone(settings);
 			return stores.users.put(user).then(function(){
 				return user.settings;
@@ -105,7 +112,11 @@ define([
 	function getSettings(username){
 		return stores.users.get(username).then(function(user){
 			if(user && user.settings){
-				return lang.clone(user.settings);
+				var settings = lang.clone(user.settings);
+				if ("password" in settings){
+					delete settings.password;
+				}
+				return settings;
 			}else{
 				return lang.clone(defaultSettings);
 			}

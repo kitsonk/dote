@@ -28,7 +28,7 @@ A topic based voting system for open collaboration.
 * [MongoDB][mongodb] - Persistent Document Store
 
 You will need [git][git] and [NodeJS][nodejs] including ``npm`` to properly install **dote**.  **dote** has been tested 
-on NodeJS 0.8.4 - 0.8.15.
+on NodeJS 0.8.4 - 0.8.15 and 0.10.5.
 
 ## Installation ##
 
@@ -92,9 +92,16 @@ And changing the ``_static/css/dote.styl`` to point at the optimised CSS:
 
 ### Notes ###
 
-* dote respects the NODE_ENV.
+* dote respects the NODE_ENV and maps this appropriately to the configuration file, defaulting to `development`.
 * While the LDAP and mail password can be set in the ``config.json`` but they will be overridden by any environment
   variable.  You generally shouldn't store clear text passwords in static files.
+* There are 3 types of authentication support (`auth` in the configuration).  There is `default` which simply means all
+  passwords are set to "password", there is `internal` which stores passwords as a SHA512 digest with an added salt
+  string and there is `ldap` which hands off authentication to the LDAP server configured in the files.
+* If using the internal password/authorization instead of LDAP, you should set the `NODE_SALT` environment variable to
+  an appropriate salt.  If not provided, the salt for the passwords defaults to the one stored in plain text in the
+  code, which isn't advised.  Of course if you change, or lose the salt for your environment, no passwords digest
+  properly, which means no one will be able to log in.
 
 [volo]: http://volojs.org/
 [cpm]: https://github.com/kriszyp/cpm/

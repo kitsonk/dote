@@ -1,6 +1,7 @@
 define([
 	"./fade",
 	"./userControls",
+	"dote/util",
 	"dojo/_base/array",
 	"dojo/_base/window",
 	"dojo/dom",
@@ -14,9 +15,10 @@ define([
 	"dijit/form/TextBox",
 	"dijit/form/ValidationTextBox",
 	"dijit/registry",
+	"dojox/encoding/crypto/RSAKey",
 	"./widgetModules"
-], function(fade, userControls, array, win, dom, JSON, on, ready, request, JsonRest, Button, CheckBox, TextBox,
-		ValidationTextBox, registry){
+], function(fade, userControls, util, array, win, dom, JSON, on, ready, request, JsonRest, Button, CheckBox, TextBox,
+		ValidationTextBox, registry, RSAKey){
 
 	var userStore = new JsonRest({
 		target: "/users/"
@@ -32,7 +34,8 @@ define([
 			label: "Next",
 			style: {
 				"float": "right"
-			}
+			},
+			disabled: true
 		}, "next"));
 		widgets.push(new ValidationTextBox({
 			id: "email",
@@ -52,6 +55,24 @@ define([
 			pattern: "[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?",
 			placeholder: "name@example.com"
 		}, "fromaddress"));
+		widgets.push(new ValidationTextBox({
+			id: "password",
+			name: "password",
+			type: "password",
+			promptMessage: "",
+			invalidMessage: "Please ensure your password is at least six characters long",
+			pattern: "[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]{6,}",
+			placeholder: "Enter Password"
+		}, "password"));
+		widgets.push(new ValidationTextBox({
+			id: "confirmpassword",
+			name: "confirmpassword",
+			type: "password",
+			promptMessage: "Please re-enter your password.",
+			invalidMessage: "Passwords do not match.",
+			placeholder: "Re-Enter Password",
+			disabled: true
+		}, "confirmpassword"));
 		widgets.push(new TextBox({
 			id: "ontags",
 			name: "ontags",
@@ -69,6 +90,12 @@ define([
 			next = registry.byId("next");
 
 		function saveSettings(e){
+			function sendSettings(settings) {
+				return request.post("/userSettings", {
+					data: { settings: JSON.stringify(settings) }
+				});
+			}
+
 			e && e.preventDefault();
 			next.set("disabled", true);
 			var settings = {};
@@ -80,9 +107,24 @@ define([
 				}
 			});
 			settings.ontags = settings.ontags.split(/\s*,\s*/);
-			request.post("/userSettings", {
-				data: { settings: JSON.stringify(settings) }
-			}).always(function(){
+			delete settings.confirmpassword;
+			var r;
+			if (settings.password && settings.password !== 'password') {
+				r = request.get("/pubKey", {
+					handleAs: "json"
+				}).then(function (pubKey) {
+					var rsakey = new RSAKey();
+					rsakey.setPublic(pubKey.n, pubKey.e);
+					settings.password = util.hex2b64(rsakey.encrypt(settings.password));
+					return sendSettings(settings);
+				}).otherwise(function (e) {
+					console.error(e);
+				});
+			}
+			else {
+				r = sendSettings(settings);
+			}
+			r.always(function(){
 				next.set("disabled", false);
 				win.global.location.href = "/";
 			});
@@ -98,6 +140,28 @@ define([
 				registry.byId(id).set("disabled", value);
 			});
 		});
+
+		var password = registry.byId("password"),
+			confirmpassword = registry.byId("confirmpassword");
+		password.on("input", function(e){
+			if (password.get("value") !== "password" && confirmpassword.get("disabled")) {
+				confirmpassword.set("disabled", false);
+				next.set("disabled", true);
+			}
+		});
+
+		confirmpassword.validator = function (value) {
+			if (value === password.get("value")) {
+				if (next.get("disabled")) {
+					next.set("disabled", false);
+				}
+				return true;
+			}
+			if (!next.get("disabled")) {
+				next.set("disabled", true);
+			}
+			return false;
+		};
 
 		array.forEach(widgets, function(widget){
 			widget.startup();
@@ -123,8 +187,8 @@ define([
 			}
 			fade.show(userSettings);
 		});
-		
+
 	});
-	
+
 	return {};
 });

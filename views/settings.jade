@@ -16,6 +16,9 @@ block scripts
         name: "dijit",
         location: "dijit"
       },{
+        name: "dojox",
+        location: "dojox"
+      },{
         name: "moment",
         location: "moment"
       },{
@@ -84,6 +87,16 @@ block content
               label(for="fromaddress") From Address:
             td
               input(type="text", id="fromaddress", name="fromaddress", placeholder="name@example.com")
+          tr
+            th
+              label(for="password") Password:
+            td
+              input(type="password", id="password", name="password", value="password")
+          tr
+            th
+              label(for="confirmpassword") Confirm Password:
+            td
+              input(type="password", id="confirmpassword", name="confirmpassword")
           tr
             th Send E-Mails:
             td

@@ -37,7 +37,27 @@ define([
 				editOn: "dblclick",
 				autoSave: true
 			}),
-			{ field: "owner", label: "Owner Flag" },
+			editor({
+				field: "owner",
+				label: "Owner Flag",
+				editor: "checkbox",
+				editOn: "dblclick",
+				autoSave: true
+			}),
+			editor({
+				field: "committer",
+				label: "Committer Flag",
+				editor: "checkbox",
+				editOn: "dblclick",
+				autoSave: true
+			}),
+			editor({
+				field: "attempts",
+				label: "Attempts",
+				editor: "text",
+				editOn: "dblclick",
+				autoSave: true
+			}),
 			{
 				field: "lastLogin",
 				label: "Last Login",

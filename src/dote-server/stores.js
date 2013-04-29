@@ -11,16 +11,18 @@ define([
 		comments: null,
 		users: null,
 		emails: null,
+		logins: null,
 
 		defaultUser: function(id){
 			return {
 				id: id,
 				admin: false,
+				committer: false,
 				owner: false,
 				settings: {}
 			};
 		},
-		
+
 		init: function(){
 
 			function initTopics(){
@@ -97,36 +99,43 @@ define([
 				users.add({
 					id: "dylanks",
 					admin: false,
+					committer: true,
 					owner: true
 				});
 				users.add({
 					id: "kriszyp",
 					admin: false,
+					committer: true,
 					owner: true
 				});
 				users.add({
 					id: "wildbill",
 					admin: false,
+					committer: true,
 					owner: true
 				});
 				users.add({
 					id: "ttrenka",
 					admin: false,
+					committer: true,
 					owner: true
 				});
 				users.add({
 					id: "csnover",
 					admin: false,
+					committer: true,
 					owner: true
 				});
 				users.add({
 					id: "kitsonk",
 					admin: true,
+					committer: true,
 					owner: true
 				});
 				users.add({
 					id: "neonstalwart",
 					admin: false,
+					committer: true,
 					owner: true
 				});
 				return users.query();
@@ -171,6 +180,11 @@ define([
 				url: config.db.url
 			});
 			dfds.push(this.emails.ready());
+			this.logins = new Storage({
+				collection: "logins",
+				url: config.db.url
+			});
+			dfds.push(this.logins.ready());
 			return init ? all(dfds).then(function(){
 				return self.init();
 			}) : all(dfds);

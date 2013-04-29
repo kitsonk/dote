@@ -378,11 +378,13 @@ define([
 						user = {
 							id: username,
 							admin: false,
-							owner: false
+							owner: false,
+							committer: false
 						};
 					}
 					request.session.user = user;
 					user.lastLogin = Math.round((new Date()).getTime() / 1000);
+					user.attempts = 0;
 					stores.users.put(user);
 					var href = (user && user.settings) ? (request.session.loginRedirect ? request.session.loginRedirect
 						: "/") : "/welcome";

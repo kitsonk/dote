@@ -1,6 +1,7 @@
 define([
 	"./fade",
 	"./userControls",
+	"dote/util",
 	"dojo/_base/array",
 	"dojo/dom",
 	"dojo/json",
@@ -13,9 +14,10 @@ define([
 	"dijit/form/TextBox",
 	"dijit/form/ValidationTextBox",
 	"dijit/registry",
+	"dojox/encoding/crypto/RSAKey",
 	"./widgetModules"
-], function(fade, userControls, array, dom, JSON, on, ready, request, JsonRest, Button, CheckBox, TextBox,
-		ValidationTextBox, registry){
+], function(fade, userControls, util, array, dom, JSON, on, ready, request, JsonRest, Button, CheckBox, TextBox,
+		ValidationTextBox, registry, RSAKey){
 
 	var userStore = new JsonRest({
 		target: "/users/"
@@ -48,6 +50,23 @@ define([
 			pattern: "[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?",
 			placeholder: "name@example.com"
 		}, "fromaddress"));
+		widgets.push(new ValidationTextBox({
+			id: "password",
+			name: "password",
+			type: "password",
+			promptMessage: "",
+			invalidMessage: "Please ensure your password is at least six characters long",
+			pattern: "[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]{6,}",
+			value: "password"
+		}, "password"));
+		widgets.push(new ValidationTextBox({
+			id: "confirmpassword",
+			name: "confirmpassword",
+			type: "password",
+			promptMessage: "Please re-enter your password.",
+			invalidMessage: "Passwords do not match.",
+			disabled: true
+		}, "confirmpassword"));
 		widgets.push(new TextBox({
 			id: "ontags",
 			name: "ontags",
@@ -61,11 +80,18 @@ define([
 			}, id));
 		});
 
-		var userSettings = dom.byId("userSettings");
+		var userSettings = dom.byId("userSettings"),
+			save = registry.byId("save");
 
 		on(userSettings, "submit", function(e){
+			function sendSettings(settings) {
+				return request.post("/userSettings", {
+					data: { settings: JSON.stringify(settings) }
+				});
+			}
+
 			e && e.preventDefault();
-			registry.byId("save").set("disabled", true);
+			save.set("disabled", true);
 			var settings = {};
 			array.forEach(userSettings.elements, function(element){
 				if(element.name && element.type !== "checkbox"){
@@ -75,10 +101,25 @@ define([
 				}
 			});
 			settings.ontags = settings.ontags.split(/\s*,\s*/);
-			request.post("/userSettings", {
-				data: { settings: JSON.stringify(settings) }
-			}).always(function(){
-				registry.byId("save").set("disabled", false);
+			delete settings.confirmpassword;
+			var r;
+			if (settings.password && settings.password !== 'password') {
+				r = request.get("/pubKey", {
+					handleAs: "json"
+				}).then(function (pubKey) {
+					var rsakey = new RSAKey();
+					rsakey.setPublic(pubKey.n, pubKey.e);
+					settings.password = util.hex2b64(rsakey.encrypt(settings.password));
+					return sendSettings(settings);
+				}).otherwise(function (e) {
+					console.error(e);
+				});
+			}
+			else {
+				r = sendSettings(settings);
+			}
+			r.always(function(){
+				save.set("disabled", false);
 			});
 		});
 
@@ -90,6 +131,28 @@ define([
 			});
 		});
 
+		var password = registry.byId("password"),
+			confirmpassword = registry.byId("confirmpassword");
+		password.on("input", function(e){
+			if (password.get("value") !== "password" && confirmpassword.get("disabled")) {
+				confirmpassword.set("disabled", false);
+				save.set("disabled", true);
+			}
+		});
+
+		confirmpassword.validator = function (value) {
+			if (value === password.get("value")) {
+				if (save.get("disabled")) {
+					save.set("disabled", false);
+				}
+				return true;
+			}
+			if (!save.get("disabled")) {
+				save.set("disabled", true);
+			}
+			return false;
+		};
+
 		array.forEach(widgets, function(widget){
 			widget.startup();
 		});
@@ -99,7 +162,7 @@ define([
 		}).then(function(settings){
 			var id, widget, value;
 			for(id in settings){
-				if(widget = registry.byId(id)){
+				if(id !== 'password' && id !== 'confirmpassword' && (widget = registry.byId(id))){ // intentional assignment
 					value = settings[id];
 					if(widget.get("type") === "checkbox"){
 						widget.set("checked", value);
@@ -112,8 +175,8 @@ define([
 			}
 			fade.show(userSettings, 500, registry.byId("email"));
 		});
-		
+
 	});
-	
+
 	return {};
 });
