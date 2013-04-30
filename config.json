@@ -77,7 +77,7 @@
 	},
 	"production": {
 		"port": "80",
-		"address": "http://dote.dojotoolkit.org/",
+		"address": "http://dote.kitsonkelly.org/",
 		"title": "dote",
 		"subtitle": "Dojo Topic Discussion",
 		"secret": "0YSj1xeZOGLkXvTiVyS3bxvAzFB2Y2TnsAqPczS0",
@@ -92,7 +92,7 @@
 			"address": "dote@kitsonkelly.com",
 			"list": {
 				"name": "dote",
-				"id": "dote.dojotoolkit.org"
+				"id": "dote.kitsonkelly.org"
 			},
 			"checkInterval": 60000,
 			"enabled": true,
