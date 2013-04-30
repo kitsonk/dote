@@ -25,6 +25,7 @@ define([
 		textRe = /(?:Voting:\s+[01\-\+]+\s*\n*)?(?:\[Additional Comment:\]\s*\n*)?((?:.*\n*)*)/mi,
 		outlookRe = /\n+_+\n+(?:.*(\n+|$))+/m;
 		quoteRe = /\n*.+:\n+(?:\s*>\s*.*(?:\n+|$))+/m,
+		sigRe = /\n-{2} *\n[\s\S]*/m,
 		topicIdRe = /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i,
 		actionTypes = ["voteu", "voted", "voten", "post", "unsubscribe"];
 
@@ -592,7 +593,11 @@ define([
 			subject = subjectRe.exec(email.subject),
 			textMatch = textRe.exec(email.text),
 			text = textMatch && textMatch.length ? textMatch[1] : "",
-			quoteMatch = quoteRe.exec(text);
+			sigMatch = sigRe.exec(text);
+
+		console.log("sigMatch[0]", sigMatch && sigMatch[0]);
+		text = sigMatch && sigMatch.length ? text.replace(sigMatch[0], "") : text;
+		var quoteMatch = quoteRe.exec(text);
 
 		if(!quoteMatch || !quoteMatch.length){
 			quoteMatch = outlookRe.exec(text);
