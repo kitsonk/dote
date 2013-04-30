@@ -18,6 +18,7 @@ neutral-color = #f4e0bc
 star-inactive-color = #ccc
 star-active-color = #7e90a3
 tr-bg-color = #eee
+tr-desc-bg-color = #fff
 
 .doteTopic
   background-color topic-bg-color
@@ -264,16 +265,27 @@ tr-bg-color = #eee
     border-top none
     border-bottom none
     border-left 2px solid topic-border-color
+  &Description
   &Comment
   &Post
     table
       border-collapse collapse
       th
-        background-color tr-bg-color
         border-bottom 1px solid topic-border-color
         font-weight bold
         padding 3px
       td
         padding 3px
+  &Comment
+  &Post
+    table
+      th
+        background-color tr-bg-color
       tr:nth-child(even) td
         background-color tr-bg-color
+  &Description
+    table
+      th
+        background-color tr-desc-bg-color
+      tr:nth-child(even) td
+        background-color tr-desc-bg-color

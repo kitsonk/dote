@@ -405,22 +405,34 @@
   border-bottom: none;
   border-left: 2px solid #c0c6cc;
 }
+.doteTopicDescription table,
 .doteTopicComment table,
 .doteTopicPost table {
   border-collapse: collapse;
 }
+.doteTopicDescription table th,
 .doteTopicComment table th,
 .doteTopicPost table th {
-  background-color: #eee;
   border-bottom: 1px solid #c0c6cc;
   font-weight: bold;
   padding: 3px;
 }
+.doteTopicDescription table td,
 .doteTopicComment table td,
 .doteTopicPost table td {
   padding: 3px;
 }
+.doteTopicComment table th,
+.doteTopicPost table th {
+  background-color: #eee;
+}
 .doteTopicComment table tr:nth-child(even) td,
 .doteTopicPost table tr:nth-child(even) td {
   background-color: #eee;
+}
+.doteTopicDescription table th {
+  background-color: #fff;
+}
+.doteTopicDescription table tr:nth-child(even) td {
+  background-color: #fff;
 }
