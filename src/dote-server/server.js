@@ -386,8 +386,8 @@ define([
 					user.lastLogin = Math.round((new Date()).getTime() / 1000);
 					user.attempts = 0;
 					stores.users.put(user);
-					var href = (user && user.settings) ? (request.session.loginRedirect ? request.session.loginRedirect
-						: "/") : "/welcome";
+					var href = (user && user.settings && user.password) ? (request.session.loginRedirect || "/") :
+						"/welcome";
 					request.session.loginRedirect = null;
 					response.json({
 						authorized: true,
