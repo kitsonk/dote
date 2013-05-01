@@ -149,7 +149,7 @@ define([
 					topicHash[self.topicId].put();
 					topicHash[self.topicId]._commentHash[self.id] = undefined;
 				}
-				self.emit("remove", { id: id });
+				self.emit("remove", { id: self.id });
 				self.id = null;
 				self.topicId = null;
 				self.item = null;
