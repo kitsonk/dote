@@ -4,6 +4,8 @@ define([
 	"dojo/ready",
 	"dojo/store/Cache",
 	"dojo/store/Memory",
+	"dojo/store/Observable",
+	"dijit/form/Button",
 	"dgrid/OnDemandGrid",
 	"dgrid/Keyboard",
 	"dgrid/Selection",
@@ -12,8 +14,8 @@ define([
 	"./store/JsonRest",
 	"./userControls",
 	"./widgetModules"
-], function(array, declare, ready, Cache, Memory, OnDemandGrid, Keyboard, Selection, editor, moment, JsonRest,
-		userControls){
+], function(array, declare, ready, Cache, Memory, Observable, Button, OnDemandGrid, Keyboard, Selection, editor, moment,
+		JsonRest, userControls){
 
 	var dateTimeFormat = "DD/MM/YY HH:mm";
 
@@ -21,12 +23,14 @@ define([
 		target: "/users/"
 	}), new Memory());
 
-	var topicStore = Cache(new JsonRest({
+	var topicStore = Observable(Cache(new JsonRest({
 		target: "/topics/"
-	}), new Memory());
+	}), new Memory()));
 
 	ready(function(){
 		userControls.start();
+
+		var widgets = [];
 
 		var userGridColumns = [
 			{ field: "id", label: "User ID" },
@@ -76,16 +80,22 @@ define([
 			{
 				field: "id",
 				label: "ID",
-				formatter: function(value){
+				formatter: function (value) {
 					return '<a href="/topic/' + value + '" target="_blank">' + value + '</a>';
 				}
 			},
-			{ field: "title", label: "Title" },
+			editor({
+				field: "title",
+				label: "Title",
+				editor: "text",
+				editOn: "dblclick",
+				autoSave: true
+			}),
 			{
 				field: "voters",
 				sortable: false,
 				label: "Vote",
-				get: function(object){
+				get: function (object) {
 					var vote = object.voters.length ? 0 : null;
 					array.forEach(object.voters, function(item){
 						vote += item.vote;
@@ -97,7 +107,7 @@ define([
 			{
 				field: "created",
 				label: "Created",
-				get: function(object){
+				get: function (object) {
 					return moment.unix(object.created).format(dateTimeFormat);
 				}
 			},
@@ -108,11 +118,17 @@ define([
 				editOn: "dblclick",
 				autoSave: true
 			}),
-			{ field: "action", label: "Action" },
+			editor({
+				field: "action",
+				label: "Action",
+				editor: "text",
+				editOn: "dblclick",
+				autoSave: true
+			}),
 			{
 				field: "actioned",
 				label: "Actioned",
-				get: function(object){
+				get: function (object) {
 					return object.actioned ? moment.unix(object.actioned).format(dateTimeFormat) : null;
 				}
 			},
@@ -121,8 +137,38 @@ define([
 
 		var topicGrid = new declare([OnDemandGrid, Keyboard, Selection])({
 			columns: topicGridColumns,
-			store: topicStore
+			store: topicStore,
+			selectionMode: "single"
 		}, "topicGrid");
+
+		topicGrid.on("dgrid-select", function (e) {
+			if (deleteTopic.get("disabled")) {
+				deleteTopic.set("disabled", false);
+			}
+		});
+
+		topicGrid.on("dgrid-deselect", function (e) {
+			for (var key in e.grid.selection) {
+				return;
+			}
+			deleteTopic.set("disabled", true);
+		});
+
+		var deleteTopic = new Button({
+			id: "deleteTopic",
+			label: "Delete Topic",
+			disabled: true
+		}, "deleteTopic");
+		deleteTopic.on("click", function () {
+			for (var key in topicGrid.selection) {
+				topicStore.remove(key);
+			}
+		});
+		widgets.push(deleteTopic);
+
+		array.forEach(widgets, function (widget) {
+			widget.startup();
+		});
 	});
 
 });

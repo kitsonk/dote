@@ -261,7 +261,7 @@ define([
 			return this.comment.removeAll().then(function(){
 				return stores.topics.remove(self.id).then(function(){
 					topicHash[self.id] = undefined;
-					self.emit("remove", { id: id });
+					self.emit("remove", { id: self.id });
 					self.id = null;
 					self.item = null;
 					return true;

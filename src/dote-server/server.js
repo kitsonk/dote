@@ -239,6 +239,7 @@ define([
 	app.all("/admin", checkAdmin);
 	app.put("/users/:id", checkAdmin);
 	app.all("/initStores", checkAdmin);
+	app.del("/topics/:id", checkAdmin);
 
 	/* Index Page */
 	app.get("/", function(request, response, next){
@@ -516,6 +517,16 @@ define([
 				next();
 			}
 		}, function(err){
+			response.status(500);
+			next(err);
+		});
+	});
+
+	app.del("/topics/:id", function (request, response, next) {
+		console.log(request.params.id);
+		topic(request.params.id).remove().then(function () {
+			response.send();
+		}, function (err) {
 			response.status(500);
 			next(err);
 		});
