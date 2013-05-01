@@ -157,7 +157,7 @@ define([
 					}
 				]
 			},
-			user: (dote && dote.username) || ""
+			user: (dote && dote.user) || ""
 		}, "topicList");
 		widgets.push(tl);
 

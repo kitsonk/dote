@@ -37,6 +37,10 @@ block scripts
     };
     dote = {
       username: "#{username}",
+      user: {
+        id: "#{user.id}",
+        committer: #{user.committer}
+      },
       topicId: "#{topicId}"
     };
   script(type="text/javascript", src="/#{base}/dojo/dojo.js")

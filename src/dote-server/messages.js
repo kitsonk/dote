@@ -136,7 +136,7 @@ define([
 				participants.push(comment.author);
 			});
 			t.voters.forEach(function(voter){
-				participants.push(voter.name);
+				participants.push(voter.user.id);
 			});
 			participants.push(t.author);
 			if(t.owner) participants.push(t.owner);
@@ -186,7 +186,7 @@ define([
 				participants.push(comment.author);
 			});
 			t.voters.forEach(function(voter){
-				participants.push(voter.name);
+				participants.push(voter.user.id);
 			});
 			participants.push(t.author);
 			if(t.owner) participants.push(t.owner);
@@ -236,7 +236,7 @@ define([
 			});
 			if(topic.voters){
 				topic.voters.forEach(function(voter){
-					participants.push(voter.name);
+					participants.push(voter.user.id);
 				});
 			}
 			if(topic.author) participants.push(topic.author);
@@ -317,7 +317,7 @@ define([
 			voteString = "";
 			topic.voters.forEach(function(vote){
 				voteCount += vote.vote;
-				voteString += vote.name + "[" + (vote.vote == 1 ? "+1" : vote.vote == -1 ? "-1" : "0") + "] ";
+				voteString += vote.user.id + "[" + (vote.vote == 1 ? "+1" : vote.vote == -1 ? "-1" : "0") + "] ";
 			});
 			textHeader += "Voting: " + voteCount + "\n";
 			textHeader += "Votes: " + voteString + "\n";
@@ -345,7 +345,7 @@ define([
 			topic.voters.forEach(function(vote){
 				voteString += string.substitute('<span class="dote_${type}">${tag} [${vote}]</span> ', {
 					type: vote.vote == 1 ? "u" : vote.vote == -1 ? "d" : "n",
-					tag: vote.name,
+					tag: vote.user.id,
 					vote: vote.vote == 1 ? "+1" : vote.vote == -1 ? "-1" : "0"
 				});
 			});
@@ -422,9 +422,9 @@ define([
 	}
 
 	function mailVote(address, vote, topic, comment){
-		var text = "${vote.name} is voting ${voteString}\nOverall: ${count}\nTopic: ${topic.title}\n",
+		var text = "${vote.user.id} is voting ${voteString}\nOverall: ${count}\nTopic: ${topic.title}\n",
 			html = '<div class="dote_h"><table><tbody><tr><td class="${voteClass}">${voteString}</td>' +
-				'<td class="${voteTotalClass}">${count}</td></tr><tr><td>${vote.name}</td><td>Total</td></tr>' +
+				'<td class="${voteTotalClass}">${count}</td></tr><tr><td>${vote.user.id}</td><td>Total</td></tr>' +
 				'</tbody></table><br><span class="dote_l">Topic:</span> <span class="dote_p">${topic.title}</span>';
 		if(topic.owner){
 			text += "Owner: ${topic.owner}\n";
@@ -443,10 +443,11 @@ define([
 			html += '<br><span class="dote_l">Voters:</span> ';
 			topic.voters.forEach(function(v){
 				count += v.vote;
-				text += v.name + "[" + (v.vote == 1 ? "+1" : v.vote == -1 ? "-1" : "0") + "] ";
+				text += v.user.id + (v.user.committer ? ' *' : '') + "[" + (v.vote == 1 ? "+1" : v.vote == -1 ?
+					"-1" : "0") + "] ";
 				html += string.substitute('<span class="dote_${type}">${tag} [${vote}]</span> ', {
 					type: v.vote == 1 ? "u" : v.vote == -1 ? "d" : "n",
-					tag: v.name,
+					tag: (v.user && v.user.id) ? (v.user.id + (v.user.committer ? ' *' : '')) : '',
 					vote: v.vote == 1 ? "+1" : v.vote == -1 ? "-1" : "0"
 				});
 			});
@@ -493,7 +494,7 @@ define([
 		text = string.substitute(text, subs);
 		html = string.substitute(html, subs);
 		var message = {
-			from: vote.name + " <" + config.mail.address + ">",
+			from: vote.user.id + " <" + config.mail.address + ">",
 			"Sender": config.mail.username + " <" + config.mail.address + ">",
 			to: address,
 			subject: "[" + config.mail.list.name + "] " + topic.title,
@@ -502,7 +503,7 @@ define([
 			"List-Unsubscribe": unsubscribeAddress,
 			"List-Post": postAddress,
 			"List-Archive": config.address,
-			"Message-ID": topic.id + "+" + vote.name + "@" + config.mail.list.id,
+			"Message-ID": topic.id + "+" + vote.user.id + "@" + config.mail.list.id,
 			"In-Reply-To": topic.id + "@" + config.mail.list.id,
 			text: text,
 			attachment: {
@@ -595,7 +596,6 @@ define([
 			text = textMatch && textMatch.length ? textMatch[1] : "",
 			sigMatch = sigRe.exec(text);
 
-		console.log("sigMatch[0]", sigMatch && sigMatch[0]);
 		text = sigMatch && sigMatch.length ? text.replace(sigMatch[0], "") : text;
 		var quoteMatch = quoteRe.exec(text);
 
@@ -624,6 +624,29 @@ define([
 
 	function process(email){
 		return processEmail(email).then(function(mail){
+
+			function post() {
+				var summary = "";
+				marked.lexer(mail.text).forEach(function (token) {
+					if (token && token.text) {
+						summary = summary.concat(token.text.replace(/\n/g, ' ') + ' ');
+					}
+				});
+				var data = {
+					title: mail.title,
+					description: mail.text,
+					summary: summary.substring(0, 120),
+					author: mail.user.id
+				};
+				return topic().add(data).then(function (topic) {
+					return {
+						action: 'post',
+						emailId: mail.emailId,
+						topicId: topic.id
+					};
+				});
+			}
+
 			var result = when(mail.emailId);
 			if(mail.user && mail.user.id){
 				var topicId,
@@ -643,41 +666,32 @@ define([
 						case "voteu":
 							voter = {
 								vote: 1,
-								name: mail.user.id
+								user: {
+									id: mail.user.id,
+									committer: mail.user.committer
+								}
 							};
 							break;
 						case "voted":
 							voter = {
 								vote: -1,
-								name: mail.user.id
+								user: {
+									id: mail.user.id,
+									committer: mail.user.committer
+								}
 							};
 							break;
 						case "voten":
 							voter = {
 								vote: 0,
-								name: mail.user.id
+								user: {
+									id: mail.user.id,
+									committer: mail.user.committer
+								}
 							};
 							break;
 						case "post":
-							var summary = "";
-							marked.lexer(mail.text).forEach(function(token){
-								if(token && token.text){
-									summary = summary.concat(token.text.replace(/\n/g, " ") + " ");
-								}
-							});
-							var data = {
-								title: mail.title,
-								description: mail.text,
-								summary: summary.substring(0, 120),
-								author: mail.user.id
-							};
-							result = topic().add(data).then(function(topic){
-								return {
-									action: "post",
-									emailId: mail.emailId,
-									topicId: topic.id
-								};
-							});
+							result = post();
 							break;
 						case "unsubscribe":
 							console.log("unsubscribe");
@@ -685,8 +699,7 @@ define([
 					}
 				}else{
 					if(!topicId && mail.text){
-						console.log(mail);
-						console.log("assume post");
+						result = post();
 					}
 				}
 				if(topicId && (voter || mail.text)){
@@ -722,7 +735,8 @@ define([
 					}
 				}
 			}else{
-				// No user Identified
+				console.log("Unsolicited E-Mail From: ".yellow.bold, email && email.from && email.from.length &&
+					email.from[0].address || "[unknown]");
 			}
 			return result;
 		});

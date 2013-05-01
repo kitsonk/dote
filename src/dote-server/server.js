@@ -245,6 +245,7 @@ define([
 	app.get("/", function(request, response, next){
 		response.render("index", {
 			username: request.session.username,
+			user: request.session.user,
 			base: config.base,
 			app: appConfig
 		});
@@ -264,6 +265,7 @@ define([
 		response.render("topic", {
 			topicId: request.params.id,
 			username: request.session.username,
+			user: request.session.user,
 			base: config.base,
 			app: appConfig
 		});

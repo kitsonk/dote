@@ -42,20 +42,20 @@ define([
 			if(changes.voters){
 				var vote = changes.voters[0],
 					voter;
-				if(vote.name){
-					voter = vote.name;
+				if(vote.user){
+					voter = vote.user;
 				}else{
 					var originalVoters = item.original.voters,
 						newVoters = item.changed.voters;
 					originalVoters.some(function(i, idx){
 						if(i.vote !== newVoters[idx].vote){
-							return voter = i.name;
+							return voter = i.user;  // intentional assignment
 						}
 					});
 				}
 				if(voter){
-					vote.name = voter;
-					messages.calculateVoteRecipients(item.changed, vote.name).then(function(results){
+					vote.user = voter;
+					messages.calculateVoteRecipients(item.changed, vote.user.id).then(function(results){
 						var mails = [];
 						results.forEach(function(address){
 							mails.push(messages.mailVote(address, vote, item.changed));
@@ -87,7 +87,7 @@ define([
 					dfd.resolve("complete");
 				}else{
 					console.log("Unsupported Topic Change".red.bold);
-					console.log(changes);
+					console.log("Changes:".grey, changes);
 					dfd.reject(new Error("Unsupported Topic Change"));
 				}
 			}

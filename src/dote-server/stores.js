@@ -40,10 +40,10 @@ define([
 					actioned: 1349199792,
 					tags: ["dijit", "css", "themes", "ui"],
 					voters: [
-						{ name: "kitsonk", vote: 1 },
-						{ name: "neonstalwart", vote: -1 },
-						{ name: "wildbill", vote: -1 },
-						{ name: "ttrenka", vote: -1 }
+						{ user: { id: "kitsonk", committer: true }, vote: 1 },
+						{ user: { id: "neonstalwart", committer: true }, vote: -1 },
+						{ user: { id: "bill", committer: true }, vote: -1 },
+						{ user: { id: "ttrenka", committer: true }, vote: -1 }
 					],
 					watchers: [ ],
 					commentsCount: 2
@@ -59,9 +59,10 @@ define([
 					created: 1349199792,
 					tags: [ "dojo", "core", "alternatives" ],
 					voters: [
-						{ name: "kitsonk", vote: 1 },
-						{ name: "dylanks", vote: -1 },
-						{ name: "csnover", vote: 0 }
+						{ user: { id: "kitsonk", committer: true }, vote: 1 },
+						{ user: { id: "dylanks", committer: true }, vote: -1 },
+						{ user: { id: "csnover", committer: true }, vote: 0 },
+						{ user: { id: "other", committer: false }, vote: 1 }
 					],
 					watchers: [ ],
 					commentsCount: 1

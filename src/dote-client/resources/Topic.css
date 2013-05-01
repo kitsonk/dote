@@ -253,6 +253,12 @@
 .doteTopicTagsContainer a:hover {
   color: #0060bf;
 }
+.doteTopicVoterPlus i,
+.doteTopicVoterMinus i,
+.doteTopicVoterNeutral i {
+  color: #555;
+  padding: 0;
+}
 .doteTopicVoterPlus {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.03, #bcf4c3), color-stop(1, #c9f6cf));
   background: -webkit-linear-gradient(top, #fff 0px, #bcf4c3 3px, #c9f6cf 100%);

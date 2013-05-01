@@ -34,7 +34,7 @@ define([
 				]
 			},
 			topicStore: topicStore,
-			user: dote.username
+			user: dote.user
 		}, "topic");
 		topic.startup();
 
@@ -44,6 +44,6 @@ define([
 		});
 
 	});
-	
+
 	return {};
 });

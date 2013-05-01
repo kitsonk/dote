@@ -26,7 +26,11 @@ block scripts
       ]
     };
     dote = {
-      username: "#{username}"
+      username: "#{username}",
+      user: {
+        id: "#{user.id}",
+        committer: #{user.committer}
+      }
     };
   script(type="text/javascript", src="/#{base}/dojo/dojo.js")
   script(type="text/javascript", src="/#{base}/dote-client/widgetModules.js")

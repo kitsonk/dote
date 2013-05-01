@@ -55,7 +55,7 @@ define([
 		_setVoteAttr: function(value){
 			if(this.item){
 				var exists = array.some(this.item.voters, function(voter, idx){
-					if(voter.name === this.topicList.user){
+					if(voter.user.id === this.topicList.user.id){
 						voter.vote = value;
 						return true;
 					}else{
@@ -64,7 +64,7 @@ define([
 				}, this);
 				if(!exists){
 					this.item.voters.push({
-						name: this.topicList.user,
+						user: this.topicList.user,
 						vote: value
 					});
 				}
@@ -113,7 +113,7 @@ define([
 			if(this.item.action !== value){
 				this.item.action = value;
 				var self = this;
-				when(this.topicList.store.put(this.item), function(item){
+				this.topicList.store.put(this.item).then(function (item) {
 					self.set("item", item);
 				});
 			}
@@ -132,7 +132,7 @@ define([
 			"moreButtonNode": "doteTopicListMoreButton"
 		},
 
-		user: "",
+		user: null,
 
 		more: false,
 		_setMoreAttr: function(value){
