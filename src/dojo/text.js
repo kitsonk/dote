@@ -1,14 +1,15 @@
-define(["./_base/kernel", "require", "./has", "./has!host-browser?./_base/xhr"], function(dojo, require, has, xhr){
+define(["./_base/kernel", "require", "./has", "./has!host-browser?./request"], function(dojo, require, has, request){
 	// module:
 	//		dojo/text
 
 	var getText;
 	if(has("host-browser")){
 		getText= function(url, sync, load){
-			xhr("GET", {url: url, sync:!!sync, load: load, headers: dojo.config.textPluginHeaders || {}});
+			request(url, {sync:!!sync}).then(load);
 		};
 	}else{
-		// TODOC: only works for dojo AMD loader
+		// Path for node.js and rhino, to load from local file system.
+		// TODO: use node.js native methods rather than depending on a require.getText() method to exist.
 		if(require.getText){
 			getText= require.getText;
 		}else{
@@ -186,7 +187,7 @@ define(["./_base/kernel", "require", "./has", "./has!host-browser?./_base/xhr"],
 				};
 			if(absMid in theCache){
 				text = theCache[absMid];
-			}else if(requireCacheUrl in require.cache){
+			}else if(require.cache && requireCacheUrl in require.cache){
 				text = require.cache[requireCacheUrl];
 			}else if(url in theCache){
 				text = theCache[url];

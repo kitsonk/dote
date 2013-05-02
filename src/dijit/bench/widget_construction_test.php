@@ -9,16 +9,16 @@
 			@import "../themes/tundra/tundra.css";
 		</style>
 		<script type="text/javascript" src="../../dojo/dojo.js"
-			djConfig="parseOnLoad: true, isDebug: true"></script>
+			data-dojo-config="parseOnLoad: true, isDebug: true"></script>
 		<script type="text/javascript">
 			dojo.require("dojo.parser");	// scan page for widgets and instantiate them
-			dojo.require("dijit._Widget");
+			dojo.require("dijit._WidgetBase");
 			dojo.require("dijit._TemplatedMixin");
 
 			/* dummy widget for benchmarking purposes */
 			dojo.declare(
 				"SimpleButton",
-				[ dijit._Widget, dijit._TemplatedMixin ],
+				[ dijit._WidgetBase, dijit._TemplatedMixin ],
 				{
 					label: "",
 
