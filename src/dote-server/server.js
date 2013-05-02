@@ -4,12 +4,10 @@ define([
 	"dojo/node!nib",
 	"dojo/node!url",
 	"dojo/node!colors",
-	"dojo/_base/lang",
 	"dojo/promise/all",
 	"dojo/when",
 	"marked/marked",
 	"dote/timer",
-	"dote/wait",
 	"./auth",
 	"./config",
 	"./email",
@@ -18,8 +16,8 @@ define([
 	"./stores",
 	"./topic",
 	"./util"
-], function(express, stylus, nib, url, colors, lang, all, when, marked, timer, wait, auth, config, email, messages,
-		queue, stores, topic, util){
+], function(express, stylus, nib, url, colors, all, when, marked, timer, auth, config, email, messages, queue, stores,
+		topic, util){
 
 	function compile(str, path){
 		return stylus(str).
