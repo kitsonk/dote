@@ -216,11 +216,12 @@ define([
 
 		comment: null,
 
-		get: function(){
+		get: function(refresh){
 			var self = this;
-			return when(this.item || stores.topics.get(this.id)).then(function(item){
-				self.emit("get", { item: item });
-				return self.item = item;
+			return when(refresh ? stores.topics.get(this.id) : this.item || stores.topics.get(this.id)).
+				then(function (item) {
+					self.emit("get", { item: item });
+					return self.item = item;  // intentional assignment
 			});
 		},
 
@@ -269,26 +270,31 @@ define([
 			});
 		},
 
-		vote: function(voter, comment){
+		vote: function (voter, comment) {
 			var self = this;
 			this.item = null;
-			return this.get().then(function(item){
+			return this.get(true).then(function (item) {
 				item = lang.clone(item);
-				if(item.voters && item.voters.length){
-					if(!item.voters.some(function(vote, idx){
-						if(vote.name === voter.name){
+				if (item.voters && item.voters.length) {
+					if(!item.voters.some(function (vote, idx) {
+						if(vote.user.id === voter.user.id){
+							console.log("voter:".yellow, voter);
 							item.voters[idx].vote = voter.vote;
+							item.voters[idx].user.committer = voter.user.committer;
 							return true;
 						}
-					})){
+					})) {
 						item.voters.push(voter);
 					}
-				}else{
+				}
+				else {
 					item.voters = [ voter ];
 				}
-				return self.put(item).then(function(item){
+				return self.put(item).then(function (item) {
 					var results = { topic: item };
-					if(comment) results.comment = self.comment().add(comment);
+					if (comment) {
+						results.comment = self.comment().add(comment);
+					}
 					return all(results);
 				});
 			});

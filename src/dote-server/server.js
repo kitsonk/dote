@@ -137,6 +137,21 @@ define([
 				comment: e.item
 			});
 		});
+
+		queue.on("topic.refresh", function (e) {
+			var result = when("complete");
+			if (e.topic) {
+				result = topic(e.topic.id).get(true).then(function (data) {
+					return "complete";
+				});
+			}
+			if (e.comment) {
+				result = topic(e.comment.topicId).get(true).then(function (data) {
+					return "complete";
+				});
+			}
+			return result;
+		});
 	});
 
 	/* Markdown Parser */
@@ -517,6 +532,32 @@ define([
 				next();
 			}
 		}, function(err){
+			response.status(500);
+			next(err);
+		});
+	});
+
+	app.post("/topics/:id/voters", function (request, response, next) {
+		var data = request.body,
+			topicId = request.params.id,
+			voter = {
+				user: {
+					id: request.session.user.id,
+					committer: request.session.user.committer
+				},
+				vote: data.vote
+			};
+
+		topic(topicId).vote(voter).then(function (data) {
+			if (data) {
+				response.status(200);
+				response.json(data);
+			}
+			else {
+				response.status(404);
+				next();
+			}
+		}, function (err) {
 			response.status(500);
 			next(err);
 		});

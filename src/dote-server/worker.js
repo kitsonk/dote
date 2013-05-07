@@ -96,7 +96,7 @@ define([
 
 		queue.on("comment.add", function(item){
 			var dfd = new Deferred();
-			topic(item.comment.topicId).get().then(function(topicItem){
+			topic(item.comment.topicId).get(true).then(function(topicItem){
 				messages.calculateCommentRecipients(item.comment).then(function(results){
 					var mails = [];
 					results.forEach(function(address){
@@ -125,6 +125,9 @@ define([
 				topic: e.item,
 				isNew: true
 			});
+			queue.create("topic.refresh", {
+				topic: e.item
+			});
 		});
 
 		topic.on("put", function(e){
@@ -132,10 +135,16 @@ define([
 				original: e.original,
 				changed: e.item
 			});
+			queue.create("topic.refresh", {
+				topic: e.item
+			});
 		});
 
 		topic.on("comment.add", function(e){
 			queue.create("comment.add", {
+				comment: e.item
+			});
+			queue.create("topic.refresh", {
 				comment: e.item
 			});
 		});

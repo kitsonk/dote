@@ -224,7 +224,7 @@ define([
 		var queries = {};
 		queries.users = stores.users.query();
 		queries.comments = topic(comment.topicId).comment.all();
-		queries.topic = topic(comment.topicId).get();
+		queries.topic = topic(comment.topicId).get(true);
 		// I can likely do this with an aggregate
 		return all(queries).then(function(results){
 			var addresses = [],
@@ -577,7 +577,7 @@ define([
 
 	function findUser(address){
 		address = address.toLowerCase();
-		return when(stores.users.query("select(id,settings)", { allowBulkFetch: true }).then(function(users){
+		return when(stores.users.query("select(id,settings,committer)", { allowBulkFetch: true }).then(function(users){
 			var match;
 			users.some(function(user){
 				return match = user.settings &&
@@ -616,7 +616,7 @@ define([
 			processed.actions = actionParts[1].split("+");
 		}
 
-		return findUser(from).then(function(user){
+		return findUser(from).then(function (user) {
 			processed.user = user;
 			return processed;
 		});

@@ -19,9 +19,9 @@ define([
 ], function(array, dom, all, ready, Cache, JsonRest, Memory, when, Button, Checkbox, Select, TextBox, TitlePane,
 		TopicList, userControls, moment){
 
-	var topicStore = Cache(new JsonRest({
+	var topicStore = new JsonRest({
 			target: "/topics/"
-		}), new Memory(), {}),
+		}),
 		ownersStore = new JsonRest({
 			target: "/owners/"
 		}),
