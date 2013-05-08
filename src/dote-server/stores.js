@@ -12,6 +12,7 @@ define([
 		users: null,
 		emails: null,
 		logins: null,
+		signups: null,
 
 		defaultUser: function(id){
 			return {
@@ -186,6 +187,11 @@ define([
 				url: config.db.url
 			});
 			dfds.push(this.logins.ready());
+			this.signups = new Storage({
+				collection: 'signups',
+				url: config.db.url
+			});
+			dfds.push(this.signups.ready());
 			return init ? all(dfds).then(function(){
 				return self.init();
 			}) : all(dfds);

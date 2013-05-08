@@ -19,6 +19,10 @@ define([
 
 	var dateTimeFormat = "DD/MM/YY HH:mm";
 
+	var signupStore = Cache(new JsonRest({
+		target: '/signups/'
+	}), new Memory());
+
 	var userStore = Cache(new JsonRest({
 		target: "/users/"
 	}), new Memory());
@@ -31,6 +35,17 @@ define([
 		userControls.start();
 
 		var widgets = [];
+
+		var signupGridColumns = [
+			{ field: 'login', label: 'User ID' },
+			{ field: 'email', label: 'E-Mail'},
+			{ field: 'message', label: 'Message'}
+		];
+
+		var signupGrid = new declare([OnDemandGrid, Keyboard, Selection])({
+			columns: signupGridColumns,
+			store: signupStore
+		}, 'signupGrid');
 
 		var userGridColumns = [
 			{ field: "id", label: "User ID" },

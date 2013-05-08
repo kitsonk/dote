@@ -1,0 +1,13 @@
+extends main
+
+prepend head
+  title = app.title + " Thank You"
+
+block content
+  .loginbox
+    h1 #{app.title}
+    h2 #{app.subtitle}
+    p
+      | Thank you for submitting your request.
+    p
+      | Once processed, you will informed of the status.

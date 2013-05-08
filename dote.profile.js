@@ -136,6 +136,9 @@ var profile = (function(){
 			"dote-client/login": {
 				exclude: generalModules
 			},
+			"dote-client/viewSignup": {
+				exclude: generalModules.concat("dote-client/widgetModules")
+			},
 			"dote-client/addTopic": {
 				exclude: generalModules.concat("dote-client/widgetModules")
 			}

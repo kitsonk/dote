@@ -1,0 +1,87 @@
+extends main
+
+prepend head
+  title = app.title + " Signup"
+
+block scripts
+  script(type="text/javascript")
+    dojoConfig = {
+      async: 1,
+      baseUrl: "/#{base}",
+      packages: [{
+        name: "dojo",
+        location: "dojo"
+      },{
+        name: "dijit",
+        location: "dijit"
+      },{
+        name: "dojox",
+        location: "dojox"
+      },{
+        name: "dote",
+        location: "dote"
+      },{
+        name: "dote-client",
+        location: "dote-client"
+      },{
+        name: "moment",
+        location: "moment"
+      }],
+      deps: [
+        "dote-client/viewSignup"
+      ]
+    };
+  script(type="text/javascript", src="/#{base}/dojo/dojo.js")
+  script(type="text/javascript", src="/#{base}/dote-client/widgetModules.js")
+
+block content
+  .header
+    .content
+      .title #{app.title}
+      .subtitle #{app.subtitle}
+      .clear
+  .main
+    h1 Signup
+    .instructions
+      p
+        | Welcome to the #{app.title}.  This application is currently a closed application for managing features for
+        | Dojo 2.  You must be authorised to be able to participate.  If you are just curious, then you can use the
+        | <a href="/readonly">read-only</a> view of the discussion.
+      form(id="userSignup", class="signup", action="")
+        table
+          tbody
+            tr
+              th
+                label(for="login") Desired Username:
+              td
+                input(type="text", id="login", name="login", placeholder="Login ID")
+            tr
+              th
+                label(for="email") Send to Address:
+              td
+                input(type="text", id="email", name="email", placeholder="name@example.com")
+            tr
+              th
+                label(for="fromaddress") From Address:
+              td
+                input(type="text", id="fromaddress", name="fromaddress", placeholder="name@example.com")
+            tr
+              th
+                label(for="password") Password:
+              td
+                input(type="password", id="password", name="password")
+            tr
+              th
+                label(for="confirmpassword") Confirm Password:
+              td
+                input(type="password", id="confirmpassword", name="confirmpassword")
+            tr
+              th
+                label(for="message") Message:
+              td
+                textarea(name="message", id="message", name="message", placeholder="Reason you are requesting access.")
+        button.next(type="submit", id="submit", disabled="disabled") Submit
+      .clear
+
+  .footer
+    .content Copyright &copy; 2012-2013 Dojo Foundation &mdash; All Rights Reserved

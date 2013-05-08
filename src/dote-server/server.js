@@ -315,6 +315,31 @@ define([
 		});
 	});
 
+	/**
+	 * Signup
+	 */
+
+	app.get('/signup', function (request, response, next) {
+		response.render('signup', {
+			base: config.base,
+			app: appConfig
+		});
+	});
+
+	app.post('/signup', function (request, response, next) {
+		var data = JSON.parse(request.body.signup);
+		stores.signups.put(data).then(function () {
+			response.send();
+		});
+	});
+
+	app.get('/thankyou', function (request, response, next) {
+		response.render('thankyou', {
+			base: config.base,
+			app: appConfig
+		});
+	});
+
 	/* Initialise the Stores */
 	app.get("/initStores", function(request, response, next){
 		topic.clear();
@@ -326,6 +351,14 @@ define([
 	/* Provide the Public Key for Logging In */
 	app.get("/pubKey", function(request, response, next){
 		response.json(auth.pubKey());
+	});
+
+	/* Validate a login name */
+	app.post('/validateLogin', function(request, response, next){
+		response.status(200);
+		response.json({
+			isValid: true
+		});
 	});
 
 	/* Hidden URL for Directing Seeing Views */
@@ -460,6 +493,14 @@ define([
 			response.status(500);
 			next(err);
 		});
+	});
+
+	/**
+	 * Signups
+	 */
+
+	app.get('/signups', function(request, response, next) {
+		queryStore(stores.signups, request, response);
 	});
 
 	/*
