@@ -77,7 +77,7 @@
 	},
 	"production": {
 		"port": "80",
-		"address": "http://dote.kitsonkelly.org/",
+		"address": "http://dote.kitsonkelly.com/",
 		"title": "dote",
 		"subtitle": "Hipster Free, No Spin Zone",
 		"secret": "0YSj1xeZOGLkXvTiVyS3bxvAzFB2Y2TnsAqPczS0",
@@ -92,7 +92,7 @@
 			"address": "dote@kitsonkelly.com",
 			"list": {
 				"name": "dote",
-				"id": "dote.kitsonkelly.org"
+				"id": "dote.kitsonkelly.com"
 			},
 			"checkInterval": 60000,
 			"enabled": true,
