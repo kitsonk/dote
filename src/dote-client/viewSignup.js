@@ -51,15 +51,22 @@ define([
 	}
 
 	function checkLogin() {
-		request.post('/validateLogin', {
-			handleAs: 'json',
-			data: {
-				id: login.get('value')
-			}
-		}).then(function (data) {
-			validLogin = !login._isEmpty(login.get('value')) && data.isValid;
+		var id = login.get('value');
+		if (id) {
+			request.post('/validateLogin', {
+				handleAs: 'json',
+				data: {
+					id: login.get('value')
+				}
+			}).then(function (data) {
+				validLogin = !login._isEmpty(login.get('value')) && data.isValid;
+				checkValidForm();
+			});
+		}
+		else {
+			validLogin = false;
 			checkValidForm();
-		});
+		}
 	}
 
 	widgets.push(new Button({
@@ -88,15 +95,6 @@ define([
 		invalidMessage: 'Not a valid e-mail address',
 		placeholder: 'name@example.com'
 	}, 'email'));
-	widgets.push(new ValidationTextBox({
-		id: 'fromaddress',
-		name: 'fromaddress',
-		type: 'text',
-		promptMessage: 'E-mails from this address are matched to your<br>username for creating posts and voting. This will<br>default to the <strong>Send to Address</strong>.',
-		invalidMessage: 'Not a valid e-mail address',
-		pattern: '[A-Za-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?',
-		placeholder: 'name@example.com'
-	}, 'fromaddress'));
 	widgets.push(new ValidationTextBox({
 		id: 'password',
 		name: 'password',

@@ -1,34 +1,35 @@
 define([
-	"dojo/_base/array",
-	"dojo/_base/declare",
-	"dojo/ready",
-	"dojo/store/Cache",
-	"dojo/store/Memory",
-	"dojo/store/Observable",
-	"dijit/form/Button",
-	"dgrid/OnDemandGrid",
-	"dgrid/Keyboard",
-	"dgrid/Selection",
-	"dgrid/editor",
-	"moment/moment",
-	"./store/JsonRest",
-	"./userControls",
-	"./widgetModules"
-], function(array, declare, ready, Cache, Memory, Observable, Button, OnDemandGrid, Keyboard, Selection, editor, moment,
-		JsonRest, userControls){
+	'dojo/_base/array',
+	'dojo/_base/declare',
+	'dojo/ready',
+	'dojo/store/Cache',
+	'dojo/store/Memory',
+	'dojo/store/Observable',
+	'dojo/when',
+	'dijit/form/Button',
+	'dgrid/OnDemandGrid',
+	'dgrid/Keyboard',
+	'dgrid/Selection',
+	'dgrid/editor',
+	'moment/moment',
+	'./store/JsonRest',
+	'./userControls',
+	'./widgetModules'
+], function(array, declare, ready, Cache, Memory, Observable, when, Button, OnDemandGrid, Keyboard, Selection, editor,
+		moment, JsonRest, userControls){
 
-	var dateTimeFormat = "DD/MM/YY HH:mm";
+	var dateTimeFormat = 'DD/MM/YY HH:mm';
 
-	var signupStore = Cache(new JsonRest({
+	var signupStore = Observable(Cache(new JsonRest({
 		target: '/signups/'
-	}), new Memory());
+	}), new Memory()));
 
-	var userStore = Cache(new JsonRest({
-		target: "/users/"
-	}), new Memory());
+	var userStore = Observable(Cache(new JsonRest({
+		target: '/users/'
+	}), new Memory()));
 
 	var topicStore = Observable(Cache(new JsonRest({
-		target: "/topics/"
+		target: '/topics/'
 	}), new Memory()));
 
 	ready(function(){
@@ -44,8 +45,24 @@ define([
 
 		var signupGrid = new declare([OnDemandGrid, Keyboard, Selection])({
 			columns: signupGridColumns,
-			store: signupStore
+			store: signupStore,
+			selectionMode: 'single'
 		}, 'signupGrid');
+
+		signupGrid.on('dgrid-select', function (e) {
+			if (activateSignup.get('disabled')) {
+				activateSignup.set('disabled', false);
+				rejectSignup.set('disabled', false);
+			}
+		});
+
+		signupGrid.on('dgrid-deselect', function (e) {
+			for (var key in e.grid.selection) {
+				return;
+			}
+			activateSignup.set('disabled', true);
+			rejectSignup.set('disabled', true);
+		});
 
 		var userGridColumns = [
 			{ field: "id", label: "User ID" },
@@ -180,6 +197,46 @@ define([
 			}
 		});
 		widgets.push(deleteTopic);
+
+		var activateSignup = new Button({
+			id: 'activateSignup',
+			label: 'Activate',
+			disabled: true
+		}, 'activateSignup');
+		activateSignup.on('click', function () {
+			function handleItem(item) {
+				if (item) {
+					var user = {
+						id: item.login,
+						email: item.email,
+						password: item.password,
+						admin: false,
+						committer: false,
+						owner: false
+					};
+					when(userStore.put(user)).then(function () {
+						signupStore.remove(item.id);
+					});
+				}
+			}
+
+			for (var key in signupGrid.selection) {
+				when(signupStore.get(key)).then(handleItem);
+			}
+		});
+		widgets.push(activateSignup);
+
+		var rejectSignup = new Button({
+			id: 'rejectSignup',
+			label: 'Reject',
+			disabled: true
+		}, 'rejectSignup');
+		rejectSignup.on('click', function () {
+			for (var key in signupGrid.selection) {
+				signupStore.remove(key);
+			}
+		});
+		widgets.push(rejectSignup);
 
 		array.forEach(widgets, function (widget) {
 			widget.startup();

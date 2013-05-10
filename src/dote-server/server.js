@@ -328,6 +328,12 @@ define([
 
 	app.post('/signup', function (request, response, next) {
 		var data = JSON.parse(request.body.signup);
+		if (data && data.password) {
+			data.password = auth.hashEncrypted(data.password);
+		}
+		if (data && 'submit' in data) {
+			delete data.submit;
+		}
 		stores.signups.put(data).then(function () {
 			response.send();
 		});
@@ -355,10 +361,28 @@ define([
 
 	/* Validate a login name */
 	app.post('/validateLogin', function(request, response, next){
-		response.status(200);
-		response.json({
-			isValid: true
-		});
+		var id = request.body.id;
+		if (id) {
+			stores.users.get(id).then(function (user) {
+				response.status(200);
+				if (!user) {
+					response.json({
+						isValid: true
+					});
+				}
+				else {
+					response.json({
+						isValid: false
+					});
+				}
+			});
+		}
+		else {
+			response.status(200);
+			response.json({
+				isValid: false
+			});
+		}
 	});
 
 	/* Hidden URL for Directing Seeing Views */
@@ -459,7 +483,7 @@ define([
 		});
 	});
 
-	app.all("/users", function(request, response, next){
+	app.get("/users", function(request, response, next){
 		queryStore(stores.users, request, response);
 	});
 
@@ -499,8 +523,17 @@ define([
 	 * Signups
 	 */
 
-	app.get('/signups', function(request, response, next) {
+	app.get('/signups', function (request, response, next) {
 		queryStore(stores.signups, request, response);
+	});
+
+	app.del('/signups/:id', function (request, response, next) {
+		stores.signups.remove(request.params.id).then(function () {
+			response.send();
+		}, function (e) {
+			response.status(500);
+			next(e);
+		});
 	});
 
 	/*

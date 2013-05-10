@@ -14,7 +14,6 @@ define([
 ], function (LdapAuth, colors, lang, all, when, RSAKey, SHA512, util, dfs, settenUtil, config, stores) {
 
 	if (config.auth === 'ldap') {
-		console.log('password', process.env.DOTE_LDAP_PWD || config.ldap.adminPassword);
 		var ldap = new LdapAuth({
 			url: config.ldap.url,
 			adminDn: config.ldap.adminDn,
@@ -103,30 +102,23 @@ define([
 		case 'internal':
 			result = stores.users.get(username).then(function (user) {
 				if (!user || !user.password) {
-					return password === 'dojotoolkit' ? {
-						mail: '',
-						cn: ''
-					} : false;
+					return false;
 				}
-				else if (user.attempts >= 3) {
+				if (user.attempts >= 3) {
 					console.log('Account Locked Out!'.red.bold + ' - '.grey + username.cyan);
 					return false;
 				}
-				else {
-					if (saltPassword(password) === user.password) {
-						user.attempts = 0;
-						stores.users.put(user);
-						return {
-							mail: user.settings && user.settings.email,
-							cn: ''
-						};
-					}
-					else {
-						user.attempts = user.attempts ? user.attempts + 1 : 1;
-						stores.users.put(user);
-						return false;
-					}
+				if (saltPassword(password) === user.password) {
+					user.attempts = 0;
+					stores.users.put(user);
+					return {
+						mail: user.settings && user.settings.email,
+						cn: ''
+					};
 				}
+				user.attempts = user.attempts ? user.attempts + 1 : 1;
+				stores.users.put(user);
+				return false;
 			});
 			break;
 		default:

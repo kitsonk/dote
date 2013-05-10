@@ -4,7 +4,7 @@ var profile = (function(){
 
 		copyOnly = function(filename, mid){
 			var list = {
-				"dote-client/dote-client.profile":1,
+				"dote-client/package":1,
 				"dote-client/package.json":1
 			};
 			return (mid in list) || (/^dote-client\/resources\//.test(mid) && !/\.(css|styl)$/.test(filename)) || /(png|jpg|jpeg|gif|tiff)$/.test(filename);

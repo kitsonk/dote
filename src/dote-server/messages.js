@@ -112,14 +112,19 @@ define([
 
 	function getSettings(username){
 		return stores.users.get(username).then(function(user){
+			var settings;
 			if(user && user.settings){
-				var settings = lang.clone(user.settings);
+				settings = lang.clone(user.settings);
 				if ("password" in settings){
 					delete settings.password;
 				}
 				return settings;
 			}else{
-				return lang.clone(defaultSettings);
+				settings = lang.clone(defaultSettings);
+				if (user && user.email) {
+					settings.email = user.email;
+				}
+				return settings;
 			}
 		});
 	}
