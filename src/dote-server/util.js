@@ -1,6 +1,5 @@
 define([
-	"dote/array"
-], function(array){
+], function(){
 
 	function getUUID(){
 		// Returns a compliant UUID
