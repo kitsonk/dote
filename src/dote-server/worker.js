@@ -120,6 +120,17 @@ define([
 			return dfd.promise;
 		});
 
+		queue.on('user.welcome', function (item) {
+			var dfd = new Deferred();
+			messages.mailWelcome(item.user.id + ' <' + item.user.email + '>', item.user).then(function (results) {
+				console.log('Welcome to '.grey + item.user.id.yellow + ' mailed.'.grey);
+				dfd.resolve('complete');
+			}, function (e) {
+				dfd.reject(e);
+			});
+			return dfd.promise;
+		});
+
 		topic.on("add", function(e){
 			queue.create("topic.new", {
 				topic: e.item,

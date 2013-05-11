@@ -1,0 +1,9 @@
+Welcome to ${config.title}
+
+Your account of "${user.id}" has been activated.  For your account to be useful
+though, you will need to do some further setup on it.  Please visit
+${config.address} and login using the password you provided during signup.
+Here you will be provided with some additional information as well as required
+to setup some preferences.
+
+Thank you!

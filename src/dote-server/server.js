@@ -505,18 +505,26 @@ define([
 	app.put("/users/:id", function(request, response, next){
 		var data = request.body;
 		data.id = request.params.id || data.id;
-		stores.users.put(data).then(function(data){
-			if(data){
-				response.status(200);
-				response.json(data);
-			}else{
-				response.status(404);
-				next();
+		if (stores.users.get(data.id).then(function (user) {
+			if (!user && data.email) {
+				queue.create('user.welcome', {
+					user: data
+				});
 			}
-		}, function(err){
-			response.status(500);
-			next(err);
-		});
+			stores.users.put(data).then(function(data){
+				if (data) {
+					response.status(200);
+					response.json(data);
+				}
+				else {
+					response.status(404);
+					next();
+				}
+			}, function (err) {
+				response.status(500);
+				next(err);
+			});
+		}));
 	});
 
 	/**

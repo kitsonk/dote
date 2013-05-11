@@ -1,47 +1,50 @@
 define([
-	"dojo/node!juice",
-	"./auth",
-	"./config",
-	"./email",
-	"./Mail",
-	"./stores",
-	"./topic",
-	"./queue",
-	"dojo/_base/lang", // lang.mixin
-	"dojo/Deferred",
-	"dojo/promise/all", // all
-	"dojo/when", // when
-	"dote/array",
-	"dote/marked",
-	"dote/string", // string.substitute, string.capitaliseFirst
-	"./stylus!./resources/messages.styl",
-	"dojo/text!hljs/default.css"
-], function(juice, auth, config, email, Mail, stores, topic, queue, lang, Deferred, all, when, array, marked, string,
-		cssMessages, cssHljs){
+	'dojo/node!juice',
+	'./auth',
+	'./config',
+	'./email',
+	'./Mail',
+	'./stores',
+	'./topic',
+	'./queue',
+	'./util', // util.getUUID
+	'dojo/_base/lang', // lang.mixin
+	'dojo/Deferred',
+	'dojo/promise/all', // all
+	'dojo/when', // when
+	'dote/array',
+	'dote/marked',
+	'dote/string', // string.substitute, string.capitaliseFirst
+	'./stylus!./resources/messages.styl',
+	'dojo/text!hljs/default.css',
+	'dojo/text!./resources/welcome.txt',
+	'dojo/text!./resources/welcome.html'
+], function(juice, auth, config, email, Mail, stores, topic, queue, util, lang, Deferred, all, when, array, marked,
+		string, cssMessages, cssHljs, tWelcomeText, tWelcomeHTML){
 
-	var toRe = new RegExp("^" + config.mail.address.split("@")[0] + "\\+?([^@]*)@", "i"),
-		subjectRe = new RegExp("(?:Re:)?\\s*(?:\\[" + config.mail.list.name +
-			"\\])?\\s*(?:\\[[01\\-\\+]+\\])?\\s*(.+)$", "i"),
+	var toRe = new RegExp('^' + config.mail.address.split('@')[0] + '\\+?([^@]*)@', 'i'),
+		subjectRe = new RegExp('(?:Re:)?\\s*(?:\\[' + config.mail.list.name +
+			'\\])?\\s*(?:\\[[01\\-\\+]+\\])?\\s*(.+)$', 'i'),
 		textRe = /(?:Voting:\s+[01\-\+]+\s*\n*)?(?:\[Additional Comment:\]\s*\n*)?((?:.*\n*)*)/mi,
 		outlookRe = /\n+_+\n+(?:.*(\n+|$))+/m;
 		quoteRe = /\n*.+:\n+(?:\s*>\s*.*(?:\n+|$))+/m,
 		sigRe = /\n-{2} *\n[\s\S]*/m,
 		topicIdRe = /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i,
-		actionTypes = ["voteu", "voted", "voten", "post", "unsubscribe"];
+		actionTypes = ['voteu', 'voted', 'voten', 'post', 'unsubscribe'];
 
 	function getReplyToTemplate(name, address){
-		address = address.split("@");
-		return name + " <" + address[0] + "+${id}@" + address[1] + ">";
+		address = address.split('@');
+		return name + ' <' + address[0] + '+${id}@' + address[1] + '>';
 	}
 
 	function getActionAddress(address, action, noWrap){
-		address = address.split("@");
-		return (noWrap ? "" : "<mailto:") + address[0] + "+" + action + "@" + address[1] + (noWrap ? "" : ">");
+		address = address.split('@');
+		return (noWrap ? '' : '<mailto:') + address[0] + '+' + action + '@' + address[1] + (noWrap ? '' : '>');
 	}
 
 	var mail,
 		defaultSettings = {
-			email: "",
+			email: '',
 			onnew: false,
 			onwatched: false,
 			onparticipate: true,
@@ -543,6 +546,36 @@ define([
 		return config.mail.enabled ? mail.send(message) : when(false);
 	}
 
+	function mailWelcome(address, user) {
+		var text = string.substitute(tWelcomeText, {
+				user: user,
+				config: config
+			}),
+			html = string.substitute(tWelcomeHTML, {
+				user: user,
+				config: config
+			});
+
+		var message = {
+			from: config.mail.username + " <" + config.mail.address + ">",
+			"Sender": config.mail.username + " <" + config.mail.address + ">",
+			to: address,
+			subject: "[" + config.mail.list.name + "] Welcome to " + config.title,
+			"Reply-To": config.mail.noreply,
+			"List-ID": config.mail.list.name + " <" + config.mail.list.id + ">",
+			"List-Unsubscribe": unsubscribeAddress,
+			"List-Post": postAddress,
+			"List-Archive": config.address,
+			"Message-ID": util.getUUID() + "@" + config.mail.list.id,
+			text: text,
+			attachment: {
+				data: juice(html, cssMessages + cssHljs),
+				alternative: true
+			}
+		};
+		return config.mail.enabled ? mail.send(message) : when(false);
+	}
+
 	function fetch(markSeen){
 		var messages = [],
 			dfd = new Deferred();
@@ -585,9 +618,9 @@ define([
 		return when(stores.users.query("select(id,settings,committer)", { allowBulkFetch: true }).then(function(users){
 			var match;
 			users.some(function(user){
-				return match = user.settings &&
+				return (match = user.settings &&
 					(user.settings.fromaddress && user.settings.fromaddress.toLowerCase() === address ?
-						user : user.settings.email && user.settings.email.toLowerCase() === address ? user : false);
+						user : user.settings.email && user.settings.email.toLowerCase() === address ? user : false));
 			});
 			return match;
 		}));
@@ -660,10 +693,10 @@ define([
 				if(mail.actions && mail.actions.length){
 					mail.actions.some(function(a){
 						var result = topicIdRe.exec(a);
-						return topicId = result ? result[0] : null;
+						return (topicId = result ? result[0] : null);
 					});
 					actionTypes.some(function(a){
-						return action = ~mail.actions.indexOf(a) ? a : null;
+						return (action = ~mail.actions.indexOf(a) ? a : null);
 					});
 				}
 				if(action){
@@ -753,6 +786,7 @@ define([
 		mailTopic: mailTopic,
 		mailVote: mailVote,
 		mailComment: mailComment,
+		mailWelcome: mailWelcome,
 		calculateTopicRecipients: calculateTopicRecipients,
 		calculateVoteRecipients: calculateVoteRecipients,
 		calculateCommentRecipients: calculateCommentRecipients,
