@@ -62,16 +62,16 @@ block content
             ul.doteTopicVoters
               each vote in topic.voters
                 if vote.vote === 1
-                  li.doteTopicVoterPlus #{vote.user.id} 
+                  li.doteTopicVoterPlus #{vote.user.id}&nbsp;
                     if vote.user.committer
                       i.icon-certificate
                 else
                   if vote.vote === -1
-                    li.doteTopicVoterMinus #{vote.user.id} 
+                    li.doteTopicVoterMinus #{vote.user.id}&nbsp;
                       if vote.user.committer
                         i.icon-certificate
                   else
-                    li.doteTopicVoterNeutral #{vote.user.id} 
+                    li.doteTopicVoterNeutral #{vote.user.id}&nbsp;
                       if vote.user.committer
                         i.icon-certificate
           .doteTopicHeightContainer
