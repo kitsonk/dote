@@ -2,8 +2,8 @@
 	"development": {
 		"port": "8011",
 		"address": "http://livi.kitsonkelly.com/",
-		"title": "dote",
-		"subtitle": "Hipster Free, No Spin Zone",
+		"title": "dote test",
+		"subtitle": "This is a test server!",
 		"secret": "replaceme",
 		"bugs": "https://github.com/kitsonk/dote/issues",
 		"base": "src",

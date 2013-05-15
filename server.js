@@ -37,6 +37,9 @@ dojoConfig = {
 	},{
 		name: "dote-server",
 		location: "dote-server"
+	},{
+		name: "moment",
+		location: "moment"
 	}],
 
 	deps: [loadModule]

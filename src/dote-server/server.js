@@ -5,8 +5,9 @@ define([
 	"dojo/node!url",
 	"dojo/node!colors",
 	"dojo/promise/all",
+	"dojo/_base/lang",
 	"dojo/when",
-	"marked/marked",
+	"dote/marked",
 	"dote/timer",
 	"./auth",
 	"./config",
@@ -15,9 +16,10 @@ define([
 	"./queue",
 	"./stores",
 	"./topic",
-	"./util"
-], function(express, stylus, nib, url, colors, all, when, marked, timer, auth, config, email, messages, queue, stores,
-		topic, util){
+	"./util",
+	"moment/moment"
+], function(express, stylus, nib, url, colors, all, lang, when, marked, timer, auth, config, email, messages, queue,
+		stores, topic, util, moment){
 
 	function compile(str, path){
 		return stylus(str).
@@ -152,13 +154,6 @@ define([
 			}
 			return result;
 		});
-	});
-
-	/* Markdown Parser */
-	marked.setOptions({
-		gfm: true,
-		pendantic: false,
-		sanitize: false
 	});
 
 	/* Configure the server */
@@ -345,6 +340,122 @@ define([
 			app: appConfig
 		});
 	});
+
+	/**
+	 * Archives
+	 */
+
+	function calcSparkWidths(topic) {
+
+		function percentVote(count){
+			return Math.round((count / topic.voters.length) * 100);
+		}
+
+		if(topic.voters.length){
+			var plus = 0,
+				minus = 0,
+				neutral = 0;
+
+			topic.voters.forEach(function (voter) {
+				switch (voter.vote) {
+				case -1:
+					minus++;
+					break;
+				case 1:
+					plus++;
+					break;
+				default:
+					neutral++;
+				}
+			});
+			plus = percentVote(plus);
+			minus = percentVote(minus);
+			neutral = percentVote(neutral);
+			var pad = 100 - plus - minus - neutral;
+			if (plus) {
+				plus += pad;
+			}
+			else if (minus) {
+				minus += pad;
+			}
+			else {
+				neutral += pad;
+			}
+			return {
+				plus: plus + '%',
+				neutral: neutral + '%',
+				minus: minus + '%'
+			};
+		}
+		return {
+			plus: 0,
+			neutral: 0,
+			minux: 0
+		};
+	}
+
+	var activeActions = [ 'open', 'reopened' ];
+
+	function renderArchiveTopics(request, response, next) {
+		var page = request.params && request.params.page ? parseInt(request.params.page, 10) : 1,
+			count = 20,
+			skip = (page - 1) * count;
+		topic.query('sort(-created)&limit(' + count + ',' + skip + ',Infinity)', {}).then(function (topics) {
+			topics = lang.clone(topics);
+			topics.forEach(function (topic) {
+				topic.vote = topic.voters.reduce(function (previous, current) {
+					return previous + current.vote;
+				}, 0);
+				topic.widths = calcSparkWidths(topic);
+				topic.active = !!~activeActions.indexOf(topic.action);
+				topic.created = moment.unix(topic.created).fromNow();
+				topic.actioned = topic.actioned ? moment.unix(topic.actioned).fromNow() : null;
+			});
+			when(topics.totalCount, function (totalCount) {
+				var nextPage = (page * count) < totalCount ? page + 1 : 0,
+					prevPage = page > 1 ? page - 1 : 0;
+				response.render('archive', {
+					base: config.base,
+					app: appConfig,
+					topics: topics,
+					nextPage: nextPage,
+					prevPage: prevPage
+				});
+			});
+		});
+	}
+
+	app.get('/archive', renderArchiveTopics);
+
+	app.get('/archive/topic/:id', function (request, response, next) {
+		topic(request.params.id).get().then(function (data) {
+			data = lang.clone(data);
+			data.vote = data.voters.reduce(function (previous, current) {
+				return previous + current.vote;
+			}, 0);
+			data.widths = calcSparkWidths(data);
+			data.active = !!~activeActions.indexOf(data.action);
+			data.created = moment.unix(data.created).fromNow();
+			data.description = marked(data.description);
+			data.actioned = data.actioned ? moment.unix(data.actioned).fromNow() : null;
+			topic(data.id).comment.query('sort(+created)', {}).then(function (comments) {
+				data.comments = [];
+				comments.forEach(function (comment) {
+					comment = lang.clone(comment);
+					comment.created = moment.unix(comment.created).fromNow();
+					comment.text = marked(comment.text);
+					data.comments.push(comment);
+				});
+				response.render('archiveTopic', {
+					base: config.base,
+					app: appConfig,
+					topic: data
+				});
+			});
+		});
+	});
+
+	app.get('/archive/:page', renderArchiveTopics);
 
 	/* Initialise the Stores */
 	app.get("/initStores", function(request, response, next){

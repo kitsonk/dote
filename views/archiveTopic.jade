@@ -1,0 +1,96 @@
+extends main
+
+prepend head
+  title = app.title + " Archive"
+
+block content
+  .header
+    .content
+      .title #{app.title}
+      .subtitle #{app.subtitle}
+      .clear
+  .main
+    .doteTopic.doteArchiveTopic
+      .doteTopicTitle= topic.title
+      .doteTopicVoteContainer
+        .doteTopicVoteInner
+          .doteTopicVotes= topic.vote
+          .doteTopicSpark
+            table
+              colgroup
+                col.doteTopicSparkPlus(style="width: #{topic.widths.plus}%")
+                col.doteTopicSparkNeutral(style="width: #{topic.widths.neutral}%")
+                col.doteTopicSparkMinus(style="width: #{topic.widths.minus}%")
+              tbody
+                tr
+                  td
+                  td
+                  td
+      .doteTopicContentContainer
+        .doteTopicContentInner
+          if topic.active
+            .doteTopicStatus.doteTopicStatusActive
+              if topic.action
+                .doteTopicAction= topic.action
+              if topic.owner
+                .doteTopicOwner= topic.owner
+              .doteTopicPosted Posted #{topic.created}<br>by #{topic.author}
+              if topic.actioned
+                .doteTopicActioned Actioned #{topic.actioned}
+              .doteTopicCommentCount
+                i.icon-comment-alt
+                span  #{topic.commentsCount}
+          else
+            .doteTopicStatus
+              if topic.action
+                .doteTopicAction= topic.action
+              if topic.owner
+                .doteTopicOwner= topic.owner
+              .doteTopicPosted Posted #{topic.created}<br>by #{topic.author}
+              if topic.actioned
+                .doteTopicActioned Actioned #{topic.actioned}
+              .doteTopicCommentCount
+                i.icon-comment-alt
+                span  #{topic.commentsCount}
+          .doteTopicTagsContainer
+            i.icon-tags.icon-large
+            ul.doteTopicTags
+              each tag in topic.tags
+                li= tag
+          .doteTopicVotersContainer
+            i.icon-check.icon-large
+            ul.doteTopicVoters
+              each vote in topic.voters
+                if vote.vote === 1
+                  li.doteTopicVoterPlus #{vote.user.id} 
+                    if vote.user.committer
+                      i.icon-certificate
+                else
+                  if vote.vote === -1
+                    li.doteTopicVoterMinus #{vote.user.id} 
+                      if vote.user.committer
+                        i.icon-certificate
+                  else
+                    li.doteTopicVoterNeutral #{vote.user.id} 
+                      if vote.user.committer
+                        i.icon-certificate
+          .doteTopicHeightContainer
+      .doteTopicHeightContainer
+      .doteTopicDescription!= topic.description
+      if topic.comments.length
+        .doteTopicComments
+          each comment in topic.comments
+            .doteTopicComment
+              .doteTopicCommentHeader
+                a(name="#{comment.id}")
+                .doteTopicCommentRight
+                  span.doteTopicCommentMoment Added #{comment.created}
+                  span
+                    a(href="##{comment.id}")
+                      i.icon-link
+                      span.doteTopicCommentLabel Link
+                .doteTopicCommentAuthor= comment.author
+              .doteTopicCommentText!= comment.text
+
+  .footer
+    .content Copyright &copy; 2012-2013 Dojo Foundation &mdash; All Rights Reserved

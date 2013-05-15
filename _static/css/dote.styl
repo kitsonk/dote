@@ -14,6 +14,8 @@ footer-border-color = #b5bcc7
 header-button-border-color = #8b9199
 header-button-bg-color = #fcfcfc
 header-button-bg-color-hover = #f2f2f2
+button-color = #bcd8f4
+button-hover-color = #86bdf2
 
 .loginbox
   margin 6em auto
@@ -149,6 +151,42 @@ header-button-bg-color-hover = #f2f2f2
 
 .claro .signup textarea
   font-size 14px
+
+.doteArchiveTopicList
+  .doteTopicListContainer
+    border-top 1px solid #c0c6cc
+  .doteTopicItem
+    display block
+  .doteTopicItemStatus
+    margin-bottom 1em
+
+.doteArchiveTopic
+  display block
+  .doteTopicComment
+    display block
+
+.navigationButtons
+  padding 1em 0
+  text-align right
+  a
+    font-size 14px
+    background-color button-color
+    background-image linear-gradient(white 0px, rgba(white, 0) 3px, rgba(white, 0.5) 100%)
+    border 1px solid darken(button-color, 40%)
+    border-radius 2px
+    box-shadow 0 1px 2px rgba(black,0.5), inset 0 0 1px rgba(white,0.5)
+    color #050505
+    display inline-block
+    margin 0 6px
+    padding 6px
+    text-align center
+    text-decoration none
+    text-shadow 0 1px 1px rgba(white,0.75)
+    transition-duration 0.3s
+    &:hover
+      background-color button-hover-color
+      background-image linear-gradient(white 0px, rgba(white, 0) 3px, rgba(white, 0.5) 100%)
+      transition-duration 0.2s
 
 .footer
   margin-top 2em

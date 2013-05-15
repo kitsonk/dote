@@ -27,6 +27,9 @@ define([
 		},{
 			value: "rejected",
 			label: "Rejected"
+		},{
+			value: "closed",
+			label: "Closed"
 		}];
 
 	function percentVote(count, self){
