@@ -60,7 +60,12 @@ define([
 					self.item = item;
 					var exists = array.some(self.item.voters, function(voter, idx){
 						if(voter.user.id === self.topicList.user.id){
-							voter.vote = value;
+							if (value === null) {
+								self.item.voters.splice(idx, 1);
+							}
+							else {
+								voter.vote = value;
+							}
 							return true;
 						}else{
 							return false;

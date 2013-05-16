@@ -42,13 +42,13 @@ define([
 			if(changes.voters){
 				var vote = changes.voters[0],
 					voter;
-				if(vote.user){
+				if(vote && vote.user){
 					voter = vote.user;
 				}else{
 					var originalVoters = item.original.voters,
 						newVoters = item.changed.voters;
 					originalVoters.some(function(i, idx){
-						if(i.vote !== newVoters[idx].vote){
+						if(i && newVoters[idx] && (i.vote !== newVoters[idx].vote)){
 							return voter = i.user;  // intentional assignment
 						}
 					});
@@ -58,7 +58,9 @@ define([
 					messages.calculateVoteRecipients(item.changed, vote.user.id).then(function(results){
 						var mails = [];
 						results.forEach(function(address){
-							mails.push(messages.mailVote(address, vote, item.changed));
+							if (address && vote && item && item.changed) {
+								mails.push(messages.mailVote(address, vote, item.changed));
+							}
 						});
 						all(mails).then(function(results){
 							console.log("Vote on Topic ".grey + item.changed.id.yellow + " mailed.".grey);
