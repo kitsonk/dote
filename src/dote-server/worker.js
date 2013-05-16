@@ -82,8 +82,7 @@ define([
 				dfd.resolve("complete");
 			}else{
 				if(util.isEmpty(changes)){
-					console.log("No Topic Changes".yellow.bold);
-					console.log(item);
+					console.log("No Topic Changes".yellow.bold, "topic.id: ".grey + item.original.id.yellow);
 					dfd.resolve("complete");
 				}else{
 					console.log("Unsupported Topic Change".red.bold);
@@ -159,6 +158,39 @@ define([
 				comment: e.item
 			});
 		});
+
+		function checkCommitters() {
+			console.log('Checking committer flags...'.grey);
+			return stores.users.query('select(id,committer)&eq(committer,true)').then(function (users) {
+				var committers = [];
+				users.forEach(function (user) {
+					committers.push(user.id);
+				});
+				return topic.query().then(function (topics) {
+					var changed;
+					topics.forEach(function (item) {
+						if (item.voters.length) {
+							changed = false;
+							item.voters.forEach(function (voter) {
+								if (~committers.indexOf(voter.user.id) && !voter.user.committer) {
+									changed = true;
+									voter.user.committer = true;
+								}
+								else if (!~committers.indexOf(voter.user.id) && voter.user.committer) {
+									changed = true;
+									voter.user.committer = false;
+								}
+							});
+							if (changed) {
+								topic(item.id).put(item);
+							}
+						}
+					});
+				});
+			});
+		}
+
+		timer(3600000).on('tick', checkCommitters);
 
 		function checkMail(){
 			console.log("Checking inbound mail...".grey);

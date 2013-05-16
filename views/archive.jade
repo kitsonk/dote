@@ -64,17 +64,20 @@ block content
                   ul.doteTopicItemVoters
                     each voter in topic.voters
                       if voter.vote === 1
-                        li.doteTopicItemVoterPlus #{voter.user.id}&nbsp;
+                        li.doteTopicItemVoterPlus #{voter.user.id}
                           if voter.user.committer === true
+                            | &nbsp;
                             i.icon-certificate
                       else
                         if voter.vote === -1
-                          li.doteTopicItemVoterMinus #{voter.user.id}&nbsp;
+                          li.doteTopicItemVoterMinus #{voter.user.id}
                             if voter.user.committer === true
+                              | &nbsp;
                               i.icon-certificate
                         else
-                          li.doteTopicItemVoterNeutral #{voter.user.id}&nbsp;
+                          li.doteTopicItemVoterNeutral #{voter.user.id}
                             if voter.user.committer === true
+                              | &nbsp;
                               i.icon-certificate
             .doteTopicItemHeightContainer
     .navigationButtons

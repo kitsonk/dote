@@ -70,8 +70,11 @@ block content
         span.filterItem
           input#filterInactive(name="filterInactive", type="checkbox")
           label(for="filterInactive") Only Active 
+          input#hideClosed(name="hideClosed", type="checkbox")
+          label(for="hideClosed") Hide Closed 
           input#filterWatched(name="filterWatched", type="checkbox")
           label(for="filterWatched") Only Watched
+        br
         span.filterItem
           label(for="filterAuthorSelect") Authored by:
           select#filterAuthorSelect(name="filterAuthorSelect")

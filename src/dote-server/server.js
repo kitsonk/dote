@@ -400,7 +400,7 @@ define([
 		var page = request.params && request.params.page ? parseInt(request.params.page, 10) : 1,
 			count = 20,
 			skip = (page - 1) * count;
-		topic.query('sort(-created)&limit(' + count + ',' + skip + ',Infinity)', {}).then(function (topics) {
+		topic.query('sort(-created)&ne(action,closed)&limit(' + count + ',' + skip + ',Infinity)', {}).then(function (topics) {
 			topics = lang.clone(topics);
 			topics.forEach(function (topic) {
 				topic.vote = topic.voters.reduce(function (previous, current) {
