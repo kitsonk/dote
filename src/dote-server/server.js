@@ -175,9 +175,9 @@ define([
 			compress: true
 		}));
 
-		app.use("/_static", express["static"]("./_static", { maxAge: 86400000 }));
+		app.use("/_static", express["static"]("./_static"));
 		app.use("/src", express["static"]("src"));
-		app.use("/lib", express["static"]("lib", { maxAge: 86400000 }));
+		app.use("/lib", express["static"]("lib"));
 
 		app.use("/500", function(request, response, next){
 			next(new Error("All your base are belong to us!"));
@@ -246,6 +246,7 @@ define([
 	/* Setup Admin Checks on Certain Pages */
 	app.all("/admin", checkAdmin);
 	app.put("/users/:id", checkAdmin);
+	app.get("/users/:id/resetpw/:password", checkAdmin);
 	app.all("/initStores", checkAdmin);
 	app.del("/topics/:id", checkAdmin);
 
@@ -308,6 +309,10 @@ define([
 			base: config.base,
 			app: appConfig
 		});
+	});
+
+	app.get('/admin/topicEditor', function(request, response, next) {
+		response.render('topicEditor');
 	});
 
 	/**
@@ -591,6 +596,21 @@ define([
 			request.session.user = null;
 			request.session.ldapInfo = null;
 			response.json({ authorized: false, error: err });
+		});
+	});
+
+	app.get("/users/:id/resetpw/:password", function (request, response, next) {
+		var username = request.params.id,
+			password = request.params.password;
+		stores.users.get(username).then(function (user) {
+			user.password = auth.saltPassword(password);
+			return stores.users.put(user).then(function (user) {
+				response.status(200);
+				response.json({ reset: true });
+			});
+		}, function (err) {
+			response.status(500);
+			next(err);
 		});
 	});
 
