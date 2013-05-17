@@ -21,7 +21,9 @@ define([
 	stores.open();
 
 	queue.ready().then(function(){
+		console.log('Queue Ready'.cyan);
 		queue.on("topic.new", function(item){
+			console.log('Dequeued Event: '.cyan + 'topic.new'.yellow);
 			var dfd = new Deferred();
 			messages.calculateTopicRecipients(item.topic, item.isNew).then(function(results){
 				var mails = [];
@@ -31,12 +33,19 @@ define([
 				all(mails).then(function(results){
 					console.log("Topic ".grey + item.topic.id.yellow + " mailed.".grey);
 					dfd.resolve("complete");
+				}, function(err) {
+					console.error('Error:'.red, err);
+					dfd.reject(err);
 				});
+			}, function(err) {
+				console.error('Error:'.red, err);
+				dfd.reject(err);
 			});
 			return dfd.promise;
 		});
 
 		queue.on("topic.change", function(item){
+			console.log('Dequeued Event: '.cyan + 'topic.change'.yellow);
 			var dfd = new Deferred(),
 				changes = util.difference(item.original, item.changed);
 			if(changes.voters){
@@ -65,7 +74,13 @@ define([
 						all(mails).then(function(results){
 							console.log("Vote on Topic ".grey + item.changed.id.yellow + " mailed.".grey);
 							dfd.resolve("complete");
+						}, function (err) {
+							console.log('Error:'.red, err);
+							dfd.reject(err);
 						});
+					}, function (err) {
+						console.log('Error:'.red, err);
+						dfd.reject(err);
 					});
 				}else{
 					console.log("Could not identify voter".red.bold);
@@ -96,6 +111,7 @@ define([
 		});
 
 		queue.on("comment.add", function(item){
+			console.log('Dequeued Event: '.cyan + 'comment.add'.yellow);
 			var dfd = new Deferred();
 			topic(item.comment.topicId).get(true).then(function(topicItem){
 				messages.calculateCommentRecipients(item.comment).then(function(results){
@@ -106,6 +122,9 @@ define([
 					all(mails).then(function(results){
 						console.log("Comment ".grey + item.comment.id.yellow + " mailed.".grey);
 						dfd.resolve("complete");
+					}, function (err) {
+						console.log('Error:', err);
+						dfd.reject(err);
 					});
 				});
 			});
@@ -113,15 +132,20 @@ define([
 		});
 
 		queue.on("email.inbound", function(email){
+			console.log('Dequeued Event: '.cyan + 'email.inbound'.yellow);
 			var dfd = new Deferred();
 			messages.process(email).then(function(){
 				console.log("Inbound email processed.".grey);
 				dfd.resolve("complete");
+			}, function (err) {
+				console.log('Error:'.red, err);
+				dfd.reject(err);
 			});
 			return dfd.promise;
 		});
 
 		queue.on('user.welcome', function (item) {
+			console.log('Dequeued Event: '.cyan + 'user.welcome'.yellow);
 			var dfd = new Deferred();
 			messages.mailWelcome(item.user.id + ' <' + item.user.email + '>', item.user).then(function (results) {
 				console.log('Welcome to '.grey + item.user.id.yellow + ' mailed.'.grey);
