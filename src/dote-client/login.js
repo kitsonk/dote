@@ -18,7 +18,8 @@ define([
 
 	ready(function(){
 
-		var warnNode = dom.byId("warn");
+		var warnNode = dom.byId("warn"),
+			loginForm = dom.byId('loginForm');
 
 		function showWarning(text){
 			if(!warningVisible){
@@ -31,7 +32,7 @@ define([
 		}
 
 		function doLogin(e){
-			e.preventDefault();
+			// e.preventDefault();
 			submit.set("disabled", true);
 			request.get("/pubKey",{
 				handleAs: "json"
@@ -42,23 +43,26 @@ define([
 					handleAs: "json"
 				}).then(function(results){
 					submit.set("disabled", false);
-					if(results && results.href){
-						win.global.location.href = results.href;
+					if(results){
+						loginForm.submit();
 					}
 				}, function(e){
 					showWarning("Invalid username or password.");
 					submit.set("disabled", false);
 				});
 			});
+			return false;
 		}
 
 		var username = new TextBox({
-			id: "username"
+			id: "username",
+			autocomplete: "on"
 		}, "username");
 		widgets.push(username);
 		var password = new TextBox({
 			id: "password",
-			type: "password"
+			type: "password",
+			autocomplete: "on"
 		}, "password");
 		widgets.push(password);
 		var submit = new Button({
@@ -66,7 +70,6 @@ define([
 			type: "submit"
 		}, "submit");
 		submit.on("click", doLogin);
-		on(dom.byId("loginForm"), "submit", doLogin);
 		widgets.push(submit);
 		array.forEach(widgets, function(widget){
 			widget.startup();

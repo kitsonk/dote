@@ -578,6 +578,7 @@ define([
 					var href = (user && user.settings && user.password) ? (request.session.loginRedirect || "/") :
 						"/welcome";
 					request.session.loginRedirect = null;
+					request.session.redirect = href;
 					response.json({
 						authorized: true,
 						href: href
@@ -597,6 +598,17 @@ define([
 			request.session.ldapInfo = null;
 			response.json({ authorized: false, error: err });
 		});
+	});
+
+	app.post('/redirect', function (request, response, next) {
+		if (request.session.redirect) {
+			var redirect = request.session.redirect;
+			delete request.session.redirect;
+			response.redirect(redirect);
+		}
+		else {
+			response.redirect('/');
+		}
 	});
 
 	app.get("/users/:id/resetpw/:password", function (request, response, next) {

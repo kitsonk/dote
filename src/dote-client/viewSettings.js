@@ -54,10 +54,9 @@ define([
 			id: "password",
 			name: "password",
 			type: "password",
-			promptMessage: "",
+			promptMessage: "Enter a new password if you wish to change it.",
 			invalidMessage: "Please ensure your password is at least six characters long",
-			pattern: "[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]{6,}",
-			value: "password"
+			pattern: "[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]{6,}"
 		}, "password"));
 		widgets.push(new ValidationTextBox({
 			id: "confirmpassword",
@@ -134,7 +133,7 @@ define([
 		var password = registry.byId("password"),
 			confirmpassword = registry.byId("confirmpassword");
 		password.on("input", function(e){
-			if (password.get("value") !== "password" && confirmpassword.get("disabled")) {
+			if (password.get("value") !== "" && confirmpassword.get("disabled")) {
 				confirmpassword.set("disabled", false);
 				save.set("disabled", true);
 			}
