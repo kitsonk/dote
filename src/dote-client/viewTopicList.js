@@ -172,6 +172,9 @@ define([
 			queryOptions: {
 				sort: [
 					{
+						attribute: 'updated',
+						descending: true
+					}, {
 						attribute: 'created',
 						descending: true
 					}

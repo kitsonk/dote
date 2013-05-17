@@ -235,6 +235,7 @@ define([
 				if(original.action !== data.action){
 					data.actioned = Math.round((new Date()).getTime() / 1000);
 				}
+				data.updated = Math.round((new Date()).getTime() / 1000);
 				return stores.topics.put(data);
 			}).then(function(item){
 				self.emit("put", { item: item, original: original });
@@ -246,6 +247,7 @@ define([
 			var self = this,
 				item = lang.mixin(lang.clone(topicDefaults), data || {});
 			item.created = Math.round((new Date()).getTime() / 1000);
+			item.updated = item.created;
 			if(item.owner === "__undefined") delete item.owner;
 			return when(stores.topics.add(item)).then(function(item){
 				if(item && item.id){
