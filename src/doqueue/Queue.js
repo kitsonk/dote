@@ -101,7 +101,7 @@ define([
 					item.status = "processing";
 					item.updated = Math.round((new Date()).getTime() / 1000);
 					self.store.put(item).then(function(){
-						when(fn.call(self, item.item)).then(function(result){
+						when(fn && fn.call(self, item.item)).then(function(result){
 							if(result && typeof result == "string"){
 								item.status = result;
 							}else{
