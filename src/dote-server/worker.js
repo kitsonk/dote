@@ -15,7 +15,7 @@ define([
 	var env = process.env.NODE_ENV || "development";
 
 	/* Init Messages */
-	messages.init(process.env.DOTE_MAIL_PWD || config.mail.password || "password");
+	messages.init(process.env.DOTE_MAIL_PWD || config.mail.password || "password", process.env.DOTE_SMTP_PWD);
 
 	/* Open Stores */
 	stores.open();

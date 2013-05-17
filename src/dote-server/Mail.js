@@ -41,8 +41,8 @@ define([
 				secure: config.secure || config.ssl
 			};
 			this._smtpConfig = {
-				user: config.user || config.username,
-				password: config.password,
+				user: config.smtpUser || config.user || config.username,
+				password: config.smtpPassword || config.password,
 				host: config.smtpHost || config.host,
 				ssl: config.ssl || config.secure
 			};
@@ -83,10 +83,10 @@ define([
 		},
 
 		send: function(mail){
+			var dfd = new Deferred();
 			if(!this.smtp){
 				this.smtp = email.server.connect(this._smtpConfig);
 			}
-			var dfd = new Deferred();
 			this.smtp.send(mail, function(err, message){
 				if(err) dfd.reject(err);
 				stores.emails.add(message);

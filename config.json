@@ -25,7 +25,8 @@
 				"user": "test@kitsonkelly.com",
 				"imapHost": "imap.gmail.com",
 				"imapPort": 993,
-				"smtpHost": "smtp.gmail.com",
+				"smtpUser": "411886c27e88cd0f40fd31143d2305e4",
+				"smtpHost": "in.mailjet.com",
 				"secure": true
 			}
 		},
@@ -91,6 +92,7 @@
 		"mail": {
 			"username": "dote",
 			"password": "password",
+			"sendAccounts": ["dote1", "dote2", "dote3", "dote4", "dote5", "dote6", "dote7", "dote8", "dote9"],
 			"address": "dote@kitsonkelly.com",
 			"noreply": "NoReply <noreply@kitsonkelly.com>",
 			"list": {
@@ -103,7 +105,8 @@
 				"user": "dote@kitsonkelly.com",
 				"imapHost": "imap.gmail.com",
 				"imapPort": 993,
-				"smtpHost": "smtp.gmail.com",
+				"smtpUser": "411886c27e88cd0f40fd31143d2305e4",
+				"smtpHost": "in.mailjet.com",
 				"secure": true
 			}
 		},

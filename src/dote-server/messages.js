@@ -90,8 +90,11 @@ define([
 				view: config.address + "topic/${id}"
 			});
 
-	function init(password){
+	function init(password, smtpPassword){
 		config.mail.severconfig.password = password;
+		if (smtpPassword) {
+			config.mail.severconfig.smtpPassword = smtpPassword;
+		}
 		mail = new Mail(config.mail.severconfig);
 	}
 
