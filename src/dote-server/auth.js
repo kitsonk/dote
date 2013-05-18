@@ -116,7 +116,7 @@ define([
 						cn: ''
 					};
 				}
-				user.attempts = user.attempts ? user.attempts + 1 : 1;
+				user.attempts = user.attempts ? parseInt(user.attempts, 10) + 1 : 1;
 				stores.users.put(user);
 				return false;
 			});
