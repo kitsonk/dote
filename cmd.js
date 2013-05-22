@@ -1,5 +1,5 @@
 
-var loadModule = "dote-server/worker";
+var loadModule = "dote-server/cmd";
 
 dojoConfig = {
 	baseUrl: "src/",
@@ -23,23 +23,11 @@ dojoConfig = {
 		name: "compose",
 		location: "compose"
 	},{
-		name: "marked",
-		location: "marked/lib"
-	},{
-		name: "hljs",
-		location: "hljs"
-	},{
-		name: "doqueue",
-		location: "doqueue"
-	},{
 		name: "dote",
 		location: "dote"
 	},{
 		name: "dote-server",
 		location: "dote-server"
-	},{
-		name: "moment",
-		location: "moment"
 	}],
 
 	deps: [loadModule]

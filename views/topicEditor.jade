@@ -1,0 +1,16 @@
+form
+  label(for="title") Title:
+  input#title(name="title", type="text")
+  br
+  label(for="owner") Owner:
+  select#owner(name="owner")
+  br
+  label(for="action") Action:
+  select#status(name="action")
+  br
+  label(for="description") Description:
+  div#tabContainer
+    div#tab1
+      textarea#description(name="description")
+    div#tab2
+      div#preview

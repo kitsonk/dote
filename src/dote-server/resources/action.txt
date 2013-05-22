@@ -1,0 +1,9 @@
+${topic.owner} has ${topic.action} the topic.
+
+Title: ${topic.title}
+Overall: ${count}
+Tags: ${tags}
+Voters: ${voters}
+
+Description:
+${topic.description}

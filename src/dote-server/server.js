@@ -234,6 +234,7 @@ define([
 	/* Checked we are logged in */
 	app.all("/views/*", checkLogin);
 	app.all("/", checkLogin);
+	app.all("/timeline", checkLogin);
 	app.all("/add", checkLogin);
 	app.all("/topic/*", checkLogin);
 	app.all("/topics/*", checkLogin);
@@ -242,6 +243,8 @@ define([
 	app.get("/users/:id", checkLogin);
 	app.all("/owners", checkLogin);
 	app.all("/settings", checkLogin);
+	app.all("/emails/*", checkLogin);
+	app.all("/events/*", checkLogin);
 
 	/* Setup Admin Checks on Certain Pages */
 	app.all("/admin", checkAdmin);
@@ -253,6 +256,16 @@ define([
 	/* Index Page */
 	app.get("/", function(request, response, next){
 		response.render("index", {
+			username: request.session.username,
+			user: request.session.user,
+			base: config.base,
+			app: appConfig
+		});
+	});
+
+	/* Timeline View */
+	app.get('/timeline', function (request, response, next) {
+		response.render('timeline', {
 			username: request.session.username,
 			user: request.session.user,
 			base: config.base,
@@ -405,7 +418,8 @@ define([
 		var page = request.params && request.params.page ? parseInt(request.params.page, 10) : 1,
 			count = 20,
 			skip = (page - 1) * count;
-		topic.query('sort(-created)&ne(action,closed)&limit(' + count + ',' + skip + ',Infinity)', {}).then(function (topics) {
+		topic.query('sort(-updated,-created)&ne(action,closed)&limit(' + count + ',' + skip + ',Infinity)', {}).
+				then(function (topics) {
 			topics = lang.clone(topics);
 			topics.forEach(function (topic) {
 				topic.vote = topic.voters.reduce(function (previous, current) {
@@ -464,10 +478,10 @@ define([
 
 	/* Initialise the Stores */
 	app.get("/initStores", function(request, response, next){
-		topic.clear();
-		stores.init().then(function(results){
-			response.json(results);
-		});
+		// topic.clear();
+		// stores.init().then(function(results){
+		// 	response.json(results);
+		// });
 	});
 
 	/* Provide the Public Key for Logging In */
@@ -748,7 +762,10 @@ define([
 	app.put("/topics/:id", function(request, response, next){
 		var data = request.body;
 		data.id = request.params.id || data.id;
-		topic(data.id).put(data).then(function(data){
+		topic(data.id).put(data, {
+			id: request.session.user.id,
+			committer: request.session.user.committer
+		}).then(function(data){
 			if(data){
 				response.status(200);
 				response.json(data);
@@ -888,6 +905,41 @@ define([
 				next();
 			}
 		}, function(err){
+			response.status(500);
+			next(err);
+		});
+	});
+
+	/**
+	 * Events
+	 */
+
+	app.get('/events', function (request, response, next) {
+		queryObject(stores.events, request, response).then(function (events) {
+			var dfds = [];
+			events.forEach(function (evt) {
+				switch (evt.type) {
+				case 'topic.vote':
+				case 'topic.new':
+				case 'topic.action':
+				case 'topic.tag':
+				case 'topic.assigned':
+					dfds.push(topic(evt.target).get().then(function (data) {
+						evt.topic = data;
+					}));
+					break;
+				case 'comment':
+					dfds.push(topic(evt.topicId).get().then(function (data) {
+						evt.topic = data;
+					}));
+					break;
+				}
+			});
+			all(dfds).then(function () {
+				response.status(200);
+				response.json(events);
+			});
+		}, function (err) {
 			response.status(500);
 			next(err);
 		});

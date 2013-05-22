@@ -1,0 +1,96 @@
+@import "nib"
+
+event-bg-color = #e4ebf2
+event-border-color = #b5bcc7
+type-default-color = #ccc
+type-default-text = #777
+type-voteplus-color = #4be639
+type-voteplus-text = #25731C
+type-voteminus-color = #e63939
+type-voteminus-text = #731c1c
+type-voteneutral-color = #e6cf39
+type-voteneutral-text = #73671c
+type-blue-color = #cad8e6
+type-blue-text = #656c73
+
+.doteEvent
+  display none
+  width 100%
+  margin 4px 0
+  clear both
+  &Inner
+    border 1px solid event-border-color
+    border-radius 2px
+    box-shadow 0 1px 1px rgba(black, 0.15)
+    background-image linear-gradient(top, rgba(white, 0.8), rgba(white, 0) 100px)
+    background-color event-bg-color
+    cursor pointer
+    transition-duration 0.1s
+    &Hover
+      box-shadow none
+      background-color #ccc
+      border-radius 2px
+      border 1px solid #999
+      transition-duration 0.3s
+  &Type
+    background-color type-default-color
+    background-image linear-gradient(white 0px, rgba(white, 0) 3px, rgba(white, 0.5) 100%)
+    border 1px solid type-default-color
+    border-radius 2px
+    box-shadow 0 1px 2px rgba(black, 0.5), inset 0 0 1px rgba(white, 0.5)
+    color type-default-text
+    display inline-block
+    font-size 24px
+    margin 4px 3px 6px 6px
+    padding 6px 0
+    text-align center
+    text-shadow 0 1px 1px rgba(white, 0.75)
+    vertical-align middle
+    width 2em
+    &VotePlus
+    &ActionAccepted
+      background-color type-voteplus-color
+      border 1px solid type-voteplus-color
+      color type-voteplus-text
+    &VoteMinus
+    &ActionRejected
+      background-color type-voteminus-color
+      border 1px solid type-voteminus-color
+      color type-voteminus-text
+    &VoteNeutral
+      background-color type-voteneutral-color
+      border 1px solid type-voteneutral-color
+      color type-voteneutral-text
+    &Comment
+    &New
+    &Assign
+    &ActionOpen
+    &ActionReopen
+    &Tag
+    &Welcome
+      background-color type-blue-color
+      border 1px solid type-blue-color
+      color type-blue-text
+  &Description
+    display inline-block
+    vertical-align middle
+    font-size 14px
+  &Time
+    vertical-align middle
+    margin 6px
+    text-align right
+    font-size 11px
+    color event-border-color
+    font-style italic
+    float right
+  .vote
+  .action
+    font-weight bold
+  .topicTitle
+  .newuser
+    font-style italic
+  .username
+    color #999
+  .committer
+    font-weight bold
+    color #000

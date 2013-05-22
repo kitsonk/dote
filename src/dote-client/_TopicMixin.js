@@ -353,9 +353,7 @@ define([
 
 		_onActionChange: function(e){
 			var self = this;
-			this.refresh().then(function () {
-				self.set('action', e);
-			});
+			self.set('action', e);
 		},
 
 		_onUpClick: function(e){

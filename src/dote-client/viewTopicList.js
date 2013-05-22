@@ -3,9 +3,7 @@ define([
 	'dojo/dom', // dom.byId
 	'dojo/promise/all', // all
 	'dojo/ready',
-	'dojo/store/Cache',
 	'dojo/store/JsonRest',
-	'dojo/store/Memory',
 	'dojo/when',
 	'dijit/form/Button',
 	'dijit/form/CheckBox',
@@ -14,10 +12,9 @@ define([
 	'dijit/TitlePane',
 	'./TopicList',
 	'./userControls',
-	'moment/moment',
 	'./widgetModules'
-], function(array, dom, all, ready, Cache, JsonRest, Memory, when, Button, Checkbox, Select, TextBox, TitlePane,
-		TopicList, userControls, moment){
+], function(array, dom, all, ready, JsonRest, when, Button, Checkbox, Select, TextBox, TitlePane, TopicList,
+		userControls){
 
 	var topicStore = new JsonRest({
 			target: '/topics/'

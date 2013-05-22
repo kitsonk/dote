@@ -25,6 +25,19 @@ define([
 		queue.on("topic.new", function(item){
 			console.log('Dequeued Event: '.cyan + 'topic.new'.yellow);
 			var dfd = new Deferred();
+			stores.users.get(item.topic.author).then(function (user) {
+				return stores.events.add({
+					type: 'topic.new',
+					target: item.topic.id,
+					created: item.topic.created,
+					user: {
+						id: user.id,
+						committer: user.committer
+					}
+				});
+			}, function (err) {
+				console.log('Error:'.red, err);
+			});
 			messages.calculateTopicRecipients(item.topic, item.isNew).then(function(results){
 				var mails = [];
 				results.forEach(function(address){
@@ -63,6 +76,20 @@ define([
 					});
 				}
 				if(voter){
+					stores.users.get(voter.id).then(function (user) {
+						return stores.events.add({
+							type: 'topic.vote',
+							value: parseInt(vote.vote, 10),
+							target: item.changed.id,
+							created: Math.round((new Date()).getTime() / 1000),
+							user: {
+								id: user.id,
+								committer: user.committer
+							}
+						});
+					}, function (err) {
+						console.log('Error:'.red, err);
+					});
 					vote.user = voter;
 					messages.calculateVoteRecipients(item.changed, vote.user.id).then(function(results){
 						var mails = [];
@@ -83,17 +110,48 @@ define([
 						dfd.reject(err);
 					});
 				}else{
-					console.log("Could not identify voter".red.bold);
+					console.error("Could not identify voter".red.bold);
 					dfd.reject(new Error("Could not identify voter"));
 				}
 			}else if(changes.action){
-				console.log("action changed");
+				console.log('Actioned'.yellow);
+				stores.users.get(item.changed.owner).then(function (user) {
+					return stores.events.add({
+						type: 'topic.action',
+						target: item.changed.id,
+						value: changes.action,
+						created: changes.actioned,
+						user: {
+							id: user.id,
+							committer: user.committer
+						}
+					});
+				})
 				dfd.resolve("complete");
 			}else if(changes.tags){
-				console.log("tags changed");
+				console.log('Tagged'.yellow);
+				stores.events.add({
+					type: 'topic.tag',
+					target: item.changed.id,
+					created: item.changed.updated,
+					user: item.changed.updater
+				});
 				dfd.resolve("complete");
 			}else if(changes.owner){
-				console.log("owner changed");
+				console.log('Owner Change'.yellow);
+				stores.users.get(changes.owner).then(function (user) {
+					return stores.events.add({
+						type: 'topic.assigned',
+						target: item.changed.id,
+						created: Math.round((new Date()).getTime() / 1000),
+						user: {
+							id: user.id,
+							committer: user.committer
+						}
+					});
+				}, function (err) {
+					console.log('Error:'.red, err);
+				});
 				dfd.resolve("complete");
 			}else if(changes.commentsCount){
 				dfd.resolve("complete");
@@ -113,6 +171,20 @@ define([
 		queue.on("comment.add", function(item){
 			console.log('Dequeued Event: '.cyan + 'comment.add'.yellow);
 			var dfd = new Deferred();
+			stores.users.get(item.comment.author).then(function (user) {
+				return stores.events.add({
+					type: 'comment',
+					target: item.comment.id,
+					topicId: item.comment.topicId,
+					created: item.comment.created,
+					user: {
+						id: user.id,
+						committer: user.committer
+					}
+				});
+			}, function (err) {
+				console.log('Error:'.red, err);
+			});
 			topic(item.comment.topicId).get(true).then(function(topicItem){
 				messages.calculateCommentRecipients(item.comment).then(function(results){
 					var mails = [];
@@ -147,6 +219,11 @@ define([
 		queue.on('user.welcome', function (item) {
 			console.log('Dequeued Event: '.cyan + 'user.welcome'.yellow);
 			var dfd = new Deferred();
+			stores.events.add({
+				type: 'user.welcome',
+				target: item.user.id,
+				created: Math.round((new Date()).getTime() / 1000)
+			});
 			messages.mailWelcome(item.user.id + ' <' + item.user.email + '>', item.user).then(function (results) {
 				console.log('Welcome to '.grey + item.user.id.yellow + ' mailed.'.grey);
 				dfd.resolve('complete');
@@ -208,7 +285,7 @@ define([
 								}
 							});
 							if (changed) {
-								topic(item.id).put(item);
+								topic(item.id).put(item, { id: '', committer: false });
 							}
 						}
 					});

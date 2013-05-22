@@ -225,7 +225,7 @@ define([
 			});
 		},
 
-		put: function(data){
+		put: function(data, user){
 			var self = this,
 				original;
 			data = lang.mixin(lang.clone(this.item), data || {});
@@ -236,6 +236,7 @@ define([
 					data.actioned = Math.round((new Date()).getTime() / 1000);
 				}
 				data.updated = Math.round((new Date()).getTime() / 1000);
+				data.updater = user || { id: '', committer: false };
 				return stores.topics.put(data);
 			}).then(function(item){
 				self.emit("put", { item: item, original: original });

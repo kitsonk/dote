@@ -1,0 +1,48 @@
+@import url("_Event.css");
+.doteTimelineContainer {
+  margin: 0 auto;
+  width: 926px;
+}
+.doteTimelineHide {
+  display: none;
+}
+.doteTimelineMore {
+  width: 924px;
+  margin: 0 auto;
+  border: 1px solid #c0c6cc;
+  border-radius: 2px;
+}
+.doteTimelineMoreButton {
+  background-color: #eee;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  display: block;
+  font-size: 20px;
+  margin: 0;
+  padding: 0.5em;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+  transition-duration: 0.2s;
+  width: 100%;
+}
+.doteTimelineMoreButtonHover {
+  background-color: #ccc;
+  transition-duration: 0.3s;
+}
+.doteTimelineMoreButton:disabled {
+  cursor: progress;
+  color: #999;
+  background-color: #ddd;
+  background-image: none;
+  box-shadow: none;
+  transition-duration: 0.2s;
+}
+.doteTimelineLoadingIcon {
+  background: url("../../dijit/themes/claro/images/loadingAnimation.gif") no-repeat;
+  height: 20px;
+  width: 20px;
+  margin-top: -6px;
+  padding-right: 0.25em;
+}

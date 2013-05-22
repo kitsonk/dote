@@ -1,13 +1,12 @@
 extends main
 
 prepend head
-  title = app.title + " Topic"
+  title = app.title + " Timeline"
 
 block scripts
   script(type="text/javascript")
     dojoConfig = {
       async: 1,
-      isDebug: 0,
       baseUrl: "/#{base}",
       packages: [{
         name: "dojo",
@@ -16,23 +15,14 @@ block scripts
         name: "dijit",
         location: "dijit"
       },{
-        name: "moment",
-        location: "moment"
-      },{
-        name: "marked",
-        location: "marked/lib"
-      },{
-        name: "hljs",
-        location: "hljs"
-      },{
-        name: "dote",
-        location: "dote"
-      },{
         name: "dote-client",
         location: "dote-client"
+      },{
+        name: "moment",
+        location: "moment"
       }],
       deps: [
-        "dote-client/viewTopic"
+        "dote-client/viewTimeline"
       ]
     };
     dote = {
@@ -40,14 +30,10 @@ block scripts
       user: {
         id: "#{user.id}",
         committer: #{user.committer}
-      },
-      topicId: "#{topicId}"
+      }
     };
   script(type="text/javascript", src="/#{base}/dojo/dojo.js")
   script(type="text/javascript", src="/#{base}/dote-client/widgetModules.js")
-
-append css
-  link(rel="stylesheet", type="text/css", href="/#{base}/hljs/default.css", media="all")
 
 block content
   .header
@@ -59,10 +45,6 @@ block content
             a(id="topicList", href="/")
               i(class="icon-reorder")
               |  list
-          li
-            a(id="timeline", href="/timeline")
-              i(class="icon-time")
-              |  timeline
           li
             a(id="settings", href="/settings")
               i(class="icon-cog")
@@ -83,7 +65,8 @@ block content
       .subtitle #{app.subtitle}
       .clear
   .main
-    #topic
+    h1 Timeline
+    #timeline
 
   .footer
     .content Copyright &copy; 2012-2013 Dojo Foundation &mdash; All Rights Reserved

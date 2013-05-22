@@ -1,0 +1,45 @@
+@import url("_Event.css")
+
+timeline-border-color = #c0c6cc
+
+.doteTimeline
+  &Container
+    margin 0 auto
+    width 926px
+  &Hide
+    display none
+  &More
+    width 924px
+    margin 0 auto
+    border 1px solid timeline-border-color
+    border-radius 2px
+    &Button
+      background-color #eee
+      border none
+      color black
+      cursor pointer
+      display block
+      font-size 20px
+      margin 0
+      padding 0.5em
+      text-align center
+      text-decoration none
+      text-shadow 0 1px 1px rgba(white,0.75)
+      transition-duration 0.2s
+      width 100%
+      &Hover
+        background-color #ccc
+        transition-duration 0.3s
+      &:disabled
+        cursor progress
+        color #999
+        background-color #ddd
+        background-image none
+        box-shadow none
+        transition-duration 0.2s
+  &LoadingIcon
+    background url("../../dijit/themes/claro/images/loadingAnimation.gif") no-repeat
+    height 20px
+    width 20px
+    margin-top -6px
+    padding-right 0.25em

@@ -124,6 +124,9 @@ var profile = (function(){
 			"dote-client/viewTopicList": {
 				exclude: generalModules.concat("dote-client/widgetModules")
 			},
+			"dote-client/viewTimeline": {
+				exclude: generalModules.concat("dote-client/widgetModules")
+			},
 			"dote-client/viewSettings": {
 				exclude: generalModules.concat("dote-client/widgetModules")
 			},

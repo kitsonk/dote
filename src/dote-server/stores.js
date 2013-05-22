@@ -13,6 +13,7 @@ define([
 		emails: null,
 		logins: null,
 		signups: null,
+		events: null,
 
 		defaultUser: function(id){
 			return {
@@ -143,17 +144,147 @@ define([
 				return users.query();
 			}
 
+			function initEvents () {
+				var events = self.events;
+				events.add({
+					type: 'topic.vote',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					value: +1,
+					created: 1349135392,
+					user: {
+						id: 'kitsonk',
+						committer: true
+					}
+				});
+				events.add({
+					type: 'topic.vote',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					value: -1,
+					created: 1349135392,
+					user: {
+						id: 'bill',
+						committer: true
+					}
+				});
+				events.add({
+					type: 'topic.vote',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					value: 0,
+					created: 1349135392,
+					user: {
+						id: 'kgf',
+						committer: false
+					}
+				});
+				events.add({
+					type: 'topic.new',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					created: 1349135392,
+					user: {
+						id: 'kitsonk',
+						committer: true
+					}
+				});
+				events.add({
+					type: 'topic.assigned',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					created: 1349135393,
+					user: {
+						id: 'kitsonk',
+						committer: true
+					}
+				});
+				events.add({
+					type: 'topic.action',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					value: 'accepted',
+					created: 1349135394,
+					user: {
+						id: 'kitsonk',
+						committer: true
+					}
+				});
+				events.add({
+					type: 'topic.action',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					value: 'rejected',
+					created: 1349135395,
+					user: {
+						id: 'kitsonk',
+						committer: true
+					}
+				});
+				events.add({
+					type: 'topic.action',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					value: 'closed',
+					created: 1349135396,
+					user: {
+						id: 'kitsonk',
+						committer: true
+					}
+				});
+				events.add({
+					type: 'topic.action',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					value: 'opened',
+					created: 1349135397,
+					user: {
+						id: 'kitsonk',
+						committer: true
+					}
+				});
+				events.add({
+					type: 'topic.action',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					value: 'reopened',
+					created: 1349135398,
+					user: {
+						id: 'kitsonk',
+						committer: true
+					}
+				});
+				events.add({
+					type: 'comment',
+					target: '5f5f3ae4-f486-467f-bfc8-996bb153d2a7',
+					created: 1349135399,
+					topicId: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					user: {
+						id: 'kitsonk',
+						committer: true
+					}
+				});
+				events.add({
+					type: 'topic.tag',
+					target: '3af990e5-036a-4e01-80a4-0a46d158038c',
+					created: 1349135400,
+					user: {
+						id: 'kgf',
+						committer: false
+					}
+				});
+				events.add({
+					type: 'user.welcome',
+					created: 1349135401,
+					target: 'slightlyoff'
+				});
+			}
+
 			var dfds = [],
 				self = this;
 
-			dfds.push(this.topics.empty().then(function(){
-				return initTopics();
-			}));
-			dfds.push(this.comments.empty().then(function(){
-				return initComments();
-			}));
-			dfds.push(this.users.empty().then(function(){
-				return initUsers();
+			// dfds.push(this.topics.empty().then(function(){
+			// 	return initTopics();
+			// }));
+			// dfds.push(this.comments.empty().then(function(){
+			// 	return initComments();
+			// }));
+			// dfds.push(this.users.empty().then(function(){
+			// 	return initUsers();
+			// }));
+			
+			dfds.push(this.events.empty().then(function () {
+				return initEvents();
 			}));
 
 			return all(dfds);
@@ -192,6 +323,10 @@ define([
 				url: config.db.url
 			});
 			dfds.push(this.signups.ready());
+			this.events = new Storage({
+				collection: 'events',
+				url: config.db.url
+			});
 			return init ? all(dfds).then(function(){
 				return self.init();
 			}) : all(dfds);
