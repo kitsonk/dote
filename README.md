@@ -2,6 +2,21 @@
 
 A topic based voting system for open collaboration.
 
+This solution is currently being used to decide the direction of Dojo 2 and is built upon Dojo 1.9 and NodeJS, so it is
+as much of "eat your own dog-food" as is possible.  It is specifically designed to document and make clear decisions
+and allow a diverse community of contributors to collaborate.
+
+The question of "why re-invent the wheel" when there are other solutions available out there.  The biggest and most
+compelling reason is that the vast majority of them lacked robust e-mail integration.  dote attempts, as far as possible
+to make interaction with the community as rich and flexible via e-mail as it does via the website.  This allows each
+individual to participate fully without having to remember another login, or remind themselves to check another site.
+
+A secondary issue was that most of the tools available out there were for users to demonstrate their support or lack of
+for "issues" or "features".  The Dojo community needed something where the intent of the community was clear, that
+members could clearly document their thoughts, including rich mark-up and then the topic would be "owned" by an
+individual and decided upon.  While other tools came close to this model, none of them were exactly the governance
+model that was used by the community.
+
 ## Requirements ##
 
 **dote** depends on the following projects:
