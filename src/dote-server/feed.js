@@ -78,7 +78,7 @@ define([
 						description = event.comment.text;
 						break;
 					case 'user.welcome':
-						title = event.user.id + ' has joined';
+						title = event.target + ' has joined';
 						break;
 					}
 					feed.item({
