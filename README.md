@@ -36,6 +36,7 @@ model that was used by the community.
 * [emailjs][emailjs] - NodeJS STMP Client
 * [node-imap][nodeimap] - NodeJS IMAP Client
 * [mailparser][mailparser] - Mail Parsing Library
+* [feed][feed] - RSS and Atom generator
 * [node-mongodb-native][nodemongodb] - Node Native MongoDB Library
 * [juice][juice] - Inlining CSS into HTML
 * [ldapauth][ldapauth] - LDAP Authorisation
@@ -143,3 +144,4 @@ And changing the ``_static/css/dote.styl`` to point at the optimised CSS:
 [colors]: https://github.com/Marak/colors.js
 [dojobuilder]: http://dojotoolkit.org/download/
 [ldapauth]: https://github.com/trentm/node-ldapauth
+[feed]: http://projets.jpmonette.net/en/feed

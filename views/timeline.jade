@@ -2,6 +2,7 @@ extends main
 
 prepend head
   title = app.title + " Timeline"
+  link(rel="alternate", type="application/rss+xml", title=app.title + " Events", href="/rss/events")
 
 block scripts
   script(type="text/javascript")

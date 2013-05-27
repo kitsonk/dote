@@ -37,6 +37,10 @@
 			"adminPassword": "password",
 			"searchBase": "ou=people,dc=kitsonkelly,dc=com",
 			"searchFilter": "(uid={{username}})"
+		},
+		"rss": {
+			"eventCount": 40,
+			"topicCount": 10
 		}
 	},
 	"heroku": {
@@ -76,6 +80,10 @@
 			"adminPassword": "password",
 			"searchBase": "ou=people,dc=kitsonkelly,dc=com",
 			"searchFilter": "(uid={{username}})"
+		},
+		"rss": {
+			"eventCount": 40,
+			"topicCount": 10
 		}
 	},
 	"production": {
@@ -117,6 +125,10 @@
 			"adminPassword": "password",
 			"searchBase": "ou=people,dc=dojotoolkit,dc=org",
 			"searchFilter": "(uid={{username}})"
+		},
+		"rss": {
+			"eventCount": 40,
+			"topicCount": 10
 		}
 	}
 }

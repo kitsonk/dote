@@ -2,6 +2,7 @@ extends main
 
 prepend head
   title = app.title + " Archive"
+  link(rel="alternate", type="application/rss+xml", title=app.title + " Topics", href="/rss/topics")
 
 block content
   .header

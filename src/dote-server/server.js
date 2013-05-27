@@ -12,14 +12,15 @@ define([
 	"./auth",
 	"./config",
 	"./email",
+	"./feed",
 	"./messages",
 	"./queue",
 	"./stores",
 	"./topic",
 	"./util",
 	"moment/moment"
-], function(express, stylus, nib, url, colors, all, lang, when, marked, timer, auth, config, email, messages, queue,
-		stores, topic, util, moment){
+], function(express, stylus, nib, url, colors, all, lang, when, marked, timer, auth, config, email, feed, messages,
+		queue, stores, topic, util, moment){
 
 	function compile(str, path){
 		return stylus(str).
@@ -1002,6 +1003,30 @@ define([
 			response.status(200);
 			response.json(authors);
 		}, function(err){
+			response.status(500);
+			next(err);
+		});
+	});
+
+	/**
+	 * RSS Feeds
+	 */
+	
+	app.get('/rss/events', function (request, response, next) {
+		feed.events().then(function (data) {
+			response.set('Content-Type', 'text/xml');
+			response.send(data);
+		}, function (err) {
+			response.status(500);
+			next(err);
+		});
+	});
+
+	app.get('/rss/topics', function (request, response, next) {
+		feed.topics().then(function (data) {
+			response.set('Content-Type', 'text/xml');
+			response.send(data);
+		}, function (err) {
 			response.status(500);
 			next(err);
 		});
