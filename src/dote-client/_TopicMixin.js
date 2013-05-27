@@ -67,22 +67,32 @@ define([
 			type: "innerHTML"
 		},
 
+		totalVotes: 0,
+		_setTotalVotesAttr: {
+			node: "totalVotesNode",
+			type: "innerHTML"
+		},
+
 		voter: "",
 
 		voters: [],
 		_setVotersAttr: function(value){
-			var votes = 0;
+			var votes = 0, totalVotes = 0;
 			if(value instanceof Array){
 				this._set("voters", value);
 			}else{
 				this._set("voters", JSON.parse(value));
 			}
 			array.forEach(this.voters, function(voter){
-				if(voter.vote){
+				if(voter.vote && voter.user && voter.user.committer){
 					votes += voter.vote;
+				}
+				if(voter.vote){
+					totalVotes += voter.vote;
 				}
 			});
 			this.set("votes", votes);
+			this.set("totalVotes", totalVotes);
 			if(this._started){
 				this._displayVoters();
 				this._displayVote();

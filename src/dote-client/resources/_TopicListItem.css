@@ -97,6 +97,12 @@
   font-size: 48px;
   text-align: center;
 }
+.doteTopicItemTotalVotes {
+  font-size: 24px;
+  padding: 3px;
+  text-align: center;
+  color: #999;
+}
 .doteTopicItemSpark {
   border: 1px solid #759dc0;
   -webkit-border-radius: 2px;

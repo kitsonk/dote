@@ -424,6 +424,9 @@ define([
 			topics = lang.clone(topics);
 			topics.forEach(function (topic) {
 				topic.vote = topic.voters.reduce(function (previous, current) {
+					return previous + (current.user && current.user.committer ? current.vote : 0);
+				}, 0);
+				topic.totalVote = topic.voters.reduce(function (previous, current) {
 					return previous + current.vote;
 				}, 0);
 				topic.widths = calcSparkWidths(topic);
@@ -451,6 +454,9 @@ define([
 		topic(request.params.id).get().then(function (data) {
 			data = lang.clone(data);
 			data.vote = data.voters.reduce(function (previous, current) {
+				return previous + (current.user && current.user.committer ? current.vote : 0);
+			}, 0);
+			data.totalVote = data.voters.reduce(function (previous, current) {
 				return previous + current.vote;
 			}, 0);
 			data.widths = calcSparkWidths(data);
